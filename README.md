@@ -43,10 +43,24 @@
 
 ### Passos
 
+Clone o repositório:
+
 ```bash
-git clone git@github.com:usuario/projeto.git
-cd projeto
+git clone https://github.com/CristianVeggian/Synaptomancer.git
+cd Synaptomancer
+```
+#### Windows
+
+```powershell
 python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
+venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+#### Linux/MacOS
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
 pip install -r requirements.txt
 ```

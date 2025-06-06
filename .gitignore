@@ -1,0 +1,7 @@
+# Ignorar todas as pastas que começam com ponto (.)
+**/*/
+
+# Ignorar arquivos e pastas dentro de collected, pipelines e profiles
+collected/
+pipelines/
+profiles/

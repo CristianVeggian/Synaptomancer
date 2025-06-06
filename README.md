@@ -52,7 +52,7 @@ cd Synaptomancer
 #### Windows
 
 ```powershell
-python -m venv venv
+python -m venv .venv
 venv\Scripts\activate
 pip install -r requirements.txt
 ```
@@ -60,7 +60,16 @@ pip install -r requirements.txt
 #### Linux/MacOS
 
 ```bash
-python3 -m venv venv
+python3 -m venv .venv
 source venv/bin/activate
 pip install -r requirements.txt
+```
+
+## ▶️ Execução 
+
+Executar o arquivo _main.py_:
+_Obs: ficar atento ao path do Python, em alguns computadores, o caminho é python3._
+
+```
+python main.py
 ```

@@ -1,7 +1,11 @@
 # Ignorar todas as pastas que começam com ponto (.)
-**/*/
+.*/
 
-# Ignorar arquivos e pastas dentro de collected, pipelines e profiles
-collected/
-pipelines/
-profiles/
+# Ignorar arquivos que começam com .
+.*
+
+# Ignorar pastas __pycache__
+**/_*/
+
+# Ignora a pasta de dados
+data/

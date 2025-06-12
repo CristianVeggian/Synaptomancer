@@ -9,3 +9,7 @@
 
 # Ignora a pasta de dados
 data/
+
+# Anotações de melhorias e testes
+melhorias.txt
+testes.py

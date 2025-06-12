@@ -5,7 +5,7 @@ from interface.AbaPipeline import AbaPipeline
 class Janela(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Projeto Namandu")
+        self.setWindowTitle("Synaptomaner")
         self.resize(800, 600)
 
         layout_principal = QVBoxLayout()

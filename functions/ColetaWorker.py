@@ -1,5 +1,5 @@
 from PyQt6.QtCore import QThread, pyqtSignal
-from brainflow.board_shim import BoardShim, BrainFlowInputParams
+from brainflow.board_shim import BoardShim
 from time import sleep
 import numpy as np
 import csv, os, datetime
@@ -9,9 +9,9 @@ class ColetaWorker(QThread):
     coleta_finalizada = pyqtSignal()
     erro = pyqtSignal(str)
 
-    def __init__(self, porta_serial, placa_id, user_data):
+    def __init__(self, params, placa_id, user_data):
         super().__init__()
-        self.porta_serial = porta_serial
+        self.params = params
         self.placa_id = placa_id
         self.user_data = user_data
 
@@ -19,18 +19,16 @@ class ColetaWorker(QThread):
         try:
 
             # Instanciar a placa primeiro
-            params = BrainFlowInputParams()
-            params.serial_port = self.porta_serial
-            board = BoardShim(self.placa_id, params)
+            board = BoardShim(self.placa_id, self.params)
 
             # Pegar os parâmetros da placa
             taxa = BoardShim.get_sampling_rate(self.placa_id)
 
-            eeg_indices = BoardShim.get_eeg_channels(self.placa_id)
-            eeg_nomes = BoardShim.get_eeg_names(self.placa_id)
+            #eeg_indices = BoardShim.get_eeg_channels(self.placa_id)
+            #eeg_nomes = BoardShim.get_eeg_names(self.placa_id)
 
-            mapa_nome_para_indice = dict(zip(eeg_nomes, eeg_indices))
-            indices_desejados = [mapa_nome_para_indice[nome] for nome in self.user_data['canais']]
+            #mapa_nome_para_indice = dict(zip(eeg_nomes, eeg_indices))
+            #indices_desejados = #[mapa_nome_para_indice[nome] for nome in self.user_data['canais']]
 
             descanso = self.user_data['tempo_descanso']
             imagetica = self.user_data['tempo_imagetica']
@@ -58,7 +56,6 @@ class ColetaWorker(QThread):
 
             board.prepare_session()
             board.start_stream()
-            sleep(1)
 
             with open(caminho, mode='a', newline='') as arquivo_csv:
                 writer = csv.writer(arquivo_csv)
@@ -66,10 +63,11 @@ class ColetaWorker(QThread):
                     if evento != 0.0:
                         board.insert_marker(evento)
                     
-                    sleep(1 / taxa)  # espera 1 amostra
+                    sleep(1)  # espera 1 amostra
 
                     amostra = board.get_board_data(1)
-                    linha = [amostra[timestamp_idx][0]] + [amostra[idx][0] for idx in indices_desejados] + [amostra[event_idx][0]]
+                    print(amostra)
+                    linha = [amostra[timestamp_idx][0]] + [amostra[idx][0] for idx in self.user_data['canais']] + [amostra[event_idx][0]]
                     writer.writerow(linha)
 
         except Exception as e:

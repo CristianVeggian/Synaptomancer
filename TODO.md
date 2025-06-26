@@ -1,10 +1,14 @@
 # TODO
 
 ## Conectividade
-- [ ] Implementar reconhecimento automático do tipo de conexão:
+- [x] Implementar reconhecimento automático do tipo de conexão:
   - Serial
   - BLE (Bluetooth Low Energy)
   - Outros, se aplicável
+- [ ] Implementar detecção automática de endereços MAC dos BLEs
+
+## Coleta de Dados
+- [ ] Arrumar ColetaWorker
 
 ## Execução da Imagética
 - [x] Adicionar tempo de espera aleatório entre imagéticas

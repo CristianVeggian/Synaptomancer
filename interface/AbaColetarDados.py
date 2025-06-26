@@ -3,51 +3,50 @@ from os.path import join
 from serial.tools.list_ports import comports
 from interface.components.ToastMessage import ToastMessage
 from functions.ColetaWorker import ColetaWorker
+from brainflow import BrainFlowInputParams
+from brainflow.board_shim import BoardIds
+
+from functions.utils.boardconfig import board_details
 
 from PyQt6.QtCore import QSize, Qt
 from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import (
     QWidget, QVBoxLayout, QGridLayout, QLabel, QLineEdit,
-    QPushButton, QComboBox, QFileDialog, QSizePolicy
+    QPushButton, QComboBox, QFileDialog, QSizePolicy, QDoubleSpinBox,
+    QFormLayout, QHBoxLayout
 )
-from brainflow.board_shim import BoardIds
+
 
 class AbaColetarDados(QWidget):
     def __init__(self):
         super().__init__()
 
-        self.label_porta = QLabel("Porta:")
-        self.combo_ports = QComboBox()
-        self.combo_ports.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
-
-        self.botao_atualizar = QPushButton()
+        # Botão atualizar portas
+        self.button_serial = QPushButton()
         try:
             icon_path = join('interface', 'assets', 'refresh.png')
             if not QIcon(icon_path).isNull():
-                 self.botao_atualizar.setIcon(QIcon(icon_path))
+                self.button_serial.setIcon(QIcon(icon_path))
             else:
-                print(f"Aviso: Ícone não encontrado em {icon_path}. Usando texto.")
-                self.botao_atualizar.setText("↻")
+                self.button_serial.setText("↻")
         except Exception as e:
             print(f"Erro ao carregar ícone: {e}. Usando texto.")
-            self.botao_atualizar.setText("↻")
+            self.button_serial.setText("↻")
 
-        self.botao_atualizar.setIconSize(QSize(20, 20))
-        self.botao_atualizar.setToolTip("Atualizar portas")
-        self.botao_atualizar.setFixedSize(28, 28)
-        self.botao_atualizar.clicked.connect(self.atualizar_ports)
+        self.button_serial.setIconSize(QSize(20, 20))
+        self.button_serial.setToolTip("Atualizar portas")
+        self.button_serial.setFixedSize(28, 28)
+        self.button_serial.clicked.connect(self.atualizar_ports)
 
+        # Placa
         self.label_placa = QLabel("Placa:")
         self.combo_placas = QComboBox()
         self.combo_placas.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
         placas = [placa.name for placa in BoardIds if placa not in (BoardIds.STREAMING_BOARD, BoardIds.PLAYBACK_FILE_BOARD)]
         self.combo_placas.addItems(placas)
-        no_board_text = "NO_BOARD"
-        if no_board_text in placas:
-             self.combo_placas.setCurrentText(no_board_text)
-        elif placas:
-            self.combo_placas.setCurrentIndex(0)
+        self.combo_placas.setCurrentIndex(0)
 
+        # Perfil
         self.label_perfil = QLabel("Perfil:")
         self.perfil_lineEdit = QLineEdit()
         self.perfil_lineEdit.setPlaceholderText("Selecione o arquivo de perfil...")
@@ -55,45 +54,122 @@ class AbaColetarDados(QWidget):
         self.perfil_botao_buscar = QPushButton("Buscar")
         self.perfil_botao_buscar.clicked.connect(self.buscar_perfil)
 
+        # Botão principal
         self.botao_iniciar_coleta = QPushButton("Iniciar Coleta")
         self.botao_iniciar_coleta.clicked.connect(self.iniciar_coleta)
 
+        # Campos de conexão
+        self.label_serial = QLabel("Porta:")
+        self.combo_serial = QComboBox()
+        self.label_mac = QLabel("MAC:")
+        self.field_mac = QLineEdit()
+        self.label_ip = QLabel("Endereço IP:")
+        self.field_ip = QLineEdit()
+        self.label_port = QLabel("Porta:")
+        self.input_port = QLineEdit()
+        self.label_timeout = QLabel("Timeout:")
+        self.field_timeout = QDoubleSpinBox()
+
+        self.combo_serial.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+        self.field_mac.setPlaceholderText("xx:xx:xx:xx:xx:xx")
+        self.input_port.setPlaceholderText("Escolha uma porta livre...")
+        self.input_port.setText("6987")
+        self.field_ip.setPlaceholderText("xxx.xxx.xxx.xxx")
+        self.field_timeout.setValue(15)
+
+        # Layout principal
+        main_layout = QVBoxLayout(self)
+
+        # Layout fixo
         form_layout = QGridLayout()
         form_layout.setSpacing(10)
-
-        form_layout.addWidget(self.label_porta, 0, 0, Qt.AlignmentFlag.AlignRight)
-        form_layout.addWidget(self.combo_ports, 0, 1)
-        form_layout.addWidget(self.botao_atualizar, 0, 2)
-
-
-        form_layout.addWidget(self.label_placa, 1, 0, Qt.AlignmentFlag.AlignRight)
-        form_layout.addWidget(self.combo_placas, 1, 1)
-   
-        form_layout.addWidget(self.label_perfil, 2, 0, Qt.AlignmentFlag.AlignRight)
-        form_layout.addWidget(self.perfil_lineEdit, 2, 1)
-        form_layout.addWidget(self.perfil_botao_buscar, 2, 2)
-
-        form_layout.setColumnStretch(0, 0)
+        form_layout.addWidget(self.label_placa, 0, 0, Qt.AlignmentFlag.AlignRight)
+        form_layout.addWidget(self.combo_placas, 0, 1)
+        form_layout.addWidget(self.label_perfil, 1, 0, Qt.AlignmentFlag.AlignRight)
+        form_layout.addWidget(self.perfil_lineEdit, 1, 1)
+        form_layout.addWidget(self.perfil_botao_buscar, 1, 2)
         form_layout.setColumnStretch(1, 1)
-        form_layout.setColumnStretch(2, 0)
 
-        main_layout = QVBoxLayout(self)
         main_layout.addLayout(form_layout)
+
+        # Layout dinâmico (campos de conexão)
+        self.campos_dinamicos_layout = QFormLayout()
+        self.campos_dinamicos_widget = QWidget()
+        self.campos_dinamicos_widget.setLayout(self.campos_dinamicos_layout)
+        main_layout.addWidget(self.campos_dinamicos_widget)
+
+        # Adiciona os campos (eles serão mostrados/ocultados depois)
+        serial_layout = QHBoxLayout()
+        serial_layout.addWidget(self.combo_serial)
+        serial_layout.addWidget(self.button_serial)
+        self.campos_dinamicos_layout.addRow(self.label_serial, serial_layout)
+
+        self.campos_dinamicos_layout.addRow(self.label_ip, self.field_ip)
+        self.campos_dinamicos_layout.addRow(self.label_port, self.input_port)
+        self.campos_dinamicos_layout.addRow(self.label_mac, self.field_mac)
+        self.campos_dinamicos_layout.addRow(self.label_timeout, self.field_timeout)
+
+        # Botão de coleta
         main_layout.addWidget(self.botao_iniciar_coleta)
         main_layout.addStretch(1)
 
+        self.connection_types = board_details
+
         self.atualizar_ports()
+        self.combo_placas.currentTextChanged.connect(self.ajustar_interface_conexao)
+        self.ajustar_interface_conexao(self.combo_placas.currentText())
+
+    def ajustar_interface_conexao(self, nome_placa):
+        conexao = self.connection_types.get(nome_placa, {})
+
+        # Esconde todos
+        self.label_serial.hide()
+        self.combo_serial.hide()
+        self.button_serial.hide()
+        self.label_mac.hide()
+        self.field_mac.hide()
+        self.label_ip.hide()
+        self.field_ip.hide()
+        self.label_port.hide()
+        self.input_port.hide()
+        self.label_timeout.hide()
+        self.field_timeout.hide()
+
+        # Exibe conforme necessário
+        if 'serial' in conexao:
+            self.label_serial.show()
+            self.combo_serial.show()
+            self.button_serial.show()
+            self.atualizar_ports()
+
+        if 'mac' in conexao:
+            self.label_mac.show()
+            self.field_mac.show()
+
+        if 'ip_address' in conexao:
+            self.label_ip.show()
+            self.field_ip.show()
+
+        if 'port' in conexao:
+            self.label_port.show()
+            self.input_port.show()
+
+        if 'timeout' in conexao:
+            self.label_timeout.show()
+            self.field_timeout.show()
+
+        self.connection = conexao
 
     def atualizar_ports(self):
         try:
             ports = [port.device for port in comports()]
-            self.combo_ports.clear()
+            self.combo_serial.clear()
             if not ports:
-                self.combo_ports.addItem("Nenhuma porta")
-                self.combo_ports.setEnabled(False)
+                self.combo_serial.addItem("Nenhuma porta")
+                self.combo_serial.setEnabled(False)
             else:
-                self.combo_ports.addItems(ports)
-                self.combo_ports.setEnabled(True)
+                self.combo_serial.addItems(ports)
+                self.combo_serial.setEnabled(True)
         except Exception as e:
             self.toast = ToastMessage(self, f"Erro ao listar portas: {str(e)}", "#ff0f0f")
 
@@ -105,37 +181,41 @@ class AbaColetarDados(QWidget):
                         "JSON Files (*.json);;All Files (*)")
         if fileName:
             self.perfil_lineEdit.setText(fileName)
-            print(f"Arquivo de perfil selecionado: {fileName}")
 
     def iniciar_coleta(self):
-        porta_selecionada = self.combo_ports.currentText()
         placa_selecionada_nome = self.combo_placas.currentText()
         caminho_perfil = self.perfil_lineEdit.text()
+        params = BrainFlowInputParams()
 
-        if porta_selecionada == "Nenhuma porta" or not porta_selecionada:
-            self.toast = ToastMessage(self, "Selecione uma porta serial.", "#cc0000")
-            return
+        if self.connection_types[placa_selecionada_nome].get('serial', False):
+            porta = self.combo_serial.currentText()
+            if not porta or porta == "Nenhuma porta":
+                self.toast = ToastMessage(self, "Selecione uma porta serial.", "#cc0000")
+                return
+            params.serial_port = porta
 
-        if not placa_selecionada_nome:
-            self.toast = ToastMessage(self, "Selecione uma placa.", "#cc0000")
-            return
+        if self.connection_types[placa_selecionada_nome].get('mac', False):
+            mac = self.field_mac.text().strip()
+            if not mac:
+                self.toast = ToastMessage(self, "Informe o endereço MAC.", "#cc0000")
+                return
+            params.mac_address = mac
+
+        if self.connection_types[placa_selecionada_nome].get('ip_address', False):
+            ip = self.field_ip.text().strip()
+            if not ip:
+                self.toast = ToastMessage(self, "Informe o endereço IP.", "#cc0000")
+                return
+            params.ip_address = ip
+
+        if self.connection_types[placa_selecionada_nome].get('port', False):
+            params.ip_port = int(self.input_port.text())
+
+        if self.connection_types[placa_selecionada_nome].get('timeout', False):
+            params.timeout = self.field_timeout.value()
 
         if not caminho_perfil:
             self.toast = ToastMessage(self, "Selecione um arquivo de perfil.", "#cc0000")
-            return
-
-        user_data = {}
-        try:
-            with open(caminho_perfil, 'r') as f:
-                user_data = json.load(f)
-        except FileNotFoundError:
-            self.toast = ToastMessage(self, f"Arquivo de perfil não encontrado: {caminho_perfil}", "#cc0000")
-            return
-        except json.JSONDecodeError:
-            self.toast = ToastMessage(self, f"Erro ao decodificar JSON do perfil: {caminho_perfil}", "#cc0000")
-            return
-        except Exception as e:
-            self.toast = ToastMessage(self, f"Erro ao carregar perfil: {str(e)}", "#cc0000")
             return
 
         try:
@@ -144,10 +224,42 @@ class AbaColetarDados(QWidget):
             self.toast = ToastMessage(self, f"Nome de placa inválido: {placa_selecionada_nome}", "#cc0000")
             return
 
-        self.toast = ToastMessage(self, f"Iniciando coleta: Porta={porta_selecionada}, Placa={placa_selecionada_nome}({board_id})", "#0077cc")
+        try:
+            with open(caminho_perfil, 'r') as f:
+                user_data = json.load(f)
+        except Exception as e:
+            self.toast = ToastMessage(self, f"Erro ao carregar perfil: {str(e)}", "#cc0000")
+            return
 
-        self.worker = ColetaWorker(porta_serial=porta_selecionada, placa_id=board_id, user_data=user_data)
+        self.toast = ToastMessage(self, f"Iniciando coleta com placa {placa_selecionada_nome}", "#0077cc")
+
+        if hasattr(self, 'worker') and self.worker.isRunning():
+            self.toast = ToastMessage(self, "Coleta já está em andamento.", "#cc0000")
+            return
+
+        self.botao_iniciar_coleta.setEnabled(False)
+        self.combo_serial.setEnabled(False)
+        self.combo_placas.setEnabled(False)
+        self.perfil_lineEdit.setEnabled(False)
+        self.perfil_botao_buscar.setEnabled(False)
+
+        self.worker = ColetaWorker(params=params, placa_id=board_id, user_data=user_data)
         self.worker.atualiza_status.connect(lambda texto: ToastMessage(self, texto, "#0077cc"))
-        self.worker.coleta_finalizada.connect(lambda: ToastMessage(self, "Coleta finalizada", "#00cc44"))
-        self.worker.erro.connect(lambda erro_msg: ToastMessage(self, f"Erro na coleta: {erro_msg}", "#cc0000"))
+        self.worker.coleta_finalizada.connect(self.coleta_finalizada)
+        self.worker.erro.connect(self.coleta_erro)
         self.worker.start()
+
+    def coleta_finalizada(self):
+        ToastMessage(self, "Coleta finalizada", "#00cc44")
+        self.restaurar_ui()
+
+    def coleta_erro(self, erro_msg):
+        ToastMessage(self, f"Erro na coleta: {erro_msg}", "#cc0000")
+        self.restaurar_ui()
+
+    def restaurar_ui(self):
+        self.botao_iniciar_coleta.setEnabled(True)
+        self.combo_serial.setEnabled(True)
+        self.combo_placas.setEnabled(True)
+        self.perfil_lineEdit.setEnabled(True)
+        self.perfil_botao_buscar.setEnabled(True)

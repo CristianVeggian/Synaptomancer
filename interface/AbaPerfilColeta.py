@@ -61,7 +61,7 @@ class AbaPerfilColeta(QWidget):
         form_layout.addRow("Descrição:", self.input_descricao)
         form_layout.addRow("Montagem:", self.combo_montagem)
         form_layout.addRow("Canais:", scroll_area)
-        form_layout.addRow("Nº de execuções (runs):", self.input_runs)
+        form_layout.addRow("Nº de ciclos:", self.input_runs)
 
         # Campos compostos
         rest_layout = QHBoxLayout()
@@ -123,7 +123,7 @@ class AbaPerfilColeta(QWidget):
             "descricao": self.input_descricao.toPlainText(),
             "montagem": self.combo_montagem.currentText(),
             "canais": canais,
-            "execucoes": self.input_runs.value(),
+            "ciclos": self.input_runs.value(),
             "tempo_descanso": {
                 "mean": self.input_rest_mean.value(),
                 "std": self.input_rest_std.value()

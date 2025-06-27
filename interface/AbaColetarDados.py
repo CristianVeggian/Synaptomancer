@@ -5,17 +5,19 @@ from interface.components.ToastMessage import ToastMessage
 from functions.ColetaWorker import ColetaWorker
 from brainflow import BrainFlowInputParams
 from brainflow.board_shim import BoardIds
+import pyqtgraph as pg
+from pyqtgraph import PlotWidget
+import numpy as np
 
 from functions.utils.boardconfig import board_details
 
 from PyQt6.QtCore import QSize, Qt
-from PyQt6.QtGui import QIcon
+from PyQt6.QtGui import QIcon, QIntValidator
 from PyQt6.QtWidgets import (
     QWidget, QVBoxLayout, QGridLayout, QLabel, QLineEdit,
     QPushButton, QComboBox, QFileDialog, QSizePolicy, QDoubleSpinBox,
     QFormLayout, QHBoxLayout
 )
-
 
 class AbaColetarDados(QWidget):
     def __init__(self):
@@ -66,16 +68,22 @@ class AbaColetarDados(QWidget):
         self.label_ip = QLabel("Endereço IP:")
         self.field_ip = QLineEdit()
         self.label_port = QLabel("Porta:")
-        self.input_port = QLineEdit()
+        self.field_port = QLineEdit()
         self.label_timeout = QLabel("Timeout:")
         self.field_timeout = QDoubleSpinBox()
 
         self.combo_serial.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
         self.field_mac.setPlaceholderText("xx:xx:xx:xx:xx:xx")
-        self.input_port.setPlaceholderText("Escolha uma porta livre...")
-        self.input_port.setText("6987")
+        self.field_port.setValidator(QIntValidator(1, 65535))
+        self.field_port.setPlaceholderText("Escolha uma porta WiFi")
+        self.field_port.setText("6987")
         self.field_ip.setPlaceholderText("xxx.xxx.xxx.xxx")
         self.field_timeout.setValue(15)
+
+        self.grafico = PlotWidget()
+        self.grafico.setBackground('w')
+        self.curva = self.grafico.plot(pen=pg.mkPen(color='b', width=2))
+        self.buffer = np.zeros(250)  # 250 amostras (~1s a 250Hz)
 
         # Layout principal
         main_layout = QVBoxLayout(self)
@@ -105,13 +113,16 @@ class AbaColetarDados(QWidget):
         self.campos_dinamicos_layout.addRow(self.label_serial, serial_layout)
 
         self.campos_dinamicos_layout.addRow(self.label_ip, self.field_ip)
-        self.campos_dinamicos_layout.addRow(self.label_port, self.input_port)
+        self.campos_dinamicos_layout.addRow(self.label_port, self.field_port)
         self.campos_dinamicos_layout.addRow(self.label_mac, self.field_mac)
         self.campos_dinamicos_layout.addRow(self.label_timeout, self.field_timeout)
 
         # Botão de coleta
         main_layout.addWidget(self.botao_iniciar_coleta)
         main_layout.addStretch(1)
+
+        main_layout.addWidget(self.grafico)
+
 
         self.connection_types = board_details
 
@@ -131,7 +142,7 @@ class AbaColetarDados(QWidget):
         self.label_ip.hide()
         self.field_ip.hide()
         self.label_port.hide()
-        self.input_port.hide()
+        self.field_port.hide()
         self.label_timeout.hide()
         self.field_timeout.hide()
 
@@ -152,7 +163,7 @@ class AbaColetarDados(QWidget):
 
         if 'port' in conexao:
             self.label_port.show()
-            self.input_port.show()
+            self.field_port.show()
 
         if 'timeout' in conexao:
             self.label_timeout.show()
@@ -183,45 +194,56 @@ class AbaColetarDados(QWidget):
             self.perfil_lineEdit.setText(fileName)
 
     def iniciar_coleta(self):
-        placa_selecionada_nome = self.combo_placas.currentText()
+        nome_placa = self.combo_placas.currentText()
         caminho_perfil = self.perfil_lineEdit.text()
+        
+        if not caminho_perfil:
+            self.toast = ToastMessage(self, "Selecione um arquivo de perfil.", "#cc0000")
+            return
+        
+        conexao = self.connection_types.get(nome_placa, {})
+
         params = BrainFlowInputParams()
 
-        if self.connection_types[placa_selecionada_nome].get('serial', False):
-            porta = self.combo_serial.currentText()
-            if not porta or porta == "Nenhuma porta":
+        if 'serial' in conexao:
+            serial = self.combo_serial.currentText()
+            if conexao['serial'] and not serial:
                 self.toast = ToastMessage(self, "Selecione uma porta serial.", "#cc0000")
                 return
-            params.serial_port = porta
+            params.serial_port = serial
 
-        if self.connection_types[placa_selecionada_nome].get('mac', False):
+        if 'mac' in conexao:
             mac = self.field_mac.text().strip()
-            if not mac:
+            if conexao['mac'] and not mac:
                 self.toast = ToastMessage(self, "Informe o endereço MAC.", "#cc0000")
                 return
             params.mac_address = mac
 
-        if self.connection_types[placa_selecionada_nome].get('ip_address', False):
+        if 'ip_address' in conexao:
             ip = self.field_ip.text().strip()
-            if not ip:
+            if conexao['ip'] and not ip:
                 self.toast = ToastMessage(self, "Informe o endereço IP.", "#cc0000")
                 return
             params.ip_address = ip
 
-        if self.connection_types[placa_selecionada_nome].get('port', False):
-            params.ip_port = int(self.input_port.text())
+        if 'port' in conexao:
+            porta = self.field_port.text()
+            if conexao['port'] and not porta:
+                self.toast = ToastMessage(self, "Informe uma porta.", "#cc0000")
+                return
+            params.ip_port = int(porta)
 
-        if self.connection_types[placa_selecionada_nome].get('timeout', False):
-            params.timeout = self.field_timeout.value()
-
-        if not caminho_perfil:
-            self.toast = ToastMessage(self, "Selecione um arquivo de perfil.", "#cc0000")
-            return
+        if 'timeout' in conexao:
+            timeout = self.field_timeout.value()
+            if conexao['timeout'] and not timeout:
+                self.toast = ToastMessage(self, "Informe um timeout.", "#cc0000")
+                return
+            params.timeout = timeout
 
         try:
-            board_id = BoardIds[placa_selecionada_nome].value
+            board_id = BoardIds[nome_placa].value
         except KeyError:
-            self.toast = ToastMessage(self, f"Nome de placa inválido: {placa_selecionada_nome}", "#cc0000")
+            self.toast = ToastMessage(self, f"Nome de placa inválido: {nome_placa}", "#cc0000")
             return
 
         try:
@@ -231,7 +253,7 @@ class AbaColetarDados(QWidget):
             self.toast = ToastMessage(self, f"Erro ao carregar perfil: {str(e)}", "#cc0000")
             return
 
-        self.toast = ToastMessage(self, f"Iniciando coleta com placa {placa_selecionada_nome}", "#0077cc")
+        self.toast = ToastMessage(self, f"Iniciando coleta com placa {nome_placa}", "#0077cc")
 
         if hasattr(self, 'worker') and self.worker.isRunning():
             self.toast = ToastMessage(self, "Coleta já está em andamento.", "#cc0000")
@@ -243,10 +265,11 @@ class AbaColetarDados(QWidget):
         self.perfil_lineEdit.setEnabled(False)
         self.perfil_botao_buscar.setEnabled(False)
 
-        self.worker = ColetaWorker(params=params, placa_id=board_id, user_data=user_data)
+        self.worker = ColetaWorker(params=params, board_id=board_id, user_data=user_data)
         self.worker.atualiza_status.connect(lambda texto: ToastMessage(self, texto, "#0077cc"))
         self.worker.coleta_finalizada.connect(self.coleta_finalizada)
         self.worker.erro.connect(self.coleta_erro)
+        self.worker.nova_amostra.connect(self.plotar_amostra)
         self.worker.start()
 
     def coleta_finalizada(self):
@@ -263,3 +286,15 @@ class AbaColetarDados(QWidget):
         self.combo_placas.setEnabled(True)
         self.perfil_lineEdit.setEnabled(True)
         self.perfil_botao_buscar.setEnabled(True)
+
+    def plotar_amostra(self, amostra):
+        try:
+            canal_idx = 0  # ou use self.user_data["canais"][0] para mapear dinamicamente
+            novo_valor = float(amostra[canal_idx])
+
+            self.buffer = np.roll(self.buffer, -1)
+            self.buffer[-1] = novo_valor
+
+            self.curva.setData(self.buffer)
+        except Exception as e:
+            print("Erro ao plotar:", str(e))

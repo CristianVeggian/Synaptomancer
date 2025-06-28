@@ -5,12 +5,12 @@ from interface.components.ToastMessage import ToastMessage
 from functions.ColetaWorker import ColetaWorker
 from brainflow import BrainFlowInputParams
 from brainflow.board_shim import BoardIds
-import pyqtgraph as pg
-from pyqtgraph import PlotWidget
+
 import numpy as np
 
 from functions.utils.boardconfig import board_details
 
+import pyqtgraph as pg
 from PyQt6.QtCore import QSize, Qt
 from PyQt6.QtGui import QIcon, QIntValidator
 from PyQt6.QtWidgets import (
@@ -80,10 +80,14 @@ class AbaColetarDados(QWidget):
         self.field_ip.setPlaceholderText("xxx.xxx.xxx.xxx")
         self.field_timeout.setValue(15)
 
-        self.grafico = PlotWidget()
-        self.grafico.setBackground('w')
-        self.curva = self.grafico.plot(pen=pg.mkPen(color='b', width=2))
-        self.buffer = np.zeros(250)  # 250 amostras (~1s a 250Hz)
+        # Função de gráfico
+        self.grafico = pg.GraphicsLayoutWidget()
+
+        # Inicialize estruturas vazias
+        self.plots = []
+        self.curvas = []
+        self.buffers = {}
+        self.grafico_inicializado = False
 
         # Layout principal
         main_layout = QVBoxLayout(self)
@@ -122,7 +126,6 @@ class AbaColetarDados(QWidget):
         main_layout.addStretch(1)
 
         main_layout.addWidget(self.grafico)
-
 
         self.connection_types = board_details
 
@@ -248,7 +251,7 @@ class AbaColetarDados(QWidget):
 
         try:
             with open(caminho_perfil, 'r') as f:
-                user_data = json.load(f)
+                self.user_data = json.load(f)
         except Exception as e:
             self.toast = ToastMessage(self, f"Erro ao carregar perfil: {str(e)}", "#cc0000")
             return
@@ -265,7 +268,8 @@ class AbaColetarDados(QWidget):
         self.perfil_lineEdit.setEnabled(False)
         self.perfil_botao_buscar.setEnabled(False)
 
-        self.worker = ColetaWorker(params=params, board_id=board_id, user_data=user_data)
+        self.worker = ColetaWorker(params=params, board_id=board_id, user_data=self.user_data)
+        self.worker.sampling_rate.connect(self.inicializar_grafico)
         self.worker.atualiza_status.connect(lambda texto: ToastMessage(self, texto, "#0077cc"))
         self.worker.coleta_finalizada.connect(self.coleta_finalizada)
         self.worker.erro.connect(self.coleta_erro)
@@ -287,14 +291,37 @@ class AbaColetarDados(QWidget):
         self.perfil_lineEdit.setEnabled(True)
         self.perfil_botao_buscar.setEnabled(True)
 
+    def inicializar_grafico(self, sampling_rate):
+        self.exg_channels = self.user_data['canais'].values()
+        self.window_size = 4
+        self.num_points = sampling_rate * self.window_size
+        self.buffers = {ch: np.zeros(self.num_points) for ch in self.exg_channels}
+
+        self.plots = []
+        self.curvas = []
+
+        self.grafico.clear()  # Limpa qualquer coisa anterior
+        self.grafico.setBackground('w')
+
+        for i, ch in enumerate(self.exg_channels):
+            plot = self.grafico.addPlot(row=i, col=0)
+            plot.showAxis('left', True)
+            plot.showAxis('bottom', True)
+            if i == 0:
+                plot.setTitle("Sinais em Tempo Real")
+            curva = plot.plot(pen=pg.mkPen(color='b', width=1.5))
+            self.plots.append(plot)
+            self.curvas.append(curva)
+
+        self.grafico_inicializado = True
+
     def plotar_amostra(self, amostra):
         try:
-            canal_idx = 0  # ou use self.user_data["canais"][0] para mapear dinamicamente
-            novo_valor = float(amostra[canal_idx])
+            for i, ch in enumerate(self.exg_channels):
+                valor = float(amostra[ch])
+                self.buffers[ch] = np.roll(self.buffers[ch], -1)
+                self.buffers[ch][-1] = valor
+                self.curvas[i].setData(self.buffers[ch])
 
-            self.buffer = np.roll(self.buffer, -1)
-            self.buffer[-1] = novo_valor
-
-            self.curva.setData(self.buffer)
         except Exception as e:
-            print("Erro ao plotar:", str(e))
+            print("Erro ao plotar:", e)

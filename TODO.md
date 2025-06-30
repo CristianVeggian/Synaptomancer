@@ -7,6 +7,9 @@
   - Outros, se aplicável
 - [ ] Implementar detecção automática de endereços MAC dos BLEs
 
+## Criação de Perfil
+- [ ] Permitir que o usuário escolhas quantas e quais classes quer durante a coleta na interface
+
 ## Coleta de Dados
 - [x] Arrumar ColetaWorker
 - [ ] Testar com sinal simulado na Cyton

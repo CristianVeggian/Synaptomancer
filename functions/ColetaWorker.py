@@ -51,11 +51,12 @@ class ColetaWorker(QThread):
             
             with open(self.arquivo_path, "a", newline="") as f:
                 writer = csv.writer(f)
+                ti = time.time()
                 while self._is_running:
                     sleep(BUFFER_TAMANHO / sampling_rate)
                     dados = board.get_board_data(BUFFER_TAMANHO)
                     for i in range(dados.shape[1]):
-                        ts = time.time()
+                        ts = time.time() - ti
                         amostra = dados[:, i]
                         linha = [ts]
                         for nome_canal in self.canais_nomes:

@@ -8,7 +8,12 @@
 - [ ] Implementar detecção automática de endereços MAC dos BLEs
 
 ## Coleta de Dados
-- [ ] Arrumar ColetaWorker
+- [x] Arrumar ColetaWorker
+- [ ] Testar com sinal simulado na Cyton
+
+## Processamento de Dados
+- [ ] Implementar métodos de classificação
+- [ ] Implementar métodos de pré-processamento 
 
 ## Execução da Imagética
 - [x] Adicionar tempo de espera aleatório entre imagéticas

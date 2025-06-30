@@ -16,7 +16,8 @@ from PyQt6.QtGui import QIcon, QIntValidator
 from PyQt6.QtWidgets import (
     QWidget, QVBoxLayout, QGridLayout, QLabel, QLineEdit,
     QPushButton, QComboBox, QFileDialog, QSizePolicy, QDoubleSpinBox,
-    QFormLayout, QHBoxLayout
+    QFormLayout, QHBoxLayout, QRadioButton, QGroupBox
+
 )
 
 class AbaColetarDados(QWidget):
@@ -120,6 +121,25 @@ class AbaColetarDados(QWidget):
         self.campos_dinamicos_layout.addRow(self.label_port, self.field_port)
         self.campos_dinamicos_layout.addRow(self.label_mac, self.field_mac)
         self.campos_dinamicos_layout.addRow(self.label_timeout, self.field_timeout)
+
+        # Modos de Coleta
+
+        self.radio_visualizar = QRadioButton("Somente Visualizar")
+        self.radio_salvar_brutos = QRadioButton("Salvar dados Brutos")
+        self.radio_salvar_filtrados = QRadioButton("Salvar dados Filtrados")
+
+        # Define o padrão inicial (ex: visualizar)
+        self.radio_visualizar.setChecked(True)
+
+        # Agrupando visualmente
+        modo_groupbox = QGroupBox("Modo de operação")
+        modo_layout = QHBoxLayout()
+        modo_layout.addWidget(self.radio_visualizar)
+        modo_layout.addWidget(self.radio_salvar_brutos)
+        modo_layout.addWidget(self.radio_salvar_filtrados)
+        modo_groupbox.setLayout(modo_layout)
+
+        main_layout.addWidget(modo_groupbox)
 
         # Botão de coleta
         main_layout.addWidget(self.botao_iniciar_coleta)
@@ -293,7 +313,8 @@ class AbaColetarDados(QWidget):
 
     def inicializar_grafico(self, sampling_rate):
         self.exg_channels = self.user_data['canais'].values()
-        self.window_size = 4
+        self.exg_names = self.user_data['canais'].keys()
+        self.window_size = 5
         self.num_points = sampling_rate * self.window_size
         self.buffers = {ch: np.zeros(self.num_points) for ch in self.exg_channels}
 
@@ -303,10 +324,10 @@ class AbaColetarDados(QWidget):
         self.grafico.clear()  # Limpa qualquer coisa anterior
         self.grafico.setBackground('w')
 
-        for i, ch in enumerate(self.exg_channels):
+        for i, (ch, name) in enumerate(zip(self.exg_channels, self.exg_names)):
             plot = self.grafico.addPlot(row=i, col=0)
-            plot.showAxis('left', True)
-            plot.showAxis('bottom', True)
+            plot.showAxis('left', False)
+            plot.setLabel('left', name)
             if i == 0:
                 plot.setTitle("Sinais em Tempo Real")
             curva = plot.plot(pen=pg.mkPen(color='b', width=1.5))

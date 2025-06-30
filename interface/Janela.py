@@ -24,3 +24,4 @@ class Janela(QWidget):
         # Adiciona o QTabWidget ao layout principal
         layout_principal.addWidget(self.abas)
         self.setLayout(layout_principal)
+        self.showMaximized()

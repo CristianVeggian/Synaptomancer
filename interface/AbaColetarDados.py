@@ -5,6 +5,7 @@ from interface.components.ToastMessage import ToastMessage
 from functions.ColetaWorker import ColetaWorker
 from brainflow import BrainFlowInputParams
 from brainflow.board_shim import BoardIds
+from PyQt6.QtWidgets import QButtonGroup
 
 import numpy as np
 
@@ -123,12 +124,10 @@ class AbaColetarDados(QWidget):
         self.campos_dinamicos_layout.addRow(self.label_timeout, self.field_timeout)
 
         # Modos de Coleta
-
         self.radio_visualizar = QRadioButton("Somente Visualizar")
         self.radio_salvar_brutos = QRadioButton("Salvar dados Brutos")
         self.radio_salvar_filtrados = QRadioButton("Salvar dados Filtrados")
 
-        # Define o padrão inicial (ex: visualizar)
         self.radio_visualizar.setChecked(True)
 
         # Agrupando visualmente
@@ -138,6 +137,12 @@ class AbaColetarDados(QWidget):
         modo_layout.addWidget(self.radio_salvar_brutos)
         modo_layout.addWidget(self.radio_salvar_filtrados)
         modo_groupbox.setLayout(modo_layout)
+
+        # Agrupando logicamente
+        self.modo_grupo = QButtonGroup(self)
+        self.modo_grupo.addButton(self.radio_visualizar, 0)
+        self.modo_grupo.addButton(self.radio_salvar_brutos, 1)
+        self.modo_grupo.addButton(self.radio_salvar_filtrados, 2)
 
         main_layout.addWidget(modo_groupbox)
 
@@ -288,7 +293,9 @@ class AbaColetarDados(QWidget):
         self.perfil_lineEdit.setEnabled(False)
         self.perfil_botao_buscar.setEnabled(False)
 
-        self.worker = ColetaWorker(params=params, board_id=board_id, user_data=self.user_data)
+        modo = self.obter_modo_selecionado()
+
+        self.worker = ColetaWorker(params=params, board_id=board_id, user_data=self.user_data, modo=modo)
         self.worker.sampling_rate.connect(self.inicializar_grafico)
         self.worker.atualiza_status.connect(lambda texto: ToastMessage(self, texto, "#0077cc"))
         self.worker.coleta_finalizada.connect(self.coleta_finalizada)
@@ -346,3 +353,11 @@ class AbaColetarDados(QWidget):
 
         except Exception as e:
             print("Erro ao plotar:", e)
+
+    def obter_modo_selecionado(self):
+        modo_id = self.modo_grupo.checkedId()
+        match modo_id:
+            case 0: return "visualizar"
+            case 1: return "brutos"
+            case 2: return "filtrados"
+            case _: return None

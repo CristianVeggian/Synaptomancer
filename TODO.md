@@ -8,11 +8,12 @@
 - [ ] Implementar detecção automática de endereços MAC dos BLEs
 
 ## Criação de Perfil
-- [ ] Permitir que o usuário escolhas quantas e quais classes quer durante a coleta na interface
+- [x] Permitir que o usuário escolhas quantas e quais classes quer durante a coleta na interface
 
 ## Coleta de Dados
 - [x] Arrumar ColetaWorker
 - [ ] Testar com sinal simulado na Cyton
+- [ ] Implementar funcionalidade de ver/salvar dados filtrados ou brutos
 
 ## Processamento de Dados
 - [ ] Implementar métodos de classificação

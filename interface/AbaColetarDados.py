@@ -6,10 +6,12 @@ from functions.ColetaWorker import ColetaWorker
 from brainflow import BrainFlowInputParams
 from brainflow.board_shim import BoardIds
 from PyQt6.QtWidgets import QButtonGroup
+import threading
 
 import numpy as np
 
 from functions.utils.boardconfig import board_details
+from functions.utils.beep import beep
 
 import pyqtgraph as pg
 from PyQt6.QtCore import QSize, Qt
@@ -26,6 +28,7 @@ class AbaColetarDados(QWidget):
         super().__init__()
 
         # Botão atualizar portas
+        self.nome_evento_ativo = "None"
         self.button_serial = QPushButton()
         try:
             icon_path = join('interface', 'assets', 'refresh.png')
@@ -150,7 +153,30 @@ class AbaColetarDados(QWidget):
         main_layout.addWidget(self.botao_iniciar_coleta)
         main_layout.addStretch(1)
 
-        main_layout.addWidget(self.grafico)
+        bottom_layout = QHBoxLayout()
+        feedback_layout = QVBoxLayout()
+
+        self.btn_feedback_sonoro = QPushButton("Ativar feedback sonoro")
+        self.btn_feedback_sonoro.clicked.connect(self.control_feedback_sonoro)
+        self.feedback_sonoro = False
+
+        self.label_evento = QLabel("Aguardando...")
+        self.label_evento.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        self.label_evento.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.label_evento.setStyleSheet("""
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            border: 2px solid #ecf0f1;
+            border-radius: 10px;
+            padding: 20px;
+        """)
+
+        feedback_layout.addWidget(self.btn_feedback_sonoro)
+        feedback_layout.addWidget(self.label_evento)
+        bottom_layout.addLayout(feedback_layout, stretch=3)
+        bottom_layout.addWidget(self.grafico, stretch=7)
+        main_layout.addLayout(bottom_layout)
 
         self.connection_types = board_details
 
@@ -297,19 +323,10 @@ class AbaColetarDados(QWidget):
 
         self.worker = ColetaWorker(params=params, board_id=board_id, user_data=self.user_data, modo=modo)
         self.worker.sampling_rate.connect(self.inicializar_grafico)
-        self.worker.atualiza_status.connect(lambda texto: ToastMessage(self, texto, "#0077cc"))
-        self.worker.coleta_finalizada.connect(self.coleta_finalizada)
-        self.worker.erro.connect(self.coleta_erro)
-        self.worker.nova_amostra.connect(self.plotar_amostra)
+        self.worker.sig_status.connect(self.status_controller)
+        self.worker.sig_active_event.connect(self.get_evento_ativo)
+        self.worker.sig_sample.connect(self.plotar_amostra)
         self.worker.start()
-
-    def coleta_finalizada(self):
-        ToastMessage(self, "Coleta finalizada", "#00cc44")
-        self.restaurar_ui()
-
-    def coleta_erro(self, erro_msg):
-        ToastMessage(self, f"Erro na coleta: {erro_msg}", "#cc0000")
-        self.restaurar_ui()
 
     def restaurar_ui(self):
         self.botao_iniciar_coleta.setEnabled(True)
@@ -317,6 +334,15 @@ class AbaColetarDados(QWidget):
         self.combo_placas.setEnabled(True)
         self.perfil_lineEdit.setEnabled(True)
         self.perfil_botao_buscar.setEnabled(True)
+        self.label_evento.setStyleSheet("""
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            border: 2px solid #ecf0f1;
+            border-radius: 10px;
+            padding: 20px;
+        """)
+        self.label_evento.setText("Aguardando...")
 
     def inicializar_grafico(self, sampling_rate):
         self.exg_channels = self.user_data['canais'].values()
@@ -361,3 +387,51 @@ class AbaColetarDados(QWidget):
             case 1: return "brutos"
             case 2: return "filtrados"
             case _: return None
+
+    def get_evento_ativo(self, nome_evento_ativo, numero_evento_ativo):            
+        if nome_evento_ativo != self.nome_evento_ativo:
+            self.numero_evento_ativo = numero_evento_ativo
+            self.nome_evento_ativo = nome_evento_ativo
+            self.feedback_controller()
+
+    def feedback_controller(self):
+        self.label_evento.setText(self.nome_evento_ativo)
+        cor_dict = {
+            -1: ("transparent", "black"),
+            0:  ("#95a5a6", "black"),   # cinza claro → texto branco
+            11: ("#e74c3c", "white"),   # vermelho → texto branco
+            22: ("#2ecc71", "black"),   # verde claro → texto preto
+            33: ("#3498db", "white"),   # azul médio → texto branco
+            44: ("#9b59b6", "white"),   # roxo → texto branco
+            55: ("#f1c40f", "black"),   # amarelo → texto preto
+            66: ("#1abc9c", "black"),   # turquesa claro → texto preto
+            77: ("#e67e22", "white"),   # laranja → texto branco
+            88: ("#34495e", "white"),   # azul escuro → texto branco
+            99: ("#d35400", "white"),   # laranja escuro → texto branco
+        }
+        self.label_evento.setStyleSheet(f"""
+            background-color: {cor_dict.get(self.numero_evento_ativo)[0]};
+            color: {cor_dict.get(self.numero_evento_ativo)[1]};
+            font-size: 24px;
+            font-weight: bold;
+            border: 2px solid {cor_dict.get(self.numero_evento_ativo)[1]};
+            border-radius: 10px;
+            padding: 20px;
+        """)
+        if self.feedback_sonoro:
+            threading.Thread(target=beep, args=(440+self.numero_evento_ativo*20, 200), daemon=True).start()
+
+    def control_feedback_sonoro(self):
+        self.feedback_sonoro = not self.feedback_sonoro
+        if self.feedback_sonoro:
+            self.btn_feedback_sonoro.setText("Desativar feedback sonoro")
+        else:
+            self.btn_feedback_sonoro.setText("Ativar feedback sonoro")
+
+    def status_controller(self, status, texto):
+        if status == 0:
+            self.toast = ToastMessage(self, texto, "#00cc2c")
+            self.restaurar_ui()
+        elif status == -1:
+            self.toast = ToastMessage(self, texto, "#cc0000")
+            self.restaurar_ui()

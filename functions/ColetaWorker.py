@@ -10,10 +10,9 @@ import random
 
 class ColetaWorker(QThread):
     sampling_rate = pyqtSignal(int)
-    atualiza_status = pyqtSignal(str)
-    nova_amostra = pyqtSignal(object)
-    coleta_finalizada = pyqtSignal()
-    erro = pyqtSignal(str)
+    sig_active_event = pyqtSignal(str, int)
+    sig_status = pyqtSignal(int, str)
+    sig_sample = pyqtSignal(object)
 
     def __init__(self, params, board_id, user_data, modo):
         super().__init__()
@@ -32,7 +31,7 @@ class ColetaWorker(QThread):
             else:
                 raise ValueError(f"Modo '{self.modo}' não reconhecido.")
         except Exception as e:
-            self.erro.emit(str(e))
+            self.sig_status.emit(-1, str(e))
 
     def tempo(self, tipo):
         info = self.user_data[f"tempo_{tipo}"]
@@ -116,17 +115,25 @@ class ColetaWorker(QThread):
                     (ev for ev in eventos if ev["inicio"] <= ts < ev["fim"]),
                     None
                 )
-                codigo_evento = self.user_data["classes"].get(evento_ativo["classe"], -1) if evento_ativo else -1
+
+                if evento_ativo:
+                    nome_evento = evento_ativo["classe"]
+                    codigo_evento = self.user_data["classes"].get(nome_evento, -1)
+                    self.sig_active_event.emit(nome_evento, codigo_evento)  # 🚀 Aqui você emite o nome do evento
+                else:
+                    codigo_evento = -1
+                    self.sig_active_event.emit("none", codigo_evento)
+
                 linha.append(codigo_evento)
 
                 if writer:
                     writer.writerow(linha)
 
-                self.nova_amostra.emit(amostra)
+                self.sig_sample.emit(amostra)
 
         board.stop_stream()
         board.release_session()
         if file:
             file.close()
 
-        self.coleta_finalizada.emit()
+        self.sig_status.emit(0, "Coleta finalizada!")

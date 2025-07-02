@@ -9,6 +9,7 @@
 
 ## Criação de Perfil
 - [x] Permitir que o usuário escolhas quantas e quais classes quer durante a coleta na interface
+- [ ] Adicionar increment == 11, max == 99 para controlar números das classes 
 
 ## Coleta de Dados
 - [x] Arrumar ColetaWorker
@@ -22,7 +23,9 @@
 ## Execução da Imagética
 - [x] Adicionar tempo de espera aleatório entre imagéticas
   - Informar **média** e **desvio padrão**
-- [ ] Adicionar **feedback visual** e **sonoro** durante a execução da imagética
+- [x] Adicionar **feedback visual** e **sonoro** durante a execução da imagética
+- [ ] Adicionar **indicação de mudança de classe** no gráfico
+- [ ] Adicionar **feedback sonoro** vocalizado ao invés de beep
 
 ## Estado da Aplicação
 - [ ] Implementar controle de estado do programa

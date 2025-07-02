@@ -9,7 +9,7 @@
 
 ## Criação de Perfil
 - [x] Permitir que o usuário escolhas quantas e quais classes quer durante a coleta na interface
-- [ ] Adicionar increment == 11, max == 99 para controlar números das classes 
+- [x] Adicionar increment == 11, max == 99 para controlar números das classes 
 
 ## Coleta de Dados
 - [x] Arrumar ColetaWorker

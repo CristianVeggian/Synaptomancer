@@ -4,7 +4,7 @@ import mne
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
     QWidget, QVBoxLayout, QFormLayout, QLabel, QLineEdit,
-    QTextEdit, QPushButton, QComboBox, QScrollArea, QWidget, QGridLayout,
+    QTextEdit, QPushButton, QComboBox, QScrollArea, QGridLayout,
     QSpinBox, QDoubleSpinBox, QHBoxLayout, QFrame
 )
 from mne.channels import get_builtin_montages
@@ -219,6 +219,11 @@ class AbaPerfilColeta(QWidget):
 
         class_name = QLineEdit("Nome")
         class_value = QSpinBox()
+        class_value.setMinimum(0)         # opcional: valor mínimo
+        class_value.setMaximum(99)        # define o valor máximo
+        class_value.setSingleStep(11)     # incrementa de 11 em 11
+        class_value.setValue(0)           # valor inicial
+        class_value.valueChanged.connect(self.on_value_changed)
 
         layout_class.addWidget(class_name)
         layout_class.addWidget(class_value)
@@ -237,3 +242,11 @@ class AbaPerfilColeta(QWidget):
                 frame.deleteLater()
                 self.class_widgets.pop(i)
                 break
+
+    def on_value_changed(self, value):
+        spinbox = self.sender()
+        if spinbox and value % 11 != 0:
+            corrected = round(value / 11) * 11
+            spinbox.blockSignals(True)
+            spinbox.setValue(corrected)
+            spinbox.blockSignals(False)

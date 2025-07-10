@@ -322,7 +322,7 @@ class AbaColetarDados(QWidget):
         modo = self.obter_modo_selecionado()
 
         self.worker = ColetaWorker(params=params, board_id=board_id, user_data=self.user_data, modo=modo)
-        self.worker.sampling_rate.connect(self.inicializar_grafico)
+        self.worker.sig_sampling_rate.connect(self.inicializar_grafico)
         self.worker.sig_status.connect(self.status_controller)
         self.worker.sig_active_event.connect(self.get_evento_ativo)
         self.worker.sig_sample.connect(self.plotar_amostra)
@@ -344,17 +344,24 @@ class AbaColetarDados(QWidget):
         """)
         self.label_evento.setText("Aguardando...")
 
+    def get_sampling_rate(self, sampling_rate):
+        self.sampling_rate = sampling_rate
+
     def inicializar_grafico(self, sampling_rate):
+        self.sampling_rate = sampling_rate
         self.exg_channels = self.user_data['canais'].values()
         self.exg_names = self.user_data['canais'].keys()
-        self.window_size = 5
+        self.window_size = 4
         self.num_points = sampling_rate * self.window_size
         self.buffers = {ch: np.zeros(self.num_points) for ch in self.exg_channels}
+        self.timestamps = np.linspace(-self.window_size, 0, self.num_points)
+        self.last_event = None
+        self.last_event_time = 0
 
         self.plots = []
         self.curvas = []
 
-        self.grafico.clear()  # Limpa qualquer coisa anterior
+        self.grafico.clear()
         self.grafico.setBackground('w')
 
         for i, (ch, name) in enumerate(zip(self.exg_channels, self.exg_names)):
@@ -369,13 +376,18 @@ class AbaColetarDados(QWidget):
 
         self.grafico_inicializado = True
 
-    def plotar_amostra(self, amostra):
+    def plotar_amostra(self, linha):
         try:
+            dados = linha[1:-1]
+            evento = linha[-1] 
+
+            self.timestamps += 1 / self.sampling_rate
+
             for i, ch in enumerate(self.exg_channels):
-                valor = float(amostra[ch])
+                valor = float(dados[i])
                 self.buffers[ch] = np.roll(self.buffers[ch], -1)
                 self.buffers[ch][-1] = valor
-                self.curvas[i].setData(self.buffers[ch])
+                self.curvas[i].setData(x=self.timestamps, y=self.buffers[ch])
 
         except Exception as e:
             print("Erro ao plotar:", e)

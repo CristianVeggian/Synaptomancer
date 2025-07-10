@@ -15,6 +15,7 @@
 - [x] Arrumar ColetaWorker
 - [ ] Testar com sinal simulado na Cyton
 - [ ] Implementar funcionalidade de ver/salvar dados filtrados ou brutos
+- [ ] Implementar threshold para identificar ruídos
 
 ## Processamento de Dados
 - [ ] Implementar métodos de classificação

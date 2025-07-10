@@ -1,15 +1,16 @@
 from PyQt6.QtCore import QThread, pyqtSignal
 from brainflow.board_shim import BoardShim
+from brainflow.data_filter import DataFilter, FilterTypes, DetrendOperations
 from time import sleep
 import csv
 import datetime
 import os
 import time
 import random
-
+import numpy as np
 
 class ColetaWorker(QThread):
-    sampling_rate = pyqtSignal(int)
+    sig_sampling_rate = pyqtSignal(int)
     sig_active_event = pyqtSignal(str, int)
     sig_status = pyqtSignal(int, str)
     sig_sample = pyqtSignal(object)
@@ -25,12 +26,19 @@ class ColetaWorker(QThread):
     def run(self):
         try:
             if self.modo == 'visualizar':
-                self._visualizar(salvar=False)
-            elif self.modo in ['brutos', 'filtrados']:
-                self._visualizar(salvar=True)
+                self._acquire_data(save=False, filter=False)
+            elif self.modo == 'brutos':
+                self._acquire_data(save=True, filter=False)
+            elif self.modo ==  'filtrados':
+                self._window_size = 4
+                self._n_exg_channels = len(BoardShim.get_exg_channels(self.board_id))
+                self._exg_channels = BoardShim.get_exg_channels(self.board_id)
+                self._sample_buffer = np.empty((self._n_exg_channels, 0))
+                self._acquire_data(save=True, filter=True)
             else:
                 raise ValueError(f"Modo '{self.modo}' não reconhecido.")
         except Exception as e:
+            print(e)
             self.sig_status.emit(-1, str(e))
 
     def tempo(self, tipo):
@@ -64,6 +72,7 @@ class ColetaWorker(QThread):
 
     def _cria_arquivo_csv(self):
         ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+
         nome_arquivo = f"{self.user_data['nome']}_{ts}.csv"
         caminho_arquivo = os.path.join("data", "collected", nome_arquivo)
         nomes_canais = list(self.user_data['canais'].keys())
@@ -73,26 +82,27 @@ class ColetaWorker(QThread):
 
         return caminho_arquivo
 
-    def _visualizar(self, salvar=False):
+    def _acquire_data(self, save=False, filter=False):
+        self.sig_status.emit(1, "Coleta Iniciada!")
         eventos = self._gera_eventos()
         nomes_canais = list(self.user_data['canais'].keys())
         canais_fisicos = self.user_data['canais'].values()
 
-        caminho_arquivo = self._cria_arquivo_csv() if salvar else None
+        caminho_arquivo = self._cria_arquivo_csv() if save else None
         writer = None
         file = None
-        if salvar:
+        if save:
             file = open(caminho_arquivo, "a", newline="")
             writer = csv.writer(file)
 
         board = BoardShim(self.board_id, self.params)
-        taxa_amostragem = BoardShim.get_sampling_rate(self.board_id)
-        self.sampling_rate.emit(taxa_amostragem)
+        self.sampling_rate = BoardShim.get_sampling_rate(self.board_id)
+        self.sig_sampling_rate.emit(self.sampling_rate)
 
         board.prepare_session()
         board.start_stream()
 
-        BUFFER_SIZE = 10
+        BUFFER_SIZE = int(self.sampling_rate*0.25)
         tempo_inicio = time.time()
 
         while self._is_running:
@@ -100,8 +110,12 @@ class ColetaWorker(QThread):
             if ts >= eventos[-1]["fim"]:
                 break
 
-            sleep(1 / taxa_amostragem)
+            sleep(BUFFER_SIZE / self.sampling_rate)
             dados = board.get_board_data(BUFFER_SIZE)
+
+            if filter:
+                self._num_point = self._window_size * self.sampling_rate
+                dados = self._apply_filter(dados)
 
             for i in range(dados.shape[1]):
                 amostra = dados[:, i]
@@ -111,15 +125,12 @@ class ColetaWorker(QThread):
                     idx_fisico = self.user_data['canais'][nome_canal]
                     linha.append(amostra[idx_fisico])
 
-                evento_ativo = next(
-                    (ev for ev in eventos if ev["inicio"] <= ts < ev["fim"]),
-                    None
-                )
+                evento_ativo = next((ev for ev in eventos if ev["inicio"] <= ts < ev["fim"]), None)
 
                 if evento_ativo:
                     nome_evento = evento_ativo["classe"]
                     codigo_evento = self.user_data["classes"].get(nome_evento, -1)
-                    self.sig_active_event.emit(nome_evento, codigo_evento)  # 🚀 Aqui você emite o nome do evento
+                    self.sig_active_event.emit(nome_evento, codigo_evento)
                 else:
                     codigo_evento = -1
                     self.sig_active_event.emit("none", codigo_evento)
@@ -129,7 +140,7 @@ class ColetaWorker(QThread):
                 if writer:
                     writer.writerow(linha)
 
-                self.sig_sample.emit(amostra)
+                self.sig_sample.emit(linha)
 
         board.stop_stream()
         board.release_session()
@@ -137,3 +148,26 @@ class ColetaWorker(QThread):
             file.close()
 
         self.sig_status.emit(0, "Coleta finalizada!")
+
+    def _apply_filter(self, new_data):
+        new_data = new_data[self._exg_channels, :]
+
+        data_size = new_data.shape[1]
+        self._sample_buffer = np.concatenate((self._sample_buffer, new_data), axis=1)
+
+        if self._sample_buffer.shape[1] > self._num_point:
+            excesso = self._sample_buffer.shape[1] - self._num_point
+            self._sample_buffer = self._sample_buffer[:, excesso:]
+
+        filtered_buffer = self._sample_buffer.copy()
+
+        for i in range(filtered_buffer.shape[0]):
+            DataFilter.detrend(filtered_buffer[i], DetrendOperations.CONSTANT.value)
+            DataFilter.perform_bandpass(
+                filtered_buffer[i],
+                self.sampling_rate,
+                8.0, 30.0, 4,
+                FilterTypes.BUTTERWORTH_ZERO_PHASE, 0
+            )
+
+        return filtered_buffer[:, -data_size:]

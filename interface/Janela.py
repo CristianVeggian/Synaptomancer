@@ -1,6 +1,7 @@
 from PyQt6.QtWidgets import QWidget, QTabWidget, QVBoxLayout
 from interface.AbaColeta import AbaColeta
 from interface.AbaPipeline import AbaPipeline
+from interface.AbaGerenciarPlugins import AbaGerenciarPlugins
 
 class Janela(QWidget):
     def __init__(self):
@@ -16,6 +17,8 @@ class Janela(QWidget):
         # Criar abas individuais
         self.aba1 = AbaColeta()
         self.aba2 = AbaPipeline()
+        self.aba_plugins = AbaGerenciarPlugins()
+        self.abas.addTab(self.aba_plugins, "🔧 Plugins")
 
         # Adiciona as abas ao widget
         self.abas.addTab(self.aba1, "Coletar Dados")

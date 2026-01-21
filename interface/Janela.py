@@ -18,11 +18,11 @@ class Janela(QWidget):
         self.aba1 = AbaColeta()
         self.aba2 = AbaPipeline()
         self.aba_plugins = AbaGerenciarPlugins()
-        self.abas.addTab(self.aba_plugins, "🔧 Plugins")
 
         # Adiciona as abas ao widget
         self.abas.addTab(self.aba1, "Coletar Dados")
         self.abas.addTab(self.aba2, "Processamento")
+        self.abas.addTab(self.aba_plugins, "🔧 Plugins")
 
         # Adiciona o QTabWidget ao layout principal
         layout_principal.addWidget(self.abas)

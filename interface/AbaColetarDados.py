@@ -1,7 +1,7 @@
 import json
 from os.path import join
 from serial.tools.list_ports import comports
-from interface.components.ToastMessage import ToastMessage
+from interface.components.toast_message import ToastMessage
 from functions.ColetaWorker import ColetaWorker
 from brainflow import BrainFlowInputParams
 from brainflow.board_shim import BoardIds
@@ -10,7 +10,7 @@ import threading
 
 import numpy as np
 
-from functions.utils.boardconfig import board_details
+from functions.utils.board_config import board_details
 from functions.utils.beep import beep
 
 import pyqtgraph as pg

@@ -84,8 +84,6 @@ class RunPipeline:
         
         self.pipeline.fit(X, y)  # Fit final
         
-        print(f"Scores CV: {cv_scores}, Média: {score}")
-
         return {
             "accuracy": round(score * 100, 2),
             "cv_scores": [round(s*100, 1) for s in cv_scores],

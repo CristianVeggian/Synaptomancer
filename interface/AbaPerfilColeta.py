@@ -8,7 +8,7 @@ from PyQt6.QtWidgets import (
     QSpinBox, QDoubleSpinBox, QHBoxLayout, QFrame
 )
 from mne.channels import get_builtin_montages
-from interface.components.ToastMessage import ToastMessage
+from interface.components.toast_message import ToastMessage
 
 class AbaPerfilColeta(QWidget):
     def __init__(self):

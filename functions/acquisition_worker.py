@@ -2,97 +2,105 @@ from PyQt6.QtCore import QThread, pyqtSignal
 from brainflow.board_shim import BoardShim
 from brainflow.data_filter import DataFilter, FilterTypes, DetrendOperations
 from time import sleep
+
+from functions.utils.paths import ACQUISITIONS_DIR
+
 import csv
 import datetime
 import os
 import time
 import random
+import json
 import numpy as np
 
-class ColetaWorker(QThread):
+class AcquisitionWorker(QThread):
     sig_sampling_rate = pyqtSignal(int)
     sig_active_event = pyqtSignal(str, int)
     sig_status = pyqtSignal(int, str)
     sig_sample = pyqtSignal(object)
 
-    def __init__(self, params, board_id, user_data, modo):
+    def __init__(self, params, board_id, protocol_path, profile_path, mode=1):
         super().__init__()
         self.params = params
         self.board_id = board_id
-        self.user_data = user_data
-        self.modo = modo
+        self.mode = mode
+        try:
+            with open(protocol_path, "r", encoding="utf-8") as f:
+                self.protocol = json.load(f)
+            with open(profile_path, "r", encoding="utf-8") as f:
+                self.profile = json.load(f)
+        except Exception as e:
+            self.sig_status.emit(-1, str(e))
         self._is_running = True
 
     def run(self):
         try:
-            if self.modo == 'visualizar':
+            if self.mode == 0:
                 self._acquire_data(save=False, filter=False)
-            elif self.modo == 'brutos':
+            elif self.mode == 1:
                 self._acquire_data(save=True, filter=False)
-            elif self.modo ==  'filtrados':
+            elif self.mode == 2:
                 self._window_size = 4
                 self._n_exg_channels = len(BoardShim.get_exg_channels(self.board_id))
                 self._exg_channels = BoardShim.get_exg_channels(self.board_id)
                 self._sample_buffer = np.empty((self._n_exg_channels, 0))
                 self._acquire_data(save=True, filter=True)
-            else:
-                raise ValueError(f"Modo '{self.modo}' não reconhecido.")
         except Exception as e:
             print(e)
             self.sig_status.emit(-1, str(e))
 
-    def tempo(self, tipo):
-        info = self.user_data[f"tempo_{tipo}"]
+    def _time(self, tipo):
+        info = self.protocol[f"{tipo}"]
         return max(0.5, random.gauss(info["mean"], info["std"]))
 
-    def _gera_eventos(self):
-        eventos = []
-        timestamp_atual = 0.0
-        classes_imageticas = [c for c in self.user_data["classes"] if c != "rest"]
+    def _generate_event(self):
+        stimuli = []
+        actual_timestamp = 0.0
+        motor_imagery_events = [c for c in self.protocol["classes"] if c != "rest"]
 
-        def adicionar_evento(classe, duracao, ciclo):
-            nonlocal timestamp_atual
-            eventos.append({
-                "inicio": round(timestamp_atual, 2),
-                "fim": round(timestamp_atual + duracao, 2),
-                "classe": classe,
-                "ciclo": ciclo
+        def add_event(event, duration, run):
+            nonlocal actual_timestamp
+            stimuli.append({
+                "start": round(actual_timestamp, 2),
+                "end": round(actual_timestamp + duration, 2),
+                "class": event,
+                "run": run
             })
-            timestamp_atual += duracao
+            actual_timestamp += duration
 
-        adicionar_evento("rest", self.tempo("descanso"), -1)
+        add_event("rest", self._time("rest_time"), -1)
 
-        for ciclo in range(self.user_data["ciclos"]):
-            for classe in classes_imageticas:
-                adicionar_evento(classe, self.tempo("imagetica"), ciclo)
-                adicionar_evento("rest", self.tempo("descanso"), ciclo)
+        for run in range(self.protocol["runs"]):
+            for event in motor_imagery_events:
+                add_event(event, self._time("motor_imagery_time"), run)
+                add_event("rest", self._time("rest_time"), run)
 
-        adicionar_evento("rest", self.tempo("descanso"), self.user_data["ciclos"])
-        return eventos
+        add_event("rest", self._time("rest_time"), self.protocol["runs"])
+        return stimuli
 
-    def _cria_arquivo_csv(self):
-        ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    def _create_csv_file(self):
+        ts = datetime.datetime.now().strftime("%d%m%y%H%M%S")
 
-        nome_arquivo = f"{self.user_data['nome']}_{ts}.csv"
-        caminho_arquivo = os.path.join("data", "collected", nome_arquivo)
-        nomes_canais = list(self.user_data['canais'].keys())
+        file_name = f"{self.protocol['name']}{self.profile['participant_id']}{ts}.csv"
+        file_path = os.path.join(ACQUISITIONS_DIR, file_name)
+        nomes_canais = list(self.protocol["channels"].keys())
 
-        with open(caminho_arquivo, "w", newline="") as f:
+        with open(file_path, "w", newline="") as f:
             csv.writer(f).writerow(['timestamp'] + nomes_canais + ['events'])
 
-        return caminho_arquivo
+        return file_path
 
     def _acquire_data(self, save=False, filter=False):
         self.sig_status.emit(1, "Coleta Iniciada!")
-        eventos = self._gera_eventos()
-        nomes_canais = list(self.user_data['canais'].keys())
-        canais_fisicos = self.user_data['canais'].values()
+        eventos = self._generate_event()
+        nomes_canais = list(self.protocol["channels"].keys())
+        canais_fisicos = self.protocol["channels"].values()
 
-        caminho_arquivo = self._cria_arquivo_csv() if save else None
+        file_path = self._create_csv_file() if save else None
         writer = None
         file = None
         if save:
-            file = open(caminho_arquivo, "a", newline="")
+            file = open(file_path, "a", newline="")
             writer = csv.writer(file)
 
         board = BoardShim(self.board_id, self.params)
@@ -107,7 +115,7 @@ class ColetaWorker(QThread):
 
         while self._is_running:
             ts = time.time() - tempo_inicio
-            if ts >= eventos[-1]["fim"]:
+            if ts >= eventos[-1]["end"]:
                 break
 
             sleep(BUFFER_SIZE / self.sampling_rate)
@@ -122,14 +130,14 @@ class ColetaWorker(QThread):
                 linha = [ts]
 
                 for nome_canal in nomes_canais:
-                    idx_fisico = self.user_data['canais'][nome_canal]
+                    idx_fisico = self.protocol["channels"][nome_canal]
                     linha.append(amostra[idx_fisico])
 
-                evento_ativo = next((ev for ev in eventos if ev["inicio"] <= ts < ev["fim"]), None)
+                evento_ativo = next((ev for ev in eventos if ev["start"] <= ts < ev["end"]), None)
 
                 if evento_ativo:
-                    nome_evento = evento_ativo["classe"]
-                    codigo_evento = self.user_data["classes"].get(nome_evento, -1)
+                    nome_evento = evento_ativo["class"]
+                    codigo_evento = self.protocol["classes"].get(nome_evento, -1)
                     self.sig_active_event.emit(nome_evento, codigo_evento)
                 else:
                     codigo_evento = -1

@@ -13,13 +13,13 @@
 
 ## Coleta de Dados
 - [x] Arrumar ColetaWorker
-- [ ] Testar com sinal simulado na Cyton
-- [ ] Implementar funcionalidade de ver/salvar dados filtrados ou brutos
+- [x] Testar com sinal simulado na Cyton
+- [x] Implementar funcionalidade de ver/salvar dados filtrados ou brutos
 - [ ] Implementar threshold para identificar ruídos
 
 ## Processamento de Dados
-- [ ] Implementar métodos de classificação
-- [ ] Implementar métodos de pré-processamento 
+- [x] Implementar métodos de classificação
+- [x] Implementar métodos de pré-processamento 
 
 ## Execução da Imagética
 - [x] Adicionar tempo de espera aleatório entre imagéticas

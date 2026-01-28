@@ -2,8 +2,8 @@ from PyQt6.QtWidgets import QVBoxLayout, QFormLayout, QLabel, QPushButton, QFile
 from interface.translatable_widget import TranslatableWidget
 from interface.components.toast_message import ToastMessage
 
-from functions.RunPipeline import RunPipeline
-from functions.utils.paths import PIPELINES_DIR, COLLECTED_DATA_DIR
+from functions.run_pipeline import RunPipeline
+from functions.utils.paths import PIPELINES_DIR, ACQUISITIONS_DIR
 from functions.utils.color import SUCCESS_COLOR, ERROR_COLOR
 
 import os
@@ -13,10 +13,9 @@ class TabPipelineExecute(TranslatableWidget):
         super().__init__()
         self.data_path = None
         self.pipeline_path = None
-        self.setup_ui()
-    
-    def setup_ui(self):
+
         self.main_layout = QVBoxLayout(self)
+        
         self.label_pipeline = QLabel(self.tr("No pipeline selected"))
         self.label_data = QLabel(self.tr("No data selected"))
         
@@ -56,7 +55,7 @@ class TabPipelineExecute(TranslatableWidget):
         path, _ = QFileDialog.getOpenFileName(
             self,
             self.tr("Select data file"),
-            COLLECTED_DATA_DIR,
+            ACQUISITIONS_DIR,
             self.tr("CSV files (*.csv)")
         )
 

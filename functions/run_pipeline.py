@@ -1,18 +1,16 @@
 from sklearn.pipeline import Pipeline
-from sklearn.model_selection import cross_val_score  # ← ADICIONE!
+from sklearn.model_selection import cross_val_score
 import mne, pandas as pd, importlib.util, os
 from typing import Optional
 import numpy as np
 import json
 
 class RunPipeline:
-    """Executa pipeline ML em dados EEG"""
     
     def __init__(self):
         self.pipeline = None
     
     def load_pipeline(self, json_path: str) -> bool:
-        """Carrega JSON → scikit-learn Pipeline"""
         try:
             with open(json_path, 'r') as f:
                 dados = json.load(f)
@@ -39,7 +37,6 @@ class RunPipeline:
             return False
     
     def load_eeg_data(self, csv_path: str, duration: float = 5.0) -> Optional[mne.io.Raw]:
-        """CSV → MNE Raw com events"""
         df = pd.read_csv(csv_path)
         eventos = df[['timestamp', 'events']].loc[df['events'] != 0]
         dados_eeg = df.drop(columns=['timestamp', 'events'])
@@ -59,17 +56,15 @@ class RunPipeline:
         return raw
     
     def execute(self, csv_path: str) -> dict:
-        """Executa pipeline completo → métricas"""
         raw = self.load_eeg_data(csv_path)
         if not raw or not self.pipeline:
             return {"error": "Dados ou pipeline inválido"}
         
-        # Pré-processamento padrão MI
         montage = mne.channels.make_standard_montage("standard_1005")
         raw.set_montage(montage).filter(8.0, 25.0)
         
-        events, event_id = mne.events_from_annotations(raw)  # ← Detecta AUTO!
-        print(f"Eventos detectados: {event_id}")  # Debug
+        events, event_id = mne.events_from_annotations(raw)
+        print(f"Eventos detectados: {event_id}")
         picks = mne.pick_types(raw.info, eeg=True)
         epochs = mne.Epochs(raw, events, event_id, 
                            tmin=-1, tmax=4, preload=True,

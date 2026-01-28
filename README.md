@@ -1,75 +1,40 @@
 # Synaptomancer
 
-> Sistema de Análise Biomédica com Processamento de Sinais de Eletroencefalografia para coleta e classificação de Imagética Motora.
+> Biomedical Analysis System for biosignals acquisition and processing.
 
 ---
 
-## 🔬 Contexto do Projeto
+- [Setup](docs/INSTALL.md)
+- [Plugins](docs/PLUGINS.md)
 
-- Desenvolvido para os laboratórios Bioteca - vinculado à Universidade Tecnológica Federal do Paraná - e Laboratório de Engenharia Neural e de Reabilitação - vinculado à Universidade Estadual de Londrina.
-- Uso autorizado apenas para fins acadêmicos/pesquisa nos grupos parceiros.
-- Sujeito a processo de **patenteamento e futura comercialização**.
+## 🔬 Project Context
 
----
+- Developed for the Bioteca Laboratory — affiliated with the Federal University of Technology – Paraná (UTFPR) — and the Neural Engineering and Rehabilitation Laboratory — affiliated with the State University of Londrina (UEL).
 
-## 🚀 Funcionalidades
+- Authorized for academic and research purposes only within partner research groups.
 
-- ✅ Coleta de dados em tempo real através de comunicação serial (BCI)
-- ✅ Processamento e Classificação em lote 
-- ✅ Integração com sistemas Windows e Linux
-- ✅ Interface gráfica simples
+- Subject to **patenting procedures and future commercialization**.
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## 🚀 Features
 
-| Tecnologia   | Versão     | Descrição                              |
-|--------------|------------|----------------------------------------|
-| Python       | 3.12+      | Backend e algoritmos de processamento  |
-| NumPy        | 2.2.5      | Processamento numérico                 |
-| scikit-learn | 1.6.1      | Algoritmos de aprendizado de máquina   |
-| MNE          | 1.9.0      | Processamento e visualização de EEG    |
-| BrainFlow    | 5.16.0     | Interface com placas neurofisiológicas |
-| PyQt6        | 6.9.0      | Interface gráfica com Qt6              |
+- ✅ Real-time data acquisition via serial communication (BCI)
+- ✅ Batch signal processing and classification
+- ✅ Integration with Windows and Linux systems
+- ✅ Simple and intuitive graphical user interface
 
 ---
 
-## 📦 Instalação
+## 🛠️ Technologies Used
 
-### Pré-requisitos
+| Technology   | Version | Description                              |
+| ------------ | ------- | ---------------------------------------- |
+| Python       | 3.12+   | Backend and signal processing algorithms |
+| NumPy        | 2.2.5   | Numerical processing                     |
+| scikit-learn | 1.6.1   | Machine learning algorithms              |
+| MNE          | 1.9.0   | EEG processing and visualization         |
+| BrainFlow    | 5.16.0  | Interface with neurophysiological boards |
+| PyQt6        | 6.9.0   | Graphical user interface using Qt6       |
 
-- Python 3.12+
-- pip
-
-### Passos
-
-Clone o repositório:
-
-```bash
-git clone https://github.com/CristianVeggian/Synaptomancer.git
-cd Synaptomancer
-```
-#### Windows
-
-```powershell
-python -m venv .venv
-.venv\Scripts\activate
-pip install -r requirements.txt
-```
-
-#### Linux/MacOS
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
-
-## ▶️ Execução 
-
-Executar o arquivo _main.py_:
-_Obs: ficar atento ao path do Python, em alguns computadores, o caminho é python3._
-
-```
-python main.py
-```
+---

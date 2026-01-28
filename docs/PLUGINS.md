@@ -84,5 +84,5 @@ Therefore, any custom method must implement the following methods:
 
 - `predict`
 
-⚠️ Any class that does not implement this interface may fail during
+> ⚠️ Any class that does not implement this interface may fail during
 pipeline execution.

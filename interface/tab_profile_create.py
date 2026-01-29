@@ -5,9 +5,10 @@ from PyQt6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QLabel,
 from PyQt6.QtGui import QIntValidator, QDoubleValidator
 
 from functions.utils.paths import PROFILES_DIR
-from functions.utils.color import WARNING_COLOR, SUCCESS_COLOR, ERROR_COLOR
+from functions.utils.color import WARNING_COLOR, SUCCESS_COLOR
 from interface.components.toast_message import ToastMessage
 
+import datetime
 import os
 import json
 import secrets
@@ -24,34 +25,42 @@ class TabProfileCreate(TranslatableWidget):
         self.input_age.setPlaceholderText("25")
         self.input_age.setValidator(QIntValidator(0, 150))
 
-        self.form_layout.addRow(QLabel(self.tr("Age (years):")), self.input_age)
+        self.form_layout.addRow(QLabel(self.tr("Age (years)")), self.input_age)
 
         self.input_height = QLineEdit()
         self.input_height.setPlaceholderText("175")
         self.input_height.setValidator(QDoubleValidator(50.0, 250.0, 1))
 
-        self.form_layout.addRow(QLabel(self.tr("Height (cm):")), self.input_height)
+        self.form_layout.addRow(QLabel(self.tr("Height (cm)")), self.input_height)
 
         self.input_weight = QLineEdit()
         self.input_weight.setPlaceholderText("70")
         self.input_weight.setValidator(QDoubleValidator(20.0, 300.0, 1))
 
-        self.form_layout.addRow(QLabel(self.tr("Weight (kg):")), self.input_weight)
+        self.form_layout.addRow(QLabel(self.tr("Weight (kg)")), self.input_weight)
                 
         self.sex_combo = QComboBox()
-        self.sex_combo.addItems(["", self.tr("Male"), self.tr("Female"), self.tr("Intersex")])
-        self.form_layout.addRow(self.tr("Gender"), self.sex_combo)
-        
+        self.sex_combo.addItem(self.tr("Male"), "male")
+        self.sex_combo.addItem(self.tr("Female"), "female")
+        self.sex_combo.addItem(self.tr("Intersex"), "intersex")
+        self.form_layout.addRow(self.tr("Sex"), self.sex_combo)
+
         self.blood_type_combo = QComboBox()
-        self.blood_type_combo.addItems(["", self.tr("A+"), self.tr("A-"),
-                                            self.tr("B+"), self.tr("B-"),
-                                            self.tr("AB+"), self.tr("AB-"),
-                                            self.tr("O+"), self.tr("O-"),
-                                            self.tr("Unknown")])
+        self.blood_type_combo.addItem(self.tr("A+"), "A+")
+        self.blood_type_combo.addItem(self.tr("A-"), "A-")
+        self.blood_type_combo.addItem(self.tr("B+"), "B+")
+        self.blood_type_combo.addItem(self.tr("B-"), "B-")
+        self.blood_type_combo.addItem(self.tr("AB+"), "AB+")
+        self.blood_type_combo.addItem(self.tr("AB-"), "AB-")
+        self.blood_type_combo.addItem(self.tr("O+"), "O+")
+        self.blood_type_combo.addItem(self.tr("O-"), "O-")
+        self.blood_type_combo.addItem(self.tr("Unknown"), "unknown")
         self.form_layout.addRow(self.tr("Blood Type"), self.blood_type_combo)
 
         self.combo_handedness = QComboBox()
-        self.combo_handedness.addItems(["", self.tr("Right"), self.tr("Left"), self.tr("Ambidextrous")])
+        self.combo_handedness.addItem(self.tr("Right"), "right")
+        self.combo_handedness.addItem(self.tr("Left"), "left")
+        self.combo_handedness.addItem(self.tr("Ambidextrous"), "ambidextrous")
         self.form_layout.addRow(self.tr("Handedness"), self.combo_handedness)
         
         self.other_data_edit = QTextEdit()
@@ -94,19 +103,19 @@ class TabProfileCreate(TranslatableWidget):
                                       color=WARNING_COLOR)
             return
         
-        if not self.sex_combo.currentText():
+        if not self.sex_combo.currentData():
             self.toast = ToastMessage(self,
-                                      self.tr("Gender is required!"),
+                                      self.tr("Sex is required!"),
                                       color=WARNING_COLOR)
             return
-        
-        if not self.blood_type_combo.currentText():
+
+        if not self.blood_type_combo.currentData():
             self.toast = ToastMessage(self,
                                       self.tr("Blood Type is required!"),
                                       color=WARNING_COLOR)
             return
 
-        if not self.combo_handedness.currentText():
+        if not self.combo_handedness.currentData():
             self.toast = ToastMessage(self,
                                       self.tr("Handedness is required!"),
                                       color=WARNING_COLOR)
@@ -117,10 +126,11 @@ class TabProfileCreate(TranslatableWidget):
             "age": int(self.input_age.text()),
             "height_cm": float(self.input_height.text()),
             "weight_kg": float(self.input_weight.text()),
-            "gender": self.sex_combo.currentText(),
-            "handedness": self.combo_handedness.currentText(),
-            "blood_type": self.blood_type_combo.currentText(),
-            "other_data": self.other_data_edit.toPlainText().strip()
+            "sex": self.sex_combo.currentData(),
+            "handedness": self.combo_handedness.currentData(),
+            "blood_type": self.blood_type_combo.currentData(),
+            "other_data": self.other_data_edit.toPlainText().strip(),
+            "creation_date": datetime.datetime.now().isoformat()
         }
 
         profile_path = f"{PROFILES_DIR}/{profile_data['participant_id']}.json"

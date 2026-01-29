@@ -59,10 +59,10 @@ class TabProtocolMotorImagery(TranslatableWidget):
         self.input_mi_std.setSingleStep(0.1)
 
         form_layout = QFormLayout()
-        form_layout.addRow(self.tr("Protocol name:"), self.input_protocol_name)
-        form_layout.addRow(self.tr("Montage:"), self.combo_montage)
-        form_layout.addRow(self.tr("Channels:"), scroll_area)
-        form_layout.addRow(self.tr("Runs:"), self.input_runs)
+        form_layout.addRow(self.tr("Protocol name"), self.input_protocol_name)
+        form_layout.addRow(self.tr("Montage"), self.combo_montage)
+        form_layout.addRow(self.tr("Channels"), scroll_area)
+        form_layout.addRow(self.tr("Runs"), self.input_runs)
 
         self.btn_add_class = QPushButton("+")
         self.btn_add_class.setToolTip(self.tr("Add new class to the protocol"))
@@ -83,18 +83,18 @@ class TabProtocolMotorImagery(TranslatableWidget):
         self.btn_add_class.clicked.connect(self.add_class)
 
         rest_layout = QHBoxLayout()
-        rest_layout.addWidget(QLabel(self.tr("Mean:")))
+        rest_layout.addWidget(QLabel(self.tr("Mean")))
         rest_layout.addWidget(self.input_rest_mean)
-        rest_layout.addWidget(QLabel(self.tr("Std:")))
+        rest_layout.addWidget(QLabel(self.tr("Std")))
         rest_layout.addWidget(self.input_rest_std)
-        form_layout.addRow(self.tr("Rest time:"), rest_layout)
+        form_layout.addRow(self.tr("Rest time"), rest_layout)
         
         mi_layout = QHBoxLayout()
-        mi_layout.addWidget(QLabel(self.tr("Mean:")))
+        mi_layout.addWidget(QLabel(self.tr("Mean")))
         mi_layout.addWidget(self.input_mi_mean)
-        mi_layout.addWidget(QLabel(self.tr("Std:")))
+        mi_layout.addWidget(QLabel(self.tr("Std")))
         mi_layout.addWidget(self.input_mi_std)
-        form_layout.addRow(self.tr("Motor imagery time:"), mi_layout)
+        form_layout.addRow(self.tr("Motor imagery time"), mi_layout)
 
         self.scroll_layout = QVBoxLayout()
         self.class_widgets = []
@@ -106,7 +106,7 @@ class TabProtocolMotorImagery(TranslatableWidget):
         classes_scroll.setWidget(classes_container)
 
         classes_row = QHBoxLayout()
-        classes_row.addWidget(QLabel(self.tr("Classes:")))
+        classes_row.addWidget(QLabel(self.tr("Classes")))
         classes_row.addWidget(self.btn_add_class)
         classes_row.addStretch()
 

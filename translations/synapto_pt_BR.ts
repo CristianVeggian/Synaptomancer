@@ -25,8 +25,8 @@
     <name>MainTabPlugins</name>
     <message>
         <location filename="..\interface\main_tab_plugins.py" line="16" />
-        <source>Installed plugins:</source>
-        <translation>Módulos instalados:</translation>
+        <source>Installed plugins</source>
+        <translation>Módulos instalados</translation>
     </message>
     <message>
         <location filename="..\interface\main_tab_plugins.py" line="22" />
@@ -127,29 +127,46 @@
 </context><context>
     <name>MainWindow</name>
     <message>
-        <location filename="..\interface\main_window.py" line="28" />
+        <location filename="..\interface\window_main.py" line="28" />
         <source>Data</source>
         <translation>Dados</translation>
     </message>
     <message>
-        <location filename="..\interface\main_window.py" line="29" />
+        <location filename="..\interface\window_main.py" line="29" />
         <source>Profiles</source>
         <translation>Perfis</translation>
     </message>
     <message>
-        <location filename="..\interface\main_window.py" line="30" />
+        <location filename="..\interface\window_main.py" line="30" />
         <source>Protocols</source>
         <translation>Protocolos</translation>
     </message>
     <message>
-        <location filename="..\interface\main_window.py" line="31" />
+        <location filename="..\interface\window_main.py" line="31" />
         <source>Processing</source>
         <translation>Processamento</translation>
     </message>
     <message>
-        <location filename="..\interface\main_window.py" line="32" />
+        <location filename="..\interface\window_main.py" line="32" />
         <source>Plugins</source>
         <translation>Módulos</translation>
+    </message>
+</context><context>
+    <name>SettingsDialog</name>
+    <message>
+        <location filename="..\interface\window_settings.py" line="10" />
+        <source>Settings</source>
+        <translation>Configurações</translation>
+    </message>
+    <message>
+        <location filename="..\interface\window_settings.py" line="21" />
+        <source>Language</source>
+        <translation>Idioma</translation>
+    </message>
+    <message>
+        <location filename="..\interface\window_settings.py" line="26" />
+        <source>Save application state on exit</source>
+        <translation>Salvar estado da aplicação ao sair</translation>
     </message>
 </context><context>
     <name>TabAcquireMotorImageryData</name>
@@ -345,8 +362,8 @@
     <name>TabPipelineCreate</name>
     <message>
         <location filename="..\interface\tab_pipeline_create.py" line="24" />
-        <source>Pipeline name:</source>
-        <translation>Nome do pipeline:</translation>
+        <source>Pipeline name</source>
+        <translation>Nome do pipeline</translation>
     </message>
     <message>
         <location filename="..\interface\tab_pipeline_create.py" line="41" />
@@ -455,186 +472,228 @@
 </context><context>
     <name>TabProfileCreate</name>
     <message>
-        <location filename="..\interface\tab_profile_create.py" line="27" />
-        <source>Age (years):</source>
-        <translation>Idade (anos):</translation>
+        <location filename="..\interface\tab_profile_create.py" line="28" />
+        <source>Age (years)</source>
+        <translation>Idade (anos)</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_profile_create.py" line="33" />
-        <source>Height (cm):</source>
-        <translation>Altura (cm):</translation>
+        <location filename="..\interface\tab_profile_create.py" line="34" />
+        <source>Height (cm)</source>
+        <translation>Altura (cm)</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_profile_create.py" line="39" />
-        <source>Weight (kg):</source>
-        <translation>Peso (kg):</translation>
+        <location filename="..\interface\tab_profile_create.py" line="40" />
+        <source>Weight (kg)</source>
+        <translation>Peso (kg)</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_profile_create.py" line="42" />
+        <location filename="..\interface\tab_profile_create.py" line="43" />
         <source>Male</source>
         <translation>Masculino</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_profile_create.py" line="42" />
+        <location filename="..\interface\tab_profile_create.py" line="44" />
         <source>Female</source>
         <translation>Feminino</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_profile_create.py" line="42" />
+        <location filename="..\interface\tab_profile_create.py" line="45" />
         <source>Intersex</source>
         <translation>Intersexo</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_profile_create.py" line="43" />
-        <source>Gender</source>
-        <translation>Gênero</translation>
+        <location filename="..\interface\tab_profile_create.py" line="46" />
+        <source>Sex</source>
+        <translation>Sexo</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_profile_create.py" line="46" />
+        <location filename="..\interface\tab_profile_create.py" line="49" />
         <source>A+</source>
         <translation>A+</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_profile_create.py" line="46" />
+        <location filename="..\interface\tab_profile_create.py" line="50" />
         <source>A-</source>
         <translation>A-</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_profile_create.py" line="47" />
+        <location filename="..\interface\tab_profile_create.py" line="51" />
         <source>B+</source>
         <translation>B+</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_profile_create.py" line="47" />
+        <location filename="..\interface\tab_profile_create.py" line="52" />
         <source>B-</source>
         <translation>B-</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_profile_create.py" line="48" />
+        <location filename="..\interface\tab_profile_create.py" line="53" />
         <source>AB+</source>
         <translation>AB+</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_profile_create.py" line="48" />
+        <location filename="..\interface\tab_profile_create.py" line="54" />
         <source>AB-</source>
         <translation>AB-</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_profile_create.py" line="49" />
+        <location filename="..\interface\tab_profile_create.py" line="55" />
         <source>O+</source>
         <translation>O+</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_profile_create.py" line="49" />
+        <location filename="..\interface\tab_profile_create.py" line="56" />
         <source>O-</source>
         <translation>O-</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_profile_create.py" line="50" />
+        <location filename="..\interface\tab_profile_create.py" line="57" />
         <source>Unknown</source>
         <translation>Desconhecido</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_profile_create.py" line="51" />
+        <location filename="..\interface\tab_profile_create.py" line="58" />
         <source>Blood Type</source>
         <translation>Tipo Sanguíneo</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_profile_create.py" line="54" />
+        <location filename="..\interface\tab_profile_create.py" line="61" />
         <source>Right</source>
         <translation>Destro</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_profile_create.py" line="54" />
+        <location filename="..\interface\tab_profile_create.py" line="62" />
         <source>Left</source>
         <translation>Canhoto</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_profile_create.py" line="54" />
+        <location filename="..\interface\tab_profile_create.py" line="63" />
         <source>Ambidextrous</source>
         <translation>Ambidestro</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_profile_create.py" line="55" />
+        <location filename="..\interface\tab_profile_create.py" line="64" />
         <source>Handedness</source>
         <translation>Lateralidade</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_profile_create.py" line="59" />
+        <location filename="..\interface\tab_profile_create.py" line="68" />
         <source>Notes...</source>
         <translation>Notas...</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_profile_create.py" line="60" />
+        <location filename="..\interface\tab_profile_create.py" line="69" />
         <source>Other data</source>
         <translation>Outros dados</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_profile_create.py" line="67" />
+        <location filename="..\interface\tab_profile_create.py" line="76" />
         <source>Save Profile</source>
         <translation>Salvar Perfil</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_profile_create.py" line="71" />
+        <location filename="..\interface\tab_profile_create.py" line="80" />
         <source>Clear Form</source>
         <translation>Limpar Formulário</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_profile_create.py" line="81" />
+        <location filename="..\interface\tab_profile_create.py" line="90" />
         <source>Age is required!</source>
         <translation>Idade é obrigatória!</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_profile_create.py" line="87" />
+        <location filename="..\interface\tab_profile_create.py" line="96" />
         <source>Height is required!</source>
         <translation>Altura é obrigatória!</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_profile_create.py" line="93" />
+        <location filename="..\interface\tab_profile_create.py" line="102" />
         <source>Weight is required!</source>
         <translation>Peso é obrigatório!</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_profile_create.py" line="99" />
-        <source>Gender is required!</source>
+        <location filename="..\interface\tab_profile_create.py" line="108" />
+        <source>Sex is required!</source>
         <translation>Sexo é obrigatório!</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_profile_create.py" line="105" />
+        <location filename="..\interface\tab_profile_create.py" line="114" />
         <source>Blood Type is required!</source>
         <translation>Tipo Sanguíneo é obrigatório!</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_profile_create.py" line="111" />
+        <location filename="..\interface\tab_profile_create.py" line="120" />
         <source>Handedness is required!</source>
         <translation>Lateralidade é obrigatória!</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_profile_create.py" line="132" />
+        <location filename="..\interface\tab_profile_create.py" line="142" />
         <source>Profile saved successfully as {0}!</source>
         <translation>Perfil salvo com sucesso como {0}!</translation>
+    </message>
+</context><context>
+    <name>TabProfileView</name>
+    <message>
+        <location filename="..\interface\tab_profile_view.py" line="23" />
+        <source>Registered profiles</source>
+        <translation>Perfis registrados</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_profile_view.py" line="30" />
+        <source>Age</source>
+        <translation>Idade</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_profile_view.py" line="31" />
+        <source>Height</source>
+        <translation>Altura</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_profile_view.py" line="32" />
+        <source>Weight</source>
+        <translation>Peso</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_profile_view.py" line="33" />
+        <source>Sex</source>
+        <translation>Sexo</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_profile_view.py" line="34" />
+        <source>Blood Type</source>
+        <translation>Tipo Sanguíneo</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_profile_view.py" line="35" />
+        <source>Handedness</source>
+        <translation>Lateralidade</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_profile_view.py" line="46" />
+        <source>Select feature to view</source>
+        <translation>Selecione um característica</translation>
     </message>
 </context><context>
     <name>TabProtocolMotorImagery</name>
     <message>
         <location filename="..\interface\tab_protocol_motor_imagery.py" line="62" />
-        <source>Protocol name:</source>
-        <translation>Nome do Protocolo:</translation>
+        <source>Protocol name</source>
+        <translation>Nome do protocolo</translation>
     </message>
     <message>
         <location filename="..\interface\tab_protocol_motor_imagery.py" line="63" />
-        <source>Montage:</source>
-        <translation>Montagem:</translation>
+        <source>Montage</source>
+        <translation>Montagem</translation>
     </message>
     <message>
         <location filename="..\interface\tab_protocol_motor_imagery.py" line="64" />
-        <source>Channels:</source>
-        <translation>Canais:</translation>
+        <source>Channels</source>
+        <translation>Canais</translation>
     </message>
     <message>
         <location filename="..\interface\tab_protocol_motor_imagery.py" line="65" />
-        <source>Runs:</source>
-        <translation>Execuções:</translation>
+        <source>Runs</source>
+        <translation>Execuções</translation>
     </message>
     <message>
         <location filename="..\interface\tab_protocol_motor_imagery.py" line="68" />
@@ -644,29 +703,29 @@
     <message>
         <location filename="..\interface\tab_protocol_motor_imagery.py" line="93" />
         <location filename="..\interface\tab_protocol_motor_imagery.py" line="86" />
-        <source>Mean:</source>
-        <translation>Média:</translation>
+        <source>Mean</source>
+        <translation>Média</translation>
     </message>
     <message>
         <location filename="..\interface\tab_protocol_motor_imagery.py" line="95" />
         <location filename="..\interface\tab_protocol_motor_imagery.py" line="88" />
-        <source>Std:</source>
-        <translation>Desvio Padrão:</translation>
+        <source>Std</source>
+        <translation>Desvio Padrão</translation>
     </message>
     <message>
         <location filename="..\interface\tab_protocol_motor_imagery.py" line="90" />
-        <source>Rest time:</source>
-        <translation>Tempo de Repouso:</translation>
+        <source>Rest time</source>
+        <translation>Tempo de Repouso</translation>
     </message>
     <message>
         <location filename="..\interface\tab_protocol_motor_imagery.py" line="97" />
-        <source>Motor imagery time:</source>
-        <translation>Tempo de Imagética Motora:</translation>
+        <source>Motor imagery time</source>
+        <translation>Tempo de Imagética Motora</translation>
     </message>
     <message>
         <location filename="..\interface\tab_protocol_motor_imagery.py" line="109" />
-        <source>Classes:</source>
-        <translation>Classes:</translation>
+        <source>Classes</source>
+        <translation>Classes</translation>
     </message>
     <message>
         <location filename="..\interface\tab_protocol_motor_imagery.py" line="120" />

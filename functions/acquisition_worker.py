@@ -46,7 +46,6 @@ class AcquisitionWorker(QThread):
                 self._sample_buffer = np.empty((self._n_exg_channels, 0))
                 self._acquire_data(save=True, filter=True)
         except Exception as e:
-            print(e)
             self.sig_status.emit(-1, str(e))
 
     def _time(self, tipo):
@@ -81,25 +80,25 @@ class AcquisitionWorker(QThread):
     def _create_csv_file(self):
         ts = datetime.datetime.now().strftime("%d%m%y%H%M%S")
 
-        file_name = f"{self.protocol['name']}{self.profile['participant_id']}{ts}.csv"
+        file_name = f"{self.profile['participant_id']}_{self.protocol['name']}_{ts}.csv"
         file_path = os.path.join(ACQUISITIONS_DIR, file_name)
-        nomes_canais = list(self.protocol["channels"].keys())
+        channel_names = list(self.protocol["channels"].keys())
 
         with open(file_path, "w", newline="") as f:
-            csv.writer(f).writerow(['timestamp'] + nomes_canais + ['events'])
+            csv.writer(f).writerow(['timestamp'] + channel_names + ['events'])
 
         return file_path
 
     def _acquire_data(self, save=False, filter=False):
         self.sig_status.emit(1, "Coleta Iniciada!")
-        eventos = self._generate_event()
-        nomes_canais = list(self.protocol["channels"].keys())
-        canais_fisicos = self.protocol["channels"].values()
+        events = self._generate_event()
+        channel_names = list(self.protocol["channels"].keys())
+        physical_channels = self.protocol["channels"].values()
 
         file_path = self._create_csv_file() if save else None
-        writer = None
-        file = None
         if save:
+            writer = None
+            file = None
             file = open(file_path, "a", newline="")
             writer = csv.writer(file)
 
@@ -111,29 +110,28 @@ class AcquisitionWorker(QThread):
         board.start_stream()
 
         BUFFER_SIZE = int(self.sampling_rate*0.25)
-        tempo_inicio = time.time()
+        start_time = time.time()
 
         while self._is_running:
-            ts = time.time() - tempo_inicio
-            if ts >= eventos[-1]["end"]:
+            ts = time.time() - start_time
+            if ts >= events[-1]["end"]:
                 break
 
             sleep(BUFFER_SIZE / self.sampling_rate)
-            dados = board.get_board_data(BUFFER_SIZE)
+            data = board.get_board_data(BUFFER_SIZE)
 
             if filter:
                 self._num_point = self._window_size * self.sampling_rate
-                dados = self._apply_filter(dados)
+                data = self._apply_filter(data)
 
-            for i in range(dados.shape[1]):
-                amostra = dados[:, i]
+            for i in range(data.shape[1]):
+                sample = data[:, i]
                 linha = [ts]
 
-                for nome_canal in nomes_canais:
-                    idx_fisico = self.protocol["channels"][nome_canal]
-                    linha.append(amostra[idx_fisico])
+                for channel in physical_channels:
+                    linha.append(sample[channel])
 
-                evento_ativo = next((ev for ev in eventos if ev["start"] <= ts < ev["end"]), None)
+                evento_ativo = next((ev for ev in events if ev["start"] <= ts < ev["end"]), None)
 
                 if evento_ativo:
                     nome_evento = evento_ativo["class"]
@@ -155,7 +153,7 @@ class AcquisitionWorker(QThread):
         if file:
             file.close()
 
-        self.sig_status.emit(0, "Coleta finalizada!")
+        self.sig_status.emit(0, self.tr("Coleta finalizada!"))
 
     def _apply_filter(self, new_data):
         new_data = new_data[self._exg_channels, :]

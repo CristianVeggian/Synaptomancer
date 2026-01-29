@@ -21,7 +21,7 @@ class TabPipelineCreate(TranslatableWidget):
 
         self.name = QFormLayout()
         self.name.addRow(
-            self.tr("Pipeline name:"),
+            self.tr("Pipeline name"),
             QLineEdit()
         )
 

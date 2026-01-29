@@ -13,7 +13,7 @@ class MainTabPlugins(TranslatableWidget):
         horizontal_layout = QHBoxLayout()
 
         self.plugins_list = QListWidget()
-        vertical_outter_layout.addWidget(QLabel(self.tr("Installed plugins:")))
+        vertical_outter_layout.addWidget(QLabel(self.tr("Installed plugins")))
 
         vertical_outter_layout.addLayout(horizontal_layout)
 

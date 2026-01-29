@@ -87,6 +87,31 @@ class TabProfileView(TranslatableWidget):
         return Counter(values)
 
     def _render_dashboard(self):
+
+        VALUE_TRANSLATIONS = {
+            "sex": {
+                "male": self.tr("Male"),
+                "female": self.tr("Female"),
+                "intersex": self.tr("Intersex"),
+            },
+            "handedness": {
+                "right": self.tr("Right"),
+                "left": self.tr("Left"),
+                "ambidextrous": self.tr("Ambidextrous"),
+            },
+            "blood_type": {
+                "A+": "A+",
+                "A-": "A-",
+                "B+": "B+",
+                "B-": "B-",
+                "AB+": "AB+",
+                "AB-": "AB-",
+                "O+": "O+",
+                "O-": "O-",
+            }
+        }
+
+
         field = self.combo_feature.currentData()
         field_type = PROFILE_FIELDS[field]["type"]
         field_label = self.tr(PROFILE_FIELDS[field]["label"])
@@ -101,10 +126,19 @@ class TabProfileView(TranslatableWidget):
             self.chart.clear()
             return
 
-        labels = list(dist.keys())
+        raw_labels = list(dist.keys())
         values = list(dist.values())
+
+        if field in VALUE_TRANSLATIONS:
+            label_map = VALUE_TRANSLATIONS[field]
+            labels = [
+                label_map.get(value, value)
+                for value in raw_labels
+            ]
+        else:
+            labels = raw_labels
 
         if field_type == "categorical":
             self.chart.plot_pie(labels, values, title=field_label)
         else:
-            self.chart.plot_bar(labels, values, title=field_label)
+            self.chart.plot_bar(labels, values, title=field_label, ylabel=self.tr("Count"))

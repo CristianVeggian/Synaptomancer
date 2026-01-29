@@ -18,11 +18,11 @@ class StatsChart(FigureCanvas):
         self.ax.clear()
         self.draw()
 
-    def plot_bar(self, labels, values, title=""):
+    def plot_bar(self, labels, values, title="", ylabel=""):
         self.ax.clear()
         self.ax.bar(labels, values)
         self.ax.set_title(title)
-        self.ax.set_ylabel("Count")
+        self.ax.set_ylabel(ylabel)
         self.draw()
 
     def plot_pie(self, labels, values, title=""):

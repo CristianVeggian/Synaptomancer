@@ -673,6 +673,41 @@
         <source>Select feature to view</source>
         <translation>Selecione um característica</translation>
     </message>
+    <message>
+        <location filename="..\interface\tab_profile_view.py" line="93" />
+        <source>Male</source>
+        <translation>Masculino</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_profile_view.py" line="94" />
+        <source>Female</source>
+        <translation>Feminino</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_profile_view.py" line="95" />
+        <source>Intersex</source>
+        <translation>Intersexo</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_profile_view.py" line="98" />
+        <source>Right</source>
+        <translation>Destro</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_profile_view.py" line="99" />
+        <source>Left</source>
+        <translation>Canhoto</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_profile_view.py" line="100" />
+        <source>Ambidextrous</source>
+        <translation>Ambidestro</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_profile_view.py" line="144" />
+        <source>Count</source>
+        <translation>Quantidade</translation>
+    </message>
 </context><context>
     <name>TabProtocolMotorImagery</name>
     <message>

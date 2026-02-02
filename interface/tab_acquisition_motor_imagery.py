@@ -2,7 +2,7 @@ import json
 from os.path import join
 from serial.tools.list_ports import comports
 from interface.components.toast_message import ToastMessage
-from functions.acquisition_worker import AcquisitionWorker
+from functions.acquisition_worker_motor_imagery import AcquisitionWorkerMotorImagery
 from brainflow import BrainFlowInputParams
 from brainflow.board_shim import BoardIds
 from PyQt6.QtWidgets import QButtonGroup
@@ -336,7 +336,7 @@ class TabAcquireMotorImageryData(QWidget):
 
         mode_id = self.mode_group.checkedId()
 
-        self.worker = AcquisitionWorker(params=params, board_id=board_id, protocol_path=protocol_path, profile_path=profile_path, mode=mode_id)
+        self.worker = AcquisitionWorkerMotorImagery(params=params, board_id=board_id, protocol_path=protocol_path, profile_path=profile_path, mode=mode_id)
         self.worker.sig_sampling_rate.connect(self._start_graphic)
         self.worker.sig_status.connect(self.status_controller)
         self.worker.sig_active_event.connect(self.get_evento_ativo)

@@ -3,11 +3,98 @@
 <TS version="2.1" language="pt_BR">
 
 <context>
+    <name>FilterConfigWidget</name>
+    <message>
+        <location filename="..\interface\components\filter_config_widget.py" line="12" />
+        <source>Filter Configuration</source>
+        <translation>Configuração do Filtro</translation>
+    </message>
+    <message>
+        <location filename="..\interface\components\filter_config_widget.py" line="20" />
+        <source>Band-pass</source>
+        <translation>Filtro Passa-Banda</translation>
+    </message>
+    <message>
+        <location filename="..\interface\components\filter_config_widget.py" line="21" />
+        <source>High-pass</source>
+        <translation>Filtro Passa-Alto</translation>
+    </message>
+    <message>
+        <location filename="..\interface\components\filter_config_widget.py" line="22" />
+        <source>Low-pass</source>
+        <translation>Filtro Passa-Baixa</translation>
+    </message>
+    <message>
+        <location filename="..\interface\components\filter_config_widget.py" line="23" />
+        <source>Notch (Band-stop)</source>
+        <translation>Filtro Notch (Band-stop)</translation>
+    </message>
+    <message>
+        <location filename="..\interface\components\filter_config_widget.py" line="28" />
+        <source>Filter type</source>
+        <translation>Tipo do filtro</translation>
+    </message>
+    <message>
+        <location filename="..\interface\components\filter_config_widget.py" line="32" />
+        <source>Butterworth</source>
+        <translation>Butterworth</translation>
+    </message>
+    <message>
+        <location filename="..\interface\components\filter_config_widget.py" line="33" />
+        <source>Chebyshev Type I</source>
+        <translation>Chebyshev Tipo I</translation>
+    </message>
+    <message>
+        <location filename="..\interface\components\filter_config_widget.py" line="34" />
+        <source>Chebyshev Type II</source>
+        <translation>Chebyshev Tipo II</translation>
+    </message>
+    <message>
+        <location filename="..\interface\components\filter_config_widget.py" line="35" />
+        <source>Bessel</source>
+        <translation>Bessel</translation>
+    </message>
+    <message>
+        <location filename="..\interface\components\filter_config_widget.py" line="40" />
+        <source>Filter method</source>
+        <translation>Método de filtragem</translation>
+    </message>
+    <message>
+        <location filename="..\interface\components\filter_config_widget.py" line="47" />
+        <source>Low cutoff frequency</source>
+        <translation>Frequência de corte inferior</translation>
+    </message>
+    <message>
+        <location filename="..\interface\components\filter_config_widget.py" line="54" />
+        <source>High cutoff frequency</source>
+        <translation>Frequência de corte superior</translation>
+    </message>
+    <message>
+        <location filename="..\interface\components\filter_config_widget.py" line="61" />
+        <source>Filter order</source>
+        <translation>Ordem do filtro</translation>
+    </message>
+    <message>
+        <location filename="..\interface\components\filter_config_widget.py" line="64" />
+        <source>Zero-phase filtering (filtfilt)</source>
+        <translation>Filtragem de fase zero (filtfilt)</translation>
+    </message>
+</context><context>
     <name>MainTabAcquisition</name>
     <message>
-        <location filename="..\interface\main_tab_acquisition.py" line="15" />
+        <location filename="..\interface\main_tab_acquisition.py" line="19" />
         <source>Collect Motor Imagery Data</source>
         <translation>Coletar dados de imagética motora</translation>
+    </message>
+    <message>
+        <location filename="..\interface\main_tab_acquisition.py" line="20" />
+        <source>Collect ECG Data</source>
+        <translation>Coletar dados de ECG</translation>
+    </message>
+    <message>
+        <location filename="..\interface\main_tab_acquisition.py" line="21" />
+        <source>Collect EMG Data</source>
+        <translation>Coletar dados de EMG</translation>
     </message>
 </context><context>
     <name>MainTabPipeline</name>
@@ -115,12 +202,17 @@
 </context><context>
     <name>MainTabProtocols</name>
     <message>
-        <location filename="..\interface\main_tab_protocols.py" line="18" />
+        <location filename="..\interface\main_tab_protocols.py" line="20" />
         <source>Create Motor Imagery Protocol</source>
         <translation>Criar protocolo de imagética motora</translation>
     </message>
     <message>
-        <location filename="..\interface\main_tab_protocols.py" line="19" />
+        <location filename="..\interface\main_tab_protocols.py" line="21" />
+        <source>Create ECG Protocol</source>
+        <translation>Criar protocolo ECG</translation>
+    </message>
+    <message>
+        <location filename="..\interface\main_tab_protocols.py" line="22" />
         <source>Create EMG Protocol</source>
         <translation>Criar protocolo EMG</translation>
     </message>
@@ -169,192 +261,448 @@
         <translation>Salvar estado da aplicação ao sair</translation>
     </message>
 </context><context>
-    <name>TabAcquireMotorImageryData</name>
+    <name>TabAcquireECGData</name>
     <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="44" />
-        <source>Refresh serial ports</source>
-        <translation>Atualizar portas seriais</translation>
-    </message>
-    <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="48" />
-        <source>Board</source>
-        <translation>Placa</translation>
-    </message>
-    <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="54" />
-        <source>Profile</source>
-        <translation>Perfil</translation>
-    </message>
-    <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="56" />
+        <location filename="..\interface\tab_acquisition_ecg.py" line="27" />
         <source>Select profile file...</source>
         <translation>Selecionar arquivo de perfil...</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="65" />
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="58" />
+        <location filename="..\interface\tab_acquisition_ecg.py" line="41" />
+        <location filename="..\interface\tab_acquisition_ecg.py" line="29" />
         <source>Browse</source>
         <translation>Procurar</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="61" />
-        <source>Protocol</source>
-        <translation>Protocolo</translation>
+        <location filename="..\interface\tab_acquisition_ecg.py" line="36" />
+        <source>Profile</source>
+        <translation>Perfil</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="63" />
+        <location filename="..\interface\tab_acquisition_ecg.py" line="39" />
         <source>Select protocol file...</source>
         <translation>Selecionar arquivo de protocolo...</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="68" />
-        <source>Start acquisition</source>
-        <translation>Iniciar aquisição</translation>
+        <location filename="..\interface\tab_acquisition_ecg.py" line="48" />
+        <source>Protocol</source>
+        <translation>Protocolo</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="77" />
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="71" />
-        <source>Port</source>
-        <translation>Porta</translation>
+        <location filename="..\interface\tab_acquisition_ecg.py" line="53" />
+        <source>Refresh</source>
+        <translation>Atualizar</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="73" />
-        <source>MAC Address</source>
-        <translation>Endereço MAC</translation>
+        <location filename="..\interface\tab_acquisition_ecg.py" line="54" />
+        <source>Refresh serial ports</source>
+        <translation>Atualizar portas seriais</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="75" />
-        <source>IP Address</source>
-        <translation>Endereço IP</translation>
+        <location filename="..\interface\tab_acquisition_ecg.py" line="61" />
+        <source>Serial Port</source>
+        <translation>Porta Serial</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="79" />
-        <source>Timeout</source>
-        <translation>Tempo limite</translation>
-    </message>
-    <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="85" />
-        <source>Choose a WiFi port</source>
-        <translation>Escolha uma porta Wi-Fi</translation>
-    </message>
-    <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="128" />
+        <location filename="..\interface\tab_acquisition_ecg.py" line="69" />
         <source>Visualize Only</source>
         <translation>Apenas visualizar</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="129" />
-        <source>Save Raw Data</source>
-        <translation>Salvar dados brutos</translation>
+        <location filename="..\interface\tab_acquisition_ecg.py" line="70" />
+        <source>Save Data</source>
+        <translation>Salvar dados</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="130" />
-        <source>Save Filtered Data</source>
-        <translation>Salvar dados filtrados</translation>
-    </message>
-    <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="134" />
+        <location filename="..\interface\tab_acquisition_ecg.py" line="74" />
         <source>Operation Mode</source>
         <translation>Modo de operação</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="154" />
-        <source>Activate audio feedback</source>
-        <translation>Ativar feedback sonoro</translation>
+        <location filename="..\interface\tab_acquisition_ecg.py" line="86" />
+        <source>Start acquisition</source>
+        <translation>Iniciar aquisição</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="360" />
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="158" />
-        <source>Waiting...</source>
-        <translation>Aguardando...</translation>
-    </message>
-    <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="226" />
+        <location filename="..\interface\tab_acquisition_ecg.py" line="106" />
         <source>No port</source>
         <translation>Nenhuma porta</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="232" />
+        <location filename="..\interface\tab_acquisition_ecg.py" line="112" />
         <source>Error listing ports: {0}</source>
         <translation>Erro ao listar portas: {0}</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="236" />
+        <location filename="..\interface\tab_acquisition_ecg.py" line="116" />
         <source>Select Profile File</source>
         <translation>Selecionar arquivo de perfil</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="244" />
+        <location filename="..\interface\tab_acquisition_ecg.py" line="124" />
         <source>Select protocol File</source>
         <translation>Selecionar arquivo de protocolo</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="258" />
+        <location filename="..\interface\tab_acquisition_ecg.py" line="137" />
         <source>Select a profile file</source>
         <translation>Selecione um arquivo de perfil</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="266" />
+        <location filename="..\interface\tab_acquisition_ecg.py" line="145" />
         <source>Select a protocol file</source>
         <translation>Selecione um arquivo de protocolo</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="279" />
-        <source>Select a serial port.</source>
-        <translation>Selecione uma porta serial.</translation>
-    </message>
-    <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="287" />
-        <source>Enter MAC address.</source>
-        <translation>Informe o endereço MAC.</translation>
-    </message>
-    <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="294" />
-        <source>Enter IP address.</source>
-        <translation>Informe o endereço IP.</translation>
-    </message>
-    <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="301" />
-        <source>Enter port.</source>
-        <translation>Informe a porta.</translation>
-    </message>
-    <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="308" />
-        <source>Set a timeout.</source>
-        <translation>Defina um tempo limite.</translation>
-    </message>
-    <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="315" />
-        <source>Invalid board name: {0}</source>
-        <translation>Nome de placa inválido: {0}</translation>
-    </message>
-    <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="322" />
+        <location filename="..\interface\tab_acquisition_ecg.py" line="160" />
         <source>Error loading protocol: {0}</source>
         <translation>Erro ao carregar protocolo: {0}</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="325" />
+        <location filename="..\interface\tab_acquisition_ecg.py" line="163" />
         <source>Starting acquisition with board {0}</source>
         <translation>Iniciando aquisição com a placa {0}</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="328" />
+        <location filename="..\interface\tab_acquisition_ecg.py" line="166" />
         <source>Acquisition already running.</source>
         <translation>A aquisição já está em execução.</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="387" />
+        <location filename="..\interface\tab_acquisition_ecg.py" line="205" />
+        <source>Real Time ECG</source>
+        <translation>ECG em tempo real</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_ecg.py" line="207" />
+        <source>Time (s)</source>
+        <translation>Tempo (s)</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_ecg.py" line="240" />
+        <source>Acquisition started</source>
+        <translation>Aquisição iniciada</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_ecg.py" line="245" />
+        <source>Acquisition completed</source>
+        <translation>Aquisição concluída</translation>
+    </message>
+</context><context>
+    <name>TabAcquireEMGData</name>
+    <message>
+        <location filename="..\interface\tab_acquisition_emg.py" line="27" />
+        <source>Select profile file...</source>
+        <translation>Selecionar arquivo de perfil...</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_emg.py" line="41" />
+        <location filename="..\interface\tab_acquisition_emg.py" line="29" />
+        <source>Browse</source>
+        <translation>Procurar</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_emg.py" line="36" />
+        <source>Profile</source>
+        <translation>Perfil</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_emg.py" line="39" />
+        <source>Select protocol file...</source>
+        <translation>Selecionar arquivo de protocolo...</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_emg.py" line="48" />
+        <source>Protocol</source>
+        <translation>Protocolo</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_emg.py" line="53" />
+        <source>Refresh</source>
+        <translation>Atualizar</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_emg.py" line="54" />
+        <source>Refresh serial ports</source>
+        <translation>Atualizar portas seriais</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_emg.py" line="61" />
+        <source>Serial Port</source>
+        <translation>Porta Serial</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_emg.py" line="69" />
+        <source>Visualize Only</source>
+        <translation>Apenas visualizar</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_emg.py" line="70" />
+        <source>Save Data</source>
+        <translation>Salvar dados</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_emg.py" line="74" />
+        <source>Operation Mode</source>
+        <translation>Modo de operação</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_emg.py" line="86" />
+        <source>Start acquisition</source>
+        <translation>Iniciar aquisição</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_emg.py" line="106" />
+        <source>No port</source>
+        <translation>Nenhuma porta</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_emg.py" line="112" />
+        <source>Error listing ports: {0}</source>
+        <translation>Erro ao listar portas: {0}</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_emg.py" line="116" />
+        <source>Select Profile File</source>
+        <translation>Selecionar arquivo de perfil</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_emg.py" line="124" />
+        <source>Select protocol File</source>
+        <translation>Selecionar arquivo de protocolo</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_emg.py" line="137" />
+        <source>Select a profile file</source>
+        <translation>Selecione um arquivo de perfil</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_emg.py" line="145" />
+        <source>Select a protocol file</source>
+        <translation>Selecione um arquivo de protocolo</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_emg.py" line="160" />
+        <source>Error loading protocol: {0}</source>
+        <translation>Erro ao carregar protocolo: {0}</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_emg.py" line="163" />
+        <source>Starting acquisition with board {0}</source>
+        <translation>Iniciando aquisição com a placa {0}</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_emg.py" line="166" />
+        <source>Acquisition already running.</source>
+        <translation>A aquisição já está em execução.</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_emg.py" line="205" />
+        <source>Real Time ECG</source>
+        <translation>ECG em tempo real</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_emg.py" line="207" />
+        <source>Time (s)</source>
+        <translation>Tempo (s)</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_emg.py" line="240" />
+        <source>Acquisition started</source>
+        <translation>Aquisição iniciada</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_emg.py" line="245" />
+        <source>Acquisition completed</source>
+        <translation>Aquisição concluída</translation>
+    </message>
+</context><context>
+    <name>TabAcquireMotorImageryData</name>
+    <message>
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="44" />
+        <source>Refresh serial ports</source>
+        <translation>Atualizar portas seriais</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="48" />
+        <source>Board</source>
+        <translation>Placa</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="54" />
+        <source>Profile</source>
+        <translation>Perfil</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="56" />
+        <source>Select profile file...</source>
+        <translation>Selecionar arquivo de perfil...</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="65" />
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="58" />
+        <source>Browse</source>
+        <translation>Procurar</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="61" />
+        <source>Protocol</source>
+        <translation>Protocolo</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="63" />
+        <source>Select protocol file...</source>
+        <translation>Selecionar arquivo de protocolo...</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="68" />
+        <source>Start acquisition</source>
+        <translation>Iniciar aquisição</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="77" />
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="71" />
+        <source>Port</source>
+        <translation>Porta</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="73" />
+        <source>MAC Address</source>
+        <translation>Endereço MAC</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="75" />
+        <source>IP Address</source>
+        <translation>Endereço IP</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="79" />
+        <source>Timeout</source>
+        <translation>Tempo limite</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="85" />
+        <source>Choose a WiFi port</source>
+        <translation>Escolha uma porta Wi-Fi</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="128" />
+        <source>Visualize Only</source>
+        <translation>Apenas visualizar</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="129" />
+        <source>Save Raw Data</source>
+        <translation>Salvar dados brutos</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="130" />
+        <source>Save Filtered Data</source>
+        <translation>Salvar dados filtrados</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="134" />
+        <source>Operation Mode</source>
+        <translation>Modo de operação</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="154" />
+        <source>Activate audio feedback</source>
+        <translation>Ativar feedback sonoro</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="360" />
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="158" />
+        <source>Waiting...</source>
+        <translation>Aguardando...</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="226" />
+        <source>No port</source>
+        <translation>Nenhuma porta</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="232" />
+        <source>Error listing ports: {0}</source>
+        <translation>Erro ao listar portas: {0}</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="236" />
+        <source>Select Profile File</source>
+        <translation>Selecionar arquivo de perfil</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="244" />
+        <source>Select protocol File</source>
+        <translation>Selecionar arquivo de protocolo</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="258" />
+        <source>Select a profile file</source>
+        <translation>Selecione um arquivo de perfil</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="266" />
+        <source>Select a protocol file</source>
+        <translation>Selecione um arquivo de protocolo</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="279" />
+        <source>Select a serial port.</source>
+        <translation>Selecione uma porta serial.</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="287" />
+        <source>Enter MAC address.</source>
+        <translation>Informe o endereço MAC.</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="294" />
+        <source>Enter IP address.</source>
+        <translation>Informe o endereço IP.</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="301" />
+        <source>Enter port.</source>
+        <translation>Informe a porta.</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="308" />
+        <source>Set a timeout.</source>
+        <translation>Defina um tempo limite.</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="315" />
+        <source>Invalid board name: {0}</source>
+        <translation>Nome de placa inválido: {0}</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="322" />
+        <source>Error loading protocol: {0}</source>
+        <translation>Erro ao carregar protocolo: {0}</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="325" />
+        <source>Starting acquisition with board {0}</source>
+        <translation>Iniciando aquisição com a placa {0}</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="328" />
+        <source>Acquisition already running.</source>
+        <translation>A aquisição já está em execução.</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="387" />
         <source>Real Time Data</source>
         <translation>Dados em tempo real</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="446" />
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="446" />
         <source>Disable audio feedback</source>
         <translation>Desativar feedback sonoro</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_acquisition_motor_imagery_data.py" line="448" />
+        <location filename="..\interface\tab_acquisition_motor_imagery.py" line="448" />
         <source>Enable audio feedback</source>
         <translation>Ativar feedback sonoro</translation>
     </message>
@@ -709,6 +1057,132 @@
         <translation>Quantidade</translation>
     </message>
 </context><context>
+    <name>TabProtocolECG</name>
+    <message>
+        <location filename="..\interface\tab_protocol_ecg.py" line="33" />
+        <source>Protocol name</source>
+        <translation>Nome do protocolo</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_protocol_ecg.py" line="34" />
+        <source>Duration</source>
+        <translation>Duração</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_protocol_ecg.py" line="35" />
+        <source>Sampling Rate</source>
+        <translation>Taxa de Amostragem</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_protocol_ecg.py" line="40" />
+        <source>Show Filter Configs</source>
+        <translation>Mostrar Configurações de Filtro</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_protocol_ecg.py" line="48" />
+        <source>Apply Filter</source>
+        <translation>Aplicar Filtro</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_protocol_ecg.py" line="56" />
+        <source>Save protocol</source>
+        <translation>Salvar protocolo</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_protocol_ecg.py" line="65" />
+        <source>Hide Filter Configs</source>
+        <translation>Ocultar Configurações de Filtro</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_protocol_ecg.py" line="75" />
+        <location filename="..\interface\tab_protocol_ecg.py" line="67" />
+        <source>Filter Configs</source>
+        <translation>Configurações de Filtro</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_protocol_ecg.py" line="80" />
+        <source>Protocol name cannot be empty</source>
+        <translation>O nome do protocolo não pode estar vazio</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_protocol_ecg.py" line="84" />
+        <source>Duration must be greater than zero</source>
+        <translation>A duração deve ser maior que zero</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_protocol_ecg.py" line="102" />
+        <source>Protocol '{0}' saved successfully.</source>
+        <translation>Protocolo '{0}' salvo com sucesso.</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_protocol_ecg.py" line="108" />
+        <source>Failed to save protocol: {0}</source>
+        <translation>Falha ao salvar protocolo: {0}</translation>
+    </message>
+</context><context>
+    <name>TabProtocolEMG</name>
+    <message>
+        <location filename="..\interface\tab_protocol_emg.py" line="33" />
+        <source>Protocol name</source>
+        <translation>Nome do protocolo</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_protocol_emg.py" line="34" />
+        <source>Duration</source>
+        <translation>Duração</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_protocol_emg.py" line="35" />
+        <source>Sampling Rate</source>
+        <translation>Taxa de Amostragem</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_protocol_emg.py" line="40" />
+        <source>Show Filter Configs</source>
+        <translation>Mostrar Configurações de Filtro</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_protocol_emg.py" line="48" />
+        <source>Apply Filter</source>
+        <translation>Aplicar Filtro</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_protocol_emg.py" line="56" />
+        <source>Save protocol</source>
+        <translation>Salvar protocolo</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_protocol_emg.py" line="65" />
+        <source>Hide Filter Configs</source>
+        <translation>Ocultar Configurações de Filtro</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_protocol_emg.py" line="75" />
+        <location filename="..\interface\tab_protocol_emg.py" line="67" />
+        <source>Filter Configs</source>
+        <translation>Configurações de Filtro</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_protocol_emg.py" line="80" />
+        <source>Protocol name cannot be empty</source>
+        <translation>O nome do protocolo não pode estar vazio</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_protocol_emg.py" line="84" />
+        <source>Duration must be greater than zero</source>
+        <translation>A duração deve ser maior que zero</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_protocol_emg.py" line="102" />
+        <source>Protocol '{0}' saved successfully.</source>
+        <translation>Protocolo '{0}' salvo com sucesso.</translation>
+    </message>
+    <message>
+        <location filename="..\interface\tab_protocol_emg.py" line="108" />
+        <source>Failed to save protocol: {0}</source>
+        <translation>Falha ao salvar protocolo: {0}</translation>
+    </message>
+</context><context>
     <name>TabProtocolMotorImagery</name>
     <message>
         <location filename="..\interface\tab_protocol_motor_imagery.py" line="62" />
@@ -783,17 +1257,17 @@
         <translation>Adicione ao menos uma classe</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_protocol_motor_imagery.py" line="187" />
+        <location filename="..\interface\tab_protocol_motor_imagery.py" line="188" />
         <source>Protocol '{0}' saved successfully.</source>
         <translation>Protocolo '{0}' salvo com sucesso.</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_protocol_motor_imagery.py" line="193" />
+        <location filename="..\interface\tab_protocol_motor_imagery.py" line="194" />
         <source>Failed to save protocol: {0}</source>
         <translation>Falha ao salvar protocolo: {0}</translation>
     </message>
     <message>
-        <location filename="..\interface\tab_protocol_motor_imagery.py" line="220" />
+        <location filename="..\interface\tab_protocol_motor_imagery.py" line="221" />
         <source>Name</source>
         <translation>Nome</translation>
     </message>

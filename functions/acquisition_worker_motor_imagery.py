@@ -13,7 +13,7 @@ import random
 import json
 import numpy as np
 
-class AcquisitionWorker(QThread):
+class AcquisitionWorkerMotorImagery(QThread):
     sig_sampling_rate = pyqtSignal(int)
     sig_active_event = pyqtSignal(str, int)
     sig_status = pyqtSignal(int, str)

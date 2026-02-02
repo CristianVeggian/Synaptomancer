@@ -10,7 +10,6 @@ FUNCTIONS_DIR = os.path.join(ROOT_DIR, "functions")
 PLUGINS_DIR = os.path.join(FUNCTIONS_DIR, "plugins")
 
 INTERFACE_DIR = os.path.join(ROOT_DIR, "interface")
-ASSETS_DIR = os.path.join(INTERFACE_DIR, "assets")
 TRANSLATIONS_DIR = os.path.join(ROOT_DIR, "translations")
 
 DATA_DIR = os.path.join(ROOT_DIR, "data")

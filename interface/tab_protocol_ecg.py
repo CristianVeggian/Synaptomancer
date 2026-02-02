@@ -12,7 +12,7 @@ from PyQt6.QtWidgets import (
 import json
 import os
 
-class TabProtocolEMG(TranslatableWidget):
+class TabProtocolECG(TranslatableWidget):
     def __init__(self):
         super().__init__()
 
@@ -86,7 +86,7 @@ class TabProtocolEMG(TranslatableWidget):
         
         protocol = {
             "name": protocol_name,
-            "type": "emg",
+            "type": "ecg",
             "duration_sec": self.input_duration.value(),
             "sampling_rate_hz": self.input_sampling_rate.value(),
             "filter": self.filter_config_widget.get_filter_config() if self.checkbox_apply_filter.isChecked() else {

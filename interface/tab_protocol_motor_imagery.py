@@ -165,6 +165,7 @@ class TabProtocolMotorImagery(TranslatableWidget):
 
         protocol = {
             "name": protocol_name,
+            "type": "motor_imagery",
             "montage": self.combo_montage.currentText(),
             "channels": channels,
             "runs": self.input_runs.value(),

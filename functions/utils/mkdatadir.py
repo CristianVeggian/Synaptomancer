@@ -1,5 +1,6 @@
 import os
 
+
 def mkdatadir():
     base = "data"
     subpastas = ["acquisitions", "protocols", "pipelines", "profiles"]

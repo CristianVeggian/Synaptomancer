@@ -5,12 +5,19 @@ from functions.utils.color import WARNING_COLOR, SUCCESS_COLOR, ERROR_COLOR
 from functions.utils.paths import PROTOCOLS_DIR
 
 from PyQt6.QtWidgets import (
-    QVBoxLayout, QFormLayout, QLineEdit, QHBoxLayout,
-    QPushButton, QDoubleSpinBox, QSpinBox, QCheckBox
+    QVBoxLayout,
+    QFormLayout,
+    QLineEdit,
+    QHBoxLayout,
+    QPushButton,
+    QDoubleSpinBox,
+    QSpinBox,
+    QCheckBox,
 )
 
 import json
 import os
+
 
 class TabProtocolEMG(TranslatableWidget):
     def __init__(self):
@@ -19,7 +26,7 @@ class TabProtocolEMG(TranslatableWidget):
         self.main_layout = QVBoxLayout(self)
 
         self.input_protocol_name = QLineEdit()
-        
+
         self.input_duration = QDoubleSpinBox()
         self.input_duration.setRange(0, 60)
         self.input_duration.setSuffix(" s")
@@ -33,7 +40,7 @@ class TabProtocolEMG(TranslatableWidget):
         form_layout.addRow(self.tr("Protocol name"), self.input_protocol_name)
         form_layout.addRow(self.tr("Duration"), self.input_duration)
         form_layout.addRow(self.tr("Sampling Rate"), self.input_sampling_rate)
-        
+
         filter_layout = QHBoxLayout()
 
         self.checkbox_apply_filter = QCheckBox()
@@ -51,11 +58,13 @@ class TabProtocolEMG(TranslatableWidget):
         self.filter_config_widget = FilterConfigWidget(self)
         self.main_layout.addWidget(self.filter_config_widget)
 
-        self.checkbox_apply_filter.stateChanged.connect(self._on_filter_checkbox_changed)
+        self.checkbox_apply_filter.stateChanged.connect(
+            self._on_filter_checkbox_changed
+        )
 
         btn_save = QPushButton(self.tr("Save protocol"))
         btn_save.clicked.connect(self._save_protocol)
-        self.main_layout.addWidget(btn_save)  
+        self.main_layout.addWidget(btn_save)
 
     def _toggle_filter_configs(self):
         visible = not self.filter_config_widget.isVisible()
@@ -77,35 +86,43 @@ class TabProtocolEMG(TranslatableWidget):
     def _save_protocol(self):
         protocol_name = self.input_protocol_name.text().strip()
         if not protocol_name:
-            self.toast = ToastMessage(self, self.tr("Protocol name cannot be empty"), WARNING_COLOR)
+            self.toast = ToastMessage(
+                self, self.tr("Protocol name cannot be empty"), WARNING_COLOR
+            )
             return
 
         if self.input_duration.value() <= 0:
-            self.toast = ToastMessage(self, self.tr("Duration must be greater than zero"), WARNING_COLOR)
+            self.toast = ToastMessage(
+                self, self.tr("Duration must be greater than zero"), WARNING_COLOR
+            )
             return
-        
+
         protocol = {
             "name": protocol_name,
             "type": "emg",
             "duration_sec": self.input_duration.value(),
             "sampling_rate_hz": self.input_sampling_rate.value(),
-            "filter": self.filter_config_widget.get_filter_config() if self.checkbox_apply_filter.isChecked() else {
-                "enabled": False
-            }
+            "filter": self.filter_config_widget.get_filter_config()
+            if self.checkbox_apply_filter.isChecked()
+            else {"enabled": False},
         }
 
         try:
-            with open(os.path.join(PROTOCOLS_DIR, protocol_name + ".json"), "w", encoding="utf-8") as f:
+            with open(
+                os.path.join(PROTOCOLS_DIR, protocol_name + ".json"),
+                "w",
+                encoding="utf-8",
+            ) as f:
                 json.dump(protocol, f, indent=4)
             self.toast = ToastMessage(
                 self,
                 self.tr("Protocol '{0}' saved successfully.").format(protocol_name),
-                SUCCESS_COLOR
+                SUCCESS_COLOR,
             )
         except Exception as e:
             self.toast = ToastMessage(
                 self,
                 self.tr("Failed to save protocol: {0}").format(str(e)),
-                ERROR_COLOR
+                ERROR_COLOR,
             )
             return

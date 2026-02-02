@@ -3,6 +3,7 @@ from interface.translatable_widget import TranslatableWidget
 from interface.tab_pipeline_execute import TabPipelineExecute
 from interface.tab_pipeline_create import TabPipelineCreate
 
+
 class MainTabPipeline(TranslatableWidget):
     def __init__(self):
         super().__init__()

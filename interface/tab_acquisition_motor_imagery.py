@@ -1,5 +1,4 @@
 import json
-from os.path import join
 from serial.tools.list_ports import comports
 from interface.components.toast_message import ToastMessage
 from functions.acquisition_worker_motor_imagery import AcquisitionWorkerMotorImagery
@@ -12,56 +11,69 @@ import numpy as np
 
 from functions.utils.board_config import board_details
 from functions.utils.beep import beep
-from functions.utils.paths import ASSETS_DIR, PROFILES_DIR, PROTOCOLS_DIR
+from functions.utils.paths import PROFILES_DIR, PROTOCOLS_DIR
 from functions.utils.color import ERROR_COLOR, SUCCESS_COLOR
 
 import pyqtgraph as pg
-from PyQt6.QtCore import QSize, Qt
-from PyQt6.QtGui import QIcon, QIntValidator
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QIntValidator
 from PyQt6.QtWidgets import (
-    QWidget, QVBoxLayout, QGridLayout, QLabel, QLineEdit,
-    QPushButton, QComboBox, QFileDialog, QSizePolicy, QDoubleSpinBox,
-    QFormLayout, QHBoxLayout, QRadioButton, QGroupBox
-
+    QWidget,
+    QVBoxLayout,
+    QGridLayout,
+    QLabel,
+    QLineEdit,
+    QPushButton,
+    QComboBox,
+    QFileDialog,
+    QSizePolicy,
+    QDoubleSpinBox,
+    QFormLayout,
+    QHBoxLayout,
+    QRadioButton,
+    QGroupBox,
 )
+
 
 class TabAcquireMotorImageryData(QWidget):
     def __init__(self):
         super().__init__()
 
         self.active_event_name = "None"
-        self.btn_serial = QPushButton()
-        try:
-            icon_path = join(ASSETS_DIR, 'refresh.png')
-            if not QIcon(icon_path).isNull():
-                self.btn_serial.setIcon(QIcon(icon_path))
-            else:
-                self.btn_serial.setText("↻")
-        except Exception as e:
-            self.btn_serial.setText("↻")
-
-        self.btn_serial.setIconSize(QSize(20, 20))
+        self.btn_serial = QPushButton("Refresh")
         self.btn_serial.setToolTip(self.tr("Refresh serial ports"))
         self.btn_serial.setFixedSize(28, 28)
         self.btn_serial.clicked.connect(self._refresh_ports)
 
         self.label_placa = QLabel(self.tr("Board"))
         self.combo_boards = QComboBox()
-        self.combo_boards.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
-        self.combo_boards.addItems([board.name for board in BoardIds if board not in (BoardIds.STREAMING_BOARD, BoardIds.PLAYBACK_FILE_BOARD)])
+        self.combo_boards.setSizePolicy(
+            QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed
+        )
+        self.combo_boards.addItems(
+            [
+                board.name
+                for board in BoardIds
+                if board not in (BoardIds.STREAMING_BOARD, BoardIds.PLAYBACK_FILE_BOARD)
+            ]
+        )
         self.combo_boards.setCurrentIndex(0)
 
         self.label_profile = QLabel(self.tr("Profile"))
         self.line_edit_profile = QLineEdit()
         self.line_edit_profile.setPlaceholderText(self.tr("Select profile file..."))
-        self.line_edit_profile.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+        self.line_edit_profile.setSizePolicy(
+            QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed
+        )
         self.btn_browse_profile = QPushButton(self.tr("Browse"))
         self.btn_browse_profile.clicked.connect(self._browse_profile)
 
         self.label_protocol = QLabel(self.tr("Protocol"))
         self.line_edit_protocol = QLineEdit()
         self.line_edit_protocol.setPlaceholderText(self.tr("Select protocol file..."))
-        self.line_edit_protocol.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+        self.line_edit_protocol.setSizePolicy(
+            QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed
+        )
         self.btn_browse_protocol = QPushButton(self.tr("Browse"))
         self.btn_browse_protocol.clicked.connect(self._browse_protocol)
 
@@ -79,7 +91,9 @@ class TabAcquireMotorImageryData(QWidget):
         self.label_timeout = QLabel(self.tr("Timeout"))
         self.field_timeout = QDoubleSpinBox()
 
-        self.combo_serial.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+        self.combo_serial.setSizePolicy(
+            QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed
+        )
         self.field_mac.setPlaceholderText("xx:xx:xx:xx:xx:xx")
         self.field_port.setValidator(QIntValidator(1, 65535))
         self.field_port.setPlaceholderText(self.tr("Choose a WiFi port"))
@@ -156,7 +170,9 @@ class TabAcquireMotorImageryData(QWidget):
         self.audio_feedback = False
 
         self.event_label = QLabel(self.tr("Waiting..."))
-        self.event_label.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        self.event_label.setSizePolicy(
+            QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding
+        )
         self.event_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.event_label.setStyleSheet("""
             color: white;
@@ -194,25 +210,25 @@ class TabAcquireMotorImageryData(QWidget):
         self.label_timeout.hide()
         self.field_timeout.hide()
 
-        if 'serial' in connection:
+        if "serial" in connection:
             self.label_serial.show()
             self.combo_serial.show()
             self.btn_serial.show()
             self._refresh_ports()
 
-        if 'mac' in connection:
+        if "mac" in connection:
             self.label_mac.show()
             self.field_mac.show()
 
-        if 'ip_address' in connection:
+        if "ip_address" in connection:
             self.label_ip.show()
             self.field_ip.show()
 
-        if 'port' in connection:
+        if "port" in connection:
             self.label_port.show()
             self.field_port.show()
 
-        if 'timeout' in connection:
+        if "timeout" in connection:
             self.label_timeout.show()
             self.field_timeout.show()
 
@@ -229,21 +245,27 @@ class TabAcquireMotorImageryData(QWidget):
                 self.combo_serial.addItems(ports)
                 self.combo_serial.setEnabled(True)
         except Exception as e:
-            self.toast = ToastMessage(self, self.tr("Error listing ports: {0}").format(str(e)), ERROR_COLOR)
+            self.toast = ToastMessage(
+                self, self.tr("Error listing ports: {0}").format(str(e)), ERROR_COLOR
+            )
 
     def _browse_profile(self):
-        fileName, _ = QFileDialog.getOpenFileName(self,
-                        self.tr("Select Profile File"),
-                        PROFILES_DIR,
-                        "JSON Files (*.json);;All Files (*)")
+        fileName, _ = QFileDialog.getOpenFileName(
+            self,
+            self.tr("Select Profile File"),
+            PROFILES_DIR,
+            "JSON Files (*.json);;All Files (*)",
+        )
         if fileName:
             self.line_edit_profile.setText(fileName)
 
     def _browse_protocol(self):
-        fileName, _ = QFileDialog.getOpenFileName(self,
-                        self.tr("Select protocol File"),
-                        PROTOCOLS_DIR,
-                        "JSON Files (*.json);;All Files (*)")
+        fileName, _ = QFileDialog.getOpenFileName(
+            self,
+            self.tr("Select protocol File"),
+            PROTOCOLS_DIR,
+            "JSON Files (*.json);;All Files (*)",
+        )
         if fileName:
             self.line_edit_protocol.setText(fileName)
 
@@ -254,57 +276,57 @@ class TabAcquireMotorImageryData(QWidget):
 
         if not profile_path:
             self.toast = ToastMessage(
-                self,
-                self.tr("Select a profile file"),
-                ERROR_COLOR
-                )
+                self, self.tr("Select a profile file"), ERROR_COLOR
+            )
             return
-        
+
         if not protocol_path:
             self.toast = ToastMessage(
-                self,
-                self.tr("Select a protocol file"),
-                ERROR_COLOR
-                )
+                self, self.tr("Select a protocol file"), ERROR_COLOR
+            )
             return
 
         connection = self.connection_types.get(board_name, {})
 
         params = BrainFlowInputParams()
 
-        if 'serial' in connection:
+        if "serial" in connection:
             serial = self.combo_serial.currentText()
-            if connection['serial'] and not serial:
-                self.toast = ToastMessage(self,
-                                          self.tr("Select a serial port."),
-                                          ERROR_COLOR)
+            if connection["serial"] and not serial:
+                self.toast = ToastMessage(
+                    self, self.tr("Select a serial port."), ERROR_COLOR
+                )
                 return
             params.serial_port = serial
 
-        if 'mac' in connection:
+        if "mac" in connection:
             mac = self.field_mac.text().strip()
-            if connection['mac'] and not mac:
-                self.toast = ToastMessage(self, self.tr("Enter MAC address."), ERROR_COLOR)
+            if connection["mac"] and not mac:
+                self.toast = ToastMessage(
+                    self, self.tr("Enter MAC address."), ERROR_COLOR
+                )
                 return
             params.mac_address = mac
 
-        if 'ip_address' in connection:
+        if "ip_address" in connection:
             ip = self.field_ip.text().strip()
-            if connection['ip'] and not ip:
-                self.toast = ToastMessage(self, self.tr("Enter IP address."), ERROR_COLOR)
+            if connection["ip"] and not ip:
+                self.toast = ToastMessage(
+                    self, self.tr("Enter IP address."), ERROR_COLOR
+                )
                 return
             params.ip_address = ip
 
-        if 'port' in connection:
+        if "port" in connection:
             porta = self.field_port.text()
-            if connection['port'] and not porta:
+            if connection["port"] and not porta:
                 self.toast = ToastMessage(self, self.tr("Enter port."), ERROR_COLOR)
                 return
             params.ip_port = int(porta)
 
-        if 'timeout' in connection:
+        if "timeout" in connection:
             timeout = self.field_timeout.value()
-            if connection['timeout'] and not timeout:
+            if connection["timeout"] and not timeout:
                 self.toast = ToastMessage(self, self.tr("Set a timeout."), ERROR_COLOR)
                 return
             params.timeout = timeout
@@ -312,20 +334,30 @@ class TabAcquireMotorImageryData(QWidget):
         try:
             board_id = BoardIds[board_name].value
         except KeyError:
-            self.toast = ToastMessage(self, self.tr("Invalid board name: {0}").format(board_name), ERROR_COLOR)
+            self.toast = ToastMessage(
+                self, self.tr("Invalid board name: {0}").format(board_name), ERROR_COLOR
+            )
             return
 
         try:
-            with open(protocol_path, 'r') as f:
+            with open(protocol_path, "r") as f:
                 self.protocol = json.load(f)
         except Exception as e:
-            self.toast = ToastMessage(self, self.tr("Error loading protocol: {0}").format(str(e)), ERROR_COLOR)
+            self.toast = ToastMessage(
+                self, self.tr("Error loading protocol: {0}").format(str(e)), ERROR_COLOR
+            )
             return
 
-        self.toast = ToastMessage(self, self.tr("Starting acquisition with board {0}").format(board_name), "#0077cc")
+        self.toast = ToastMessage(
+            self,
+            self.tr("Starting acquisition with board {0}").format(board_name),
+            "#0077cc",
+        )
 
-        if hasattr(self, 'worker') and self.worker.isRunning():
-            self.toast = ToastMessage(self, self.tr("Acquisition already running."), ERROR_COLOR)
+        if hasattr(self, "worker") and self.worker.isRunning():
+            self.toast = ToastMessage(
+                self, self.tr("Acquisition already running."), ERROR_COLOR
+            )
             return
 
         self.btn_start_acquisition.setEnabled(False)
@@ -336,7 +368,13 @@ class TabAcquireMotorImageryData(QWidget):
 
         mode_id = self.mode_group.checkedId()
 
-        self.worker = AcquisitionWorkerMotorImagery(params=params, board_id=board_id, protocol_path=protocol_path, profile_path=profile_path, mode=mode_id)
+        self.worker = AcquisitionWorkerMotorImagery(
+            params=params,
+            board_id=board_id,
+            protocol_path=protocol_path,
+            profile_path=profile_path,
+            mode=mode_id,
+        )
         self.worker.sig_sampling_rate.connect(self._start_graphic)
         self.worker.sig_status.connect(self.status_controller)
         self.worker.sig_active_event.connect(self.get_evento_ativo)
@@ -364,8 +402,8 @@ class TabAcquireMotorImageryData(QWidget):
 
     def _start_graphic(self, sampling_rate):
         self.sampling_rate = sampling_rate
-        self.exg_channels = self.protocol['channels'].values()
-        self.exg_names = self.protocol['channels'].keys()
+        self.exg_channels = self.protocol["channels"].values()
+        self.exg_names = self.protocol["channels"].keys()
         self.window_size = 4
         self.num_points = sampling_rate * self.window_size
         self.buffers = {ch: np.zeros(self.num_points) for ch in self.exg_channels}
@@ -377,15 +415,15 @@ class TabAcquireMotorImageryData(QWidget):
         self.curvas = []
 
         self.grafico.clear()
-        self.grafico.setBackground('w')
+        self.grafico.setBackground("w")
 
         for i, (ch, name) in enumerate(zip(self.exg_channels, self.exg_names)):
             plot = self.grafico.addPlot(row=i, col=0)
-            plot.showAxis('left', False)
-            plot.setLabel('left', name)
+            plot.showAxis("left", False)
+            plot.setLabel("left", name)
             if i == 0:
                 plot.setTitle(self.tr("Real Time Data"))
-            curva = plot.plot(pen=pg.mkPen(color='b', width=1.5))
+            curva = plot.plot(pen=pg.mkPen(color="b", width=1.5))
             self.plots.append(plot)
             self.curvas.append(curva)
 
@@ -394,7 +432,6 @@ class TabAcquireMotorImageryData(QWidget):
     def _plot_sample(self, linha):
         try:
             dados = linha[1:-1]
-            evento = linha[-1] 
 
             self.timestamps += 1 / self.sampling_rate
 
@@ -407,7 +444,7 @@ class TabAcquireMotorImageryData(QWidget):
         except Exception as e:
             print("Erro ao plotar:", e)
 
-    def get_evento_ativo(self, active_event_name, numero_evento_ativo):            
+    def get_evento_ativo(self, active_event_name, numero_evento_ativo):
         if active_event_name != self.active_event_name:
             self.numero_evento_ativo = numero_evento_ativo
             self.active_event_name = active_event_name
@@ -417,16 +454,16 @@ class TabAcquireMotorImageryData(QWidget):
         self.event_label.setText(self.active_event_name)
         cor_dict = {
             -1: ("transparent", "black"),
-            0:  ("#95a5a6", "black"),   # cinza claro → texto branco
-            11: ("#e74c3c", "white"),   # vermelho → texto branco
-            22: ("#2ecc71", "black"),   # verde claro → texto preto
-            33: ("#3498db", "white"),   # azul médio → texto branco
-            44: ("#9b59b6", "white"),   # roxo → texto branco
-            55: ("#f1c40f", "black"),   # amarelo → texto preto
-            66: ("#1abc9c", "black"),   # turquesa claro → texto preto
-            77: ("#e67e22", "white"),   # laranja → texto branco
-            88: ("#34495e", "white"),   # azul escuro → texto branco
-            99: ("#d35400", "white"),   # laranja escuro → texto branco
+            0: ("#95a5a6", "black"),  # cinza claro → texto branco
+            11: ("#e74c3c", "white"),  # vermelho → texto branco
+            22: ("#2ecc71", "black"),  # verde claro → texto preto
+            33: ("#3498db", "white"),  # azul médio → texto branco
+            44: ("#9b59b6", "white"),  # roxo → texto branco
+            55: ("#f1c40f", "black"),  # amarelo → texto preto
+            66: ("#1abc9c", "black"),  # turquesa claro → texto preto
+            77: ("#e67e22", "white"),  # laranja → texto branco
+            88: ("#34495e", "white"),  # azul escuro → texto branco
+            99: ("#d35400", "white"),  # laranja escuro → texto branco
         }
         self.event_label.setStyleSheet(f"""
             background-color: {cor_dict.get(self.numero_evento_ativo)[0]};
@@ -438,7 +475,11 @@ class TabAcquireMotorImageryData(QWidget):
             padding: 20px;
         """)
         if self.audio_feedback:
-            threading.Thread(target=beep, args=(440+self.numero_evento_ativo*20, 200), daemon=True).start()
+            threading.Thread(
+                target=beep,
+                args=(440 + self.numero_evento_ativo * 20, 200),
+                daemon=True,
+            ).start()
 
     def _control_audio_feedback(self):
         self.audio_feedback = not self.audio_feedback
@@ -449,14 +490,8 @@ class TabAcquireMotorImageryData(QWidget):
 
     def status_controller(self, status, texto):
         if status == 0:
-            self.toast = ToastMessage(
-                self,
-                texto,
-                SUCCESS_COLOR)
+            self.toast = ToastMessage(self, texto, SUCCESS_COLOR)
             self._restore_ui()
         elif status == -1:
-            self.toast = ToastMessage(
-                self,
-                texto,
-                ERROR_COLOR)
+            self.toast = ToastMessage(self, texto, ERROR_COLOR)
             self._restore_ui()

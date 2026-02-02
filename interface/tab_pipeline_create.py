@@ -1,6 +1,14 @@
-from PyQt6.QtWidgets import ( QWidget,
-    QStackedWidget, QVBoxLayout, QFormLayout, QLineEdit,
-    QPushButton, QHBoxLayout, QScrollArea, QFrame, QLabel,
+from PyQt6.QtWidgets import (
+    QWidget,
+    QStackedWidget,
+    QVBoxLayout,
+    QFormLayout,
+    QLineEdit,
+    QPushButton,
+    QHBoxLayout,
+    QScrollArea,
+    QFrame,
+    QLabel,
 )
 
 from functions.utils.paths import PLUGINS_DIR, PIPELINES_DIR
@@ -9,7 +17,10 @@ from functions.utils.color import WARNING_COLOR, ERROR_COLOR
 from interface.translatable_widget import TranslatableWidget
 from interface.components.no_scroll_combobox import NoScrollComboBox
 from interface.components.toast_message import ToastMessage
-import os, importlib, json
+import os
+import importlib
+import json
+
 
 class TabPipelineCreate(TranslatableWidget):
     def __init__(self):
@@ -20,10 +31,7 @@ class TabPipelineCreate(TranslatableWidget):
         self.main_layout = QVBoxLayout(self)
 
         self.name = QFormLayout()
-        self.name.addRow(
-            self.tr("Pipeline name"),
-            QLineEdit()
-        )
+        self.name.addRow(self.tr("Pipeline name"), QLineEdit())
 
         self.main_layout.addLayout(self.name)
 
@@ -72,18 +80,20 @@ class TabPipelineCreate(TranslatableWidget):
 
             if os.path.isdir(plugin_path) and os.path.isfile(interface_path):
                 try:
-                    spec = importlib.util.spec_from_file_location(f"{plugin_name}_interface", interface_path)
+                    spec = importlib.util.spec_from_file_location(
+                        f"{plugin_name}_interface", interface_path
+                    )
                     module = importlib.util.module_from_spec(spec)
                     spec.loader.exec_module(module)
 
                     interface_class = getattr(module, "PluginInterface", None)
                     if interface_class and isinstance(interface_class, type):
                         plugins[plugin_name] = interface_class
-                except Exception as e:
+                except Exception:
                     self.toast = ToastMessage(
                         self,
                         self.tr("One or more plugins could not be loaded."),
-                        color=WARNING_COLOR
+                        color=WARNING_COLOR,
                     )
 
         return plugins
@@ -95,9 +105,7 @@ class TabPipelineCreate(TranslatableWidget):
         step_layout = QVBoxLayout(container)
 
         upper_layout = QHBoxLayout()
-        title = QLabel(
-            self.tr("Stage {0}").format(step_number)
-            )
+        title = QLabel(self.tr("Stage {0}").format(step_number))
         btn_remove = QPushButton("-")
         btn_remove.setFixedSize(20, 20)
         btn_remove.setStyleSheet("""
@@ -155,9 +163,7 @@ class TabPipelineCreate(TranslatableWidget):
         for i, (_, _, container) in enumerate(self.steps):
             label = container.findChild(QLabel)
             if label:
-                label.setText(
-                    self.tr("Stage {0}").format(i + 1)
-                )
+                label.setText(self.tr("Stage {0}").format(i + 1))
 
     def _save_pipeline(self):
         widget_name = self.name.itemAt(0, QFormLayout.ItemRole.FieldRole).widget()
@@ -165,54 +171,48 @@ class TabPipelineCreate(TranslatableWidget):
 
         if not pipeline_name:
             self.toast = ToastMessage(
-                self,
-                self.tr("Pipeline name is empty"),
-                color=ERROR_COLOR)
+                self, self.tr("Pipeline name is empty"), color=ERROR_COLOR
+            )
             return
 
-        pipeline_data = {
-            "name": pipeline_name,
-            "steps": []
-        }
+        pipeline_data = {"name": pipeline_name, "steps": []}
 
         for combo, stack, _ in self.steps:
             plugin_name = combo.currentText()
             widget = stack.currentWidget()
 
             parameters = {}
-            if hasattr(widget, 'get_parameters') and callable(widget.get_parameters):
+            if hasattr(widget, "get_parameters") and callable(widget.get_parameters):
                 try:
                     parameters = widget.get_parameters()
                 except Exception as e:
                     self.toast = ToastMessage(
                         self,
-                        self.tr("Plugin '{0}' parameters error: {1}").format(plugin_name, str(e)),
-                        color=ERROR_COLOR
-                        )
+                        self.tr("Plugin '{0}' parameters error: {1}").format(
+                            plugin_name, str(e)
+                        ),
+                        color=ERROR_COLOR,
+                    )
             else:
                 self.toast = ToastMessage(
                     self,
-                    self.tr("Plugin '{0}' is not configurable or old.").format(plugin_name),
-                    color=WARNING_COLOR
-                    )
-            
-            pipeline_data["steps"].append({
-                "plugin": plugin_name,
-                "parameters": parameters
-            })
+                    self.tr("Plugin '{0}' is not configurable or old.").format(
+                        plugin_name
+                    ),
+                    color=WARNING_COLOR,
+                )
+
+            pipeline_data["steps"].append(
+                {"plugin": plugin_name, "parameters": parameters}
+            )
 
         try:
             destination_path = os.path.join(PIPELINES_DIR, f"{pipeline_name}.json")
             with open(destination_path, "w", encoding="utf-8") as f:
                 json.dump(pipeline_data, f, indent=4, ensure_ascii=False)
 
-            self.toast = ToastMessage(
-                self,
-                self.tr("Pipeline saved successfully!")
-                )
+            self.toast = ToastMessage(self, self.tr("Pipeline saved successfully!"))
         except Exception as e:
             self.toast = ToastMessage(
-                self,
-                self.tr("Error saving pipeline: {0}").format(e),
-                color=ERROR_COLOR
-                )
+                self, self.tr("Error saving pipeline: {0}").format(e), color=ERROR_COLOR
+            )

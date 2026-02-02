@@ -9,6 +9,7 @@ from interface.main_tab_plugins import MainTabPlugins
 from interface.main_tab_profiles import MainTabProfiles
 from interface.main_tab_protocols import MainTabProtocols
 
+
 class MainWindow(TranslatableWidget):
     def __init__(self):
         super().__init__()
@@ -38,10 +39,7 @@ class MainWindow(TranslatableWidget):
         self._setup_shortcuts()
 
     def _setup_shortcuts(self):
-        shortcut_settings = QShortcut(
-            QKeySequence("Ctrl+."),
-            self
-        )
+        shortcut_settings = QShortcut(QKeySequence("Ctrl+."), self)
         shortcut_settings.activated.connect(self.open_settings)
 
     def open_settings(self):

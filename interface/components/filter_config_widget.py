@@ -1,8 +1,13 @@
 from interface.translatable_widget import TranslatableWidget
 from PyQt6.QtWidgets import (
-    QGroupBox, QVBoxLayout, QFormLayout,
-    QCheckBox, QComboBox, QDoubleSpinBox
+    QGroupBox,
+    QVBoxLayout,
+    QFormLayout,
+    QCheckBox,
+    QComboBox,
+    QDoubleSpinBox,
 )
+
 
 class FilterConfigWidget(QGroupBox, TranslatableWidget):
     def __init__(self, parent=None):
@@ -20,7 +25,7 @@ class FilterConfigWidget(QGroupBox, TranslatableWidget):
             "bandpass": self.tr("Band-pass"),
             "highpass": self.tr("High-pass"),
             "lowpass": self.tr("Low-pass"),
-            "notch": self.tr("Notch (Band-stop)")
+            "notch": self.tr("Notch (Band-stop)"),
         }
         for key, label in self.filter_type_map.items():
             self.combo_filter_type.addItem(label, userData=key)
@@ -32,7 +37,7 @@ class FilterConfigWidget(QGroupBox, TranslatableWidget):
             "butterworth": self.tr("Butterworth"),
             "chebyshev1": self.tr("Chebyshev Type I"),
             "chebyshev2": self.tr("Chebyshev Type II"),
-            "bessel": self.tr("Bessel")
+            "bessel": self.tr("Bessel"),
         }
         for key, label in self.filter_method_map.items():
             self.combo_filter_method.addItem(label, userData=key)
@@ -60,17 +65,13 @@ class FilterConfigWidget(QGroupBox, TranslatableWidget):
 
         form_layout.addRow(self.tr("Filter order"), self.combo_filter_order)
 
-        self.checkbox_zero_phase = QCheckBox(
-            self.tr("Zero-phase filtering (filtfilt)")
-        )
+        self.checkbox_zero_phase = QCheckBox(self.tr("Zero-phase filtering (filtfilt)"))
         self.checkbox_zero_phase.setChecked(True)
         form_layout.addRow("", self.checkbox_zero_phase)
 
         main_layout.addLayout(form_layout)
 
-        self.combo_filter_type.currentIndexChanged.connect(
-            self._update_visible_fields
-        )
+        self.combo_filter_type.currentIndexChanged.connect(self._update_visible_fields)
         self._update_visible_fields()
 
     def _update_visible_fields(self):
@@ -96,5 +97,5 @@ class FilterConfigWidget(QGroupBox, TranslatableWidget):
             "lowcut": self.spin_low_cut.value(),
             "highcut": self.spin_high_cut.value(),
             "order": self.combo_filter_order.currentData(),
-            "zero_phase": self.checkbox_zero_phase.isChecked()
+            "zero_phase": self.checkbox_zero_phase.isChecked(),
         }

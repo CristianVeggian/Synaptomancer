@@ -1,8 +1,9 @@
 from PyQt6.QtCore import QTimer, Qt
 from PyQt6.QtWidgets import QLabel
 
+
 class ToastMessage:
-    def __init__(self, parent, texto, color='#28a745', duracao=2000):
+    def __init__(self, parent, texto, color="#28a745", duracao=2000):
         self.toast = QLabel(texto)  # Sem parent
         self.toast.setStyleSheet(f"""
             QLabel {{
@@ -16,9 +17,9 @@ class ToastMessage:
         """)
         self.toast.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.toast.setWindowFlags(
-            Qt.WindowType.FramelessWindowHint |
-            Qt.WindowType.ToolTip |
-            Qt.WindowType.WindowStaysOnTopHint
+            Qt.WindowType.FramelessWindowHint
+            | Qt.WindowType.ToolTip
+            | Qt.WindowType.WindowStaysOnTopHint
         )
         self.toast.adjustSize()
 

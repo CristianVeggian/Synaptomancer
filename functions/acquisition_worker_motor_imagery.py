@@ -13,6 +13,7 @@ import random
 import json
 import numpy as np
 
+
 class AcquisitionWorkerMotorImagery(QThread):
     sig_sampling_rate = pyqtSignal(int)
     sig_active_event = pyqtSignal(str, int)
@@ -59,12 +60,14 @@ class AcquisitionWorkerMotorImagery(QThread):
 
         def add_event(event, duration, run):
             nonlocal actual_timestamp
-            stimuli.append({
-                "start": round(actual_timestamp, 2),
-                "end": round(actual_timestamp + duration, 2),
-                "class": event,
-                "run": run
-            })
+            stimuli.append(
+                {
+                    "start": round(actual_timestamp, 2),
+                    "end": round(actual_timestamp + duration, 2),
+                    "class": event,
+                    "run": run,
+                }
+            )
             actual_timestamp += duration
 
         add_event("rest", self._time("rest_time"), -1)
@@ -85,14 +88,13 @@ class AcquisitionWorkerMotorImagery(QThread):
         channel_names = list(self.protocol["channels"].keys())
 
         with open(file_path, "w", newline="") as f:
-            csv.writer(f).writerow(['timestamp'] + channel_names + ['events'])
+            csv.writer(f).writerow(["timestamp"] + channel_names + ["events"])
 
         return file_path
 
     def _acquire_data(self, save=False, filter=False):
         self.sig_status.emit(1, "Coleta Iniciada!")
         events = self._generate_event()
-        channel_names = list(self.protocol["channels"].keys())
         physical_channels = self.protocol["channels"].values()
 
         file_path = self._create_csv_file() if save else None
@@ -109,7 +111,7 @@ class AcquisitionWorkerMotorImagery(QThread):
         board.prepare_session()
         board.start_stream()
 
-        BUFFER_SIZE = int(self.sampling_rate*0.25)
+        BUFFER_SIZE = int(self.sampling_rate * 0.25)
         start_time = time.time()
 
         while self._is_running:
@@ -131,7 +133,9 @@ class AcquisitionWorkerMotorImagery(QThread):
                 for channel in physical_channels:
                     linha.append(sample[channel])
 
-                evento_ativo = next((ev for ev in events if ev["start"] <= ts < ev["end"]), None)
+                evento_ativo = next(
+                    (ev for ev in events if ev["start"] <= ts < ev["end"]), None
+                )
 
                 if evento_ativo:
                     nome_evento = evento_ativo["class"]
@@ -172,8 +176,11 @@ class AcquisitionWorkerMotorImagery(QThread):
             DataFilter.perform_bandpass(
                 filtered_buffer[i],
                 self.sampling_rate,
-                8.0, 30.0, 4,
-                FilterTypes.BUTTERWORTH_ZERO_PHASE, 0
+                8.0,
+                30.0,
+                4,
+                FilterTypes.BUTTERWORTH_ZERO_PHASE,
+                0,
             )
 
         return filtered_buffer[:, -data_size:]

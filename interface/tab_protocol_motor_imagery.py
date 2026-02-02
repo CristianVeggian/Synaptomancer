@@ -2,9 +2,19 @@ import json
 import os
 import mne
 from PyQt6.QtWidgets import (
-    QWidget, QVBoxLayout, QFormLayout, QLabel, QLineEdit,
-    QPushButton, QComboBox, QScrollArea, QGridLayout,
-    QSpinBox, QDoubleSpinBox, QHBoxLayout, QFrame
+    QWidget,
+    QVBoxLayout,
+    QFormLayout,
+    QLabel,
+    QLineEdit,
+    QPushButton,
+    QComboBox,
+    QScrollArea,
+    QGridLayout,
+    QSpinBox,
+    QDoubleSpinBox,
+    QHBoxLayout,
+    QFrame,
 )
 
 from functions.utils.color import WARNING_COLOR, SUCCESS_COLOR, ERROR_COLOR
@@ -14,6 +24,7 @@ from interface.translatable_widget import TranslatableWidget
 from mne.channels import get_builtin_montages
 from interface.components.toast_message import ToastMessage
 
+
 class TabProtocolMotorImagery(TranslatableWidget):
     def __init__(self):
         super().__init__()
@@ -21,7 +32,7 @@ class TabProtocolMotorImagery(TranslatableWidget):
         layout = QVBoxLayout(self)
 
         self.input_protocol_name = QLineEdit()
-        
+
         self.combo_montage = QComboBox()
         self.combo_montage.addItems(sorted(get_builtin_montages()))
         self.combo_montage.currentTextChanged.connect(self._refresh_channels)
@@ -88,7 +99,7 @@ class TabProtocolMotorImagery(TranslatableWidget):
         rest_layout.addWidget(QLabel(self.tr("Std")))
         rest_layout.addWidget(self.input_rest_std)
         form_layout.addRow(self.tr("Rest time"), rest_layout)
-        
+
         mi_layout = QHBoxLayout()
         mi_layout.addWidget(QLabel(self.tr("Mean")))
         mi_layout.addWidget(self.input_mi_mean)
@@ -119,9 +130,8 @@ class TabProtocolMotorImagery(TranslatableWidget):
 
         btn_save = QPushButton(self.tr("Save protocol"))
         btn_save.clicked.connect(self._save_protocol)
-        layout.addWidget(btn_save)  
+        layout.addWidget(btn_save)
         self._refresh_channels(self.combo_montage.currentText())
-
 
     def _refresh_channels(self, montage):
         montage = mne.channels.make_standard_montage(montage)
@@ -145,7 +155,9 @@ class TabProtocolMotorImagery(TranslatableWidget):
     def _save_protocol(self):
         protocol_name = self.input_protocol_name.text().strip()
         if not protocol_name:
-            self.toast = ToastMessage(self, self.tr("Protocol name cannot be empty"), WARNING_COLOR)
+            self.toast = ToastMessage(
+                self, self.tr("Protocol name cannot be empty"), WARNING_COLOR
+            )
             return
 
         channels = {}
@@ -160,7 +172,9 @@ class TabProtocolMotorImagery(TranslatableWidget):
             if class_name:
                 classes[class_name] = input_value.value()
         if not classes:
-            self.toast = ToastMessage(self, self.tr("Add at least one class"), WARNING_COLOR)
+            self.toast = ToastMessage(
+                self, self.tr("Add at least one class"), WARNING_COLOR
+            )
             return
 
         protocol = {
@@ -172,32 +186,35 @@ class TabProtocolMotorImagery(TranslatableWidget):
             "classes": classes,
             "rest_time": {
                 "mean": self.input_rest_mean.value(),
-                "std": self.input_rest_std.value()
+                "std": self.input_rest_std.value(),
             },
             "motor_imagery_time": {
                 "mean": self.input_mi_mean.value(),
-                "std": self.input_mi_std.value()
-            }
+                "std": self.input_mi_std.value(),
+            },
         }
 
         try:
-            with open(os.path.join(PROTOCOLS_DIR, protocol_name + ".json"), "w", encoding="utf-8") as f:
+            with open(
+                os.path.join(PROTOCOLS_DIR, protocol_name + ".json"),
+                "w",
+                encoding="utf-8",
+            ) as f:
                 json.dump(protocol, f, indent=4)
             self.toast = ToastMessage(
                 self,
                 self.tr("Protocol '{0}' saved successfully.").format(protocol_name),
-                SUCCESS_COLOR
+                SUCCESS_COLOR,
             )
         except Exception as e:
             self.toast = ToastMessage(
                 self,
                 self.tr("Failed to save protocol: {0}").format(str(e)),
-                ERROR_COLOR
+                ERROR_COLOR,
             )
             return
 
     def add_class(self):
-
         container = QFrame()
         layout_class = QHBoxLayout(container)
 

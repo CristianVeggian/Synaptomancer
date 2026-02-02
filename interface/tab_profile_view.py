@@ -9,10 +9,11 @@ from collections import Counter
 import os
 import json
 
+
 class TabProfileView(TranslatableWidget):
     def __init__(self):
         super().__init__()
-        
+
         self.layout_main = QHBoxLayout(self)
 
         self.layout_left = QVBoxLayout()
@@ -36,12 +37,9 @@ class TabProfileView(TranslatableWidget):
         }
 
         self.combo_feature = QComboBox()
-        
+
         for key, label in self.FEATURE_KEYS.items():
-            self.combo_feature.addItem(
-                self.tr(label),
-                key
-            )
+            self.combo_feature.addItem(self.tr(label), key)
 
         self.layout_right.addWidget(QLabel(self.tr("Select feature to view")))
         self.layout_right.addWidget(self.combo_feature)
@@ -53,15 +51,13 @@ class TabProfileView(TranslatableWidget):
         self.chart = StatsChart()
         self.layout_right.addWidget(self.chart)
 
-        self.combo_feature.currentTextChanged.connect(
-            self._render_dashboard
-        )
+        self.combo_feature.currentTextChanged.connect(self._render_dashboard)
 
     def showEvent(self, event):
         self._populate_profile_view()
         self._render_dashboard()
         super().showEvent(event)
-    
+
     def _load_profiles(self):
         profiles = []
 
@@ -73,12 +69,9 @@ class TabProfileView(TranslatableWidget):
         return profiles
 
     def _populate_profile_view(self):
-
         profiles = self._load_profiles()
-        
-        self.profiles_count_label.setText(
-            str(len(profiles))
-        )
+
+        self.profiles_count_label.setText(str(len(profiles)))
 
     def _compute_distribution(self, field):
         profiles = self._load_profiles()
@@ -87,7 +80,6 @@ class TabProfileView(TranslatableWidget):
         return Counter(values)
 
     def _render_dashboard(self):
-
         VALUE_TRANSLATIONS = {
             "sex": {
                 "male": self.tr("Male"),
@@ -108,9 +100,8 @@ class TabProfileView(TranslatableWidget):
                 "AB-": "AB-",
                 "O+": "O+",
                 "O-": "O-",
-            }
+            },
         }
-
 
         field = self.combo_feature.currentData()
         field_type = PROFILE_FIELDS[field]["type"]
@@ -131,14 +122,13 @@ class TabProfileView(TranslatableWidget):
 
         if field in VALUE_TRANSLATIONS:
             label_map = VALUE_TRANSLATIONS[field]
-            labels = [
-                label_map.get(value, value)
-                for value in raw_labels
-            ]
+            labels = [label_map.get(value, value) for value in raw_labels]
         else:
             labels = raw_labels
 
         if field_type == "categorical":
             self.chart.plot_pie(labels, values, title=field_label)
         else:
-            self.chart.plot_bar(labels, values, title=field_label, ylabel=self.tr("Count"))
+            self.chart.plot_bar(
+                labels, values, title=field_label, ylabel=self.tr("Count")
+            )

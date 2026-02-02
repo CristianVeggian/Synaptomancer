@@ -1,8 +1,6 @@
 import os
 
-ROOT_DIR = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), "..", "..")
-)
+ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 
 LOGS_DIR = os.path.join(ROOT_DIR, "_logs")
 

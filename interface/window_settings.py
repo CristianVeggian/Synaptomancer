@@ -1,8 +1,14 @@
 from PyQt6.QtWidgets import (
-    QDialog, QVBoxLayout, QComboBox, QLabel,
-    QCheckBox, QDialogButtonBox)
+    QDialog,
+    QVBoxLayout,
+    QComboBox,
+    QLabel,
+    QCheckBox,
+    QDialogButtonBox,
+)
 
 from PyQt6.QtCore import QSettings
+
 
 class SettingsDialog(QDialog):
     def __init__(self, parent=None):
@@ -22,16 +28,13 @@ class SettingsDialog(QDialog):
         layout.addWidget(self.language_combo)
 
         # Save state
-        self.save_state_checkbox = QCheckBox(
-            self.tr("Save application state on exit")
-        )
+        self.save_state_checkbox = QCheckBox(self.tr("Save application state on exit"))
         layout.addWidget(self.save_state_checkbox)
 
         layout.addStretch()
 
         buttons = QDialogButtonBox(
-            QDialogButtonBox.StandardButton.Save |
-            QDialogButtonBox.StandardButton.Close
+            QDialogButtonBox.StandardButton.Save | QDialogButtonBox.StandardButton.Close
         )
         buttons.accepted.connect(self.save_settings)
         buttons.rejected.connect(self.close)

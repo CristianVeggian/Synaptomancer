@@ -1,8 +1,17 @@
 from PyQt6.QtWidgets import (
-    QWidget, QVBoxLayout, QFormLayout, QLabel, QLineEdit, QSpinBox,
-    QDoubleSpinBox, QComboBox, QCheckBox, QPushButton
+    QWidget,
+    QVBoxLayout,
+    QFormLayout,
+    QLabel,
+    QLineEdit,
+    QSpinBox,
+    QDoubleSpinBox,
+    QComboBox,
+    QCheckBox,
+    QPushButton,
 )
 from PyQt6.QtCore import Qt
+
 
 class PluginInterface(QWidget):
     def __init__(self):
@@ -25,7 +34,7 @@ class PluginInterface(QWidget):
         # Kernel
         self.label_kernel = QLabel("Kernel:")
         self.combo_kernel = QComboBox()
-        self.combo_kernel.addItems(['linear', 'poly', 'rbf', 'sigmoid', 'precomputed'])
+        self.combo_kernel.addItems(["linear", "poly", "rbf", "sigmoid", "precomputed"])
         form_layout.addRow(self.label_kernel, self.combo_kernel)
 
         # Degree
@@ -152,7 +161,9 @@ class PluginInterface(QWidget):
             "probability": self.check_prob.isChecked(),
             "tol": self.spin_tol.value(),
             "cache_size": self.spin_cache.value(),
-            "class_weight": None if self.combo_class_weight.currentText() == "None" else "balanced",
+            "class_weight": None
+            if self.combo_class_weight.currentText() == "None"
+            else "balanced",
             "verbose": self.check_verbose.isChecked(),
             "max_iter": self.spin_max_iter.value(),
             "decision_function_shape": self.combo_decision.currentText(),

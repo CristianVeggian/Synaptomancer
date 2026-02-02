@@ -11,6 +11,7 @@ import serial
 import json
 import numpy as np
 
+
 class AcquisitionWorkerEMG(QThread):
     sig_sampling_rate = pyqtSignal(int)
     sig_status = pyqtSignal(int, str)
@@ -53,7 +54,7 @@ class AcquisitionWorkerEMG(QThread):
 
         with open(file_path, "w", newline="") as f:
             writer = csv.writer(f)
-            header = ["timestamp","signal"]
+            header = ["timestamp", "signal"]
             writer.writerow(header)
 
         return file_path
@@ -65,10 +66,9 @@ class AcquisitionWorkerEMG(QThread):
         duration = float(self.protocol["duration_sec"])
         fs = int(self.protocol["sampling_rate_hz"])
 
-        with serial.Serial(self.params["serial_port"],
-                        self.params["baud_rate"],
-                        timeout=1) as ser:
-
+        with serial.Serial(
+            self.params["serial_port"], self.params["baud_rate"], timeout=1
+        ) as ser:
             ser.write(f"FS:{fs}\n".encode())
             ser.write(f"DUR:{int(duration)}\n".encode())
             time.sleep(0.1)
@@ -125,27 +125,14 @@ class AcquisitionWorkerEMG(QThread):
 
         if ftype == "bandpass":
             b, a = butter(
-                order,
-                [cfg["lowcut"], cfg["highcut"]],
-                btype="bandpass",
-                fs=fs
+                order, [cfg["lowcut"], cfg["highcut"]], btype="bandpass", fs=fs
             )
 
         elif ftype == "highpass":
-            b, a = butter(
-                order,
-                cfg["cutoff"],
-                btype="highpass",
-                fs=fs
-            )
+            b, a = butter(order, cfg["cutoff"], btype="highpass", fs=fs)
 
         elif ftype == "lowpass":
-            b, a = butter(
-                order,
-                cfg["cutoff"],
-                btype="lowpass",
-                fs=fs
-            )
+            b, a = butter(order, cfg["cutoff"], btype="lowpass", fs=fs)
 
         elif ftype == "notch":
             Q = cfg["center_freq"] / cfg["bandwidth"]

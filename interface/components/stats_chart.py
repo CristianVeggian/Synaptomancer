@@ -3,16 +3,14 @@ from matplotlib.figure import Figure
 
 from PyQt6.QtWidgets import QSizePolicy
 
+
 class StatsChart(FigureCanvas):
     def __init__(self, parent=None):
         self.fig = Figure(figsize=(4, 4))
         self.ax = self.fig.add_subplot(111)
         super().__init__(self.fig)
         self.setParent(parent)
-        self.setSizePolicy(
-            QSizePolicy.Policy.Expanding,
-            QSizePolicy.Policy.Expanding
-        )
+        self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
 
     def clear(self):
         self.ax.clear()

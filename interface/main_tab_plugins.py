@@ -1,10 +1,19 @@
-from PyQt6.QtWidgets import (QHBoxLayout, QVBoxLayout, QPushButton, QFileDialog, 
-                             QListWidget, QMessageBox, QLabel)
-import os, shutil
+from PyQt6.QtWidgets import (
+    QHBoxLayout,
+    QVBoxLayout,
+    QPushButton,
+    QFileDialog,
+    QListWidget,
+    QMessageBox,
+    QLabel,
+)
+import os
+import shutil
 from interface.translatable_widget import TranslatableWidget
 from interface.components.toast_message import ToastMessage
 
 from functions.utils.paths import PLUGINS_DIR
+
 
 class MainTabPlugins(TranslatableWidget):
     def __init__(self):
@@ -18,7 +27,7 @@ class MainTabPlugins(TranslatableWidget):
         vertical_outter_layout.addLayout(horizontal_layout)
 
         horizontal_layout.addWidget(self.plugins_list, stretch=3)
-        
+
         btn_install = QPushButton(self.tr("Install new plugin"))
         btn_refresh = QPushButton(self.tr("Refresh list"))
         btn_remove = QPushButton(self.tr("Remove plugin"))
@@ -41,17 +50,16 @@ class MainTabPlugins(TranslatableWidget):
         horizontal_layout.addLayout(vertical_inner_layout, stretch=1)
 
         self._refresh_list()
-    
+
     def _refresh_list(self):
         self.plugins_list.clear()
         for plugin in os.listdir(PLUGINS_DIR):
             if os.path.isdir(os.path.join(PLUGINS_DIR, plugin)):
                 self.plugins_list.addItem(plugin)
-    
+
     def _install_plugin(self):
         zip_file, _ = QFileDialog.getOpenFileName(
-            self, self.tr("Select plugin (.zip)"), 
-            "", "ZIP (*.zip)"
+            self, self.tr("Select plugin (.zip)"), "", "ZIP (*.zip)"
         )
         if zip_file:
             plugin_dir = QFileDialog.getExistingDirectory(
@@ -63,19 +71,20 @@ class MainTabPlugins(TranslatableWidget):
                 QMessageBox.critical(
                     self,
                     self.tr("Installation failed"),
-                    self.tr("Could not install plugin:\n{0}").format(str(e))
+                    self.tr("Could not install plugin:\n{0}").format(str(e)),
                 )
                 return
-            ToastMessage(self, self.tr("Installed plugin: {0}").format(os.path.basename(zip_file)))
+            ToastMessage(
+                self,
+                self.tr("Installed plugin: {0}").format(os.path.basename(zip_file)),
+            )
             self._refresh_list()
-    
+
     def _remove_plugin(self):
         plugin = self.plugins_list.currentItem()
         if plugin:
             reply = QMessageBox.question(
-                self,
-                self.tr("Confirm"),
-                self.tr("Remove {0}?").format(plugin.text())
+                self, self.tr("Confirm"), self.tr("Remove {0}?").format(plugin.text())
             )
             if reply == QMessageBox.StandardButton.Yes:
                 shutil.rmtree(os.path.join(PLUGINS_DIR, plugin.text()))

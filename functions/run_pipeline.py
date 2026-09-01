@@ -8,6 +8,8 @@ from typing import Optional
 import numpy as np
 import json
 
+from functions.utils.paths import PLUGINS_DIR
+
 
 class RunPipeline:
     def __init__(self):
@@ -26,7 +28,7 @@ class RunPipeline:
                     k.replace(" ", "_").replace("º", "o"): v for k, v in params.items()
                 }
 
-                caminho = os.path.join("functions", "plugins", nome_plugin, "method.py")
+                caminho = os.path.join(PLUGINS_DIR, nome_plugin, "method.py")
                 spec = importlib.util.spec_from_file_location("PluginMethod", caminho)
                 modulo = importlib.util.module_from_spec(spec)
                 spec.loader.exec_module(modulo)

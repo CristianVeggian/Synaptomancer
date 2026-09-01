@@ -1,8 +1,10 @@
 import os
 
+from functions.utils.paths import DATA_DIR
+
 
 def mkdatadir():
-    base = "data"
+    base = DATA_DIR
     subpastas = ["acquisitions", "protocols", "pipelines", "profiles"]
 
     if not os.path.exists(base):

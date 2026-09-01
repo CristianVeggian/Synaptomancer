@@ -1,0 +1,337 @@
+159 INFO: PyInstaller: 6.22.2, contrib hooks: 2026.7
+159 INFO: Python: 3.12.10
+183 INFO: Platform: Windows-11-10.0.26200-SP0
+183 INFO: Python environment: D:\Arquivos\desktop\Projetos\Synaptomancer\.venv
+183 INFO: wrote D:\Arquivos\desktop\Projetos\Synaptomancer\build\pyinstaller\Synaptomancer.spec
+199 INFO: Removing temporary files and cleaning cache in C:\Users\crist\AppData\Local\pyinstaller
+3148 INFO: Module search paths (PYTHONPATH):
+['D:\\Arquivos\\desktop\\Projetos\\Synaptomancer',
+ 'C:\\Users\\crist\\AppData\\Local\\Python\\pythoncore-3.12-64\\python312.zip',
+ 'C:\\Users\\crist\\AppData\\Local\\Python\\pythoncore-3.12-64\\DLLs',
+ 'C:\\Users\\crist\\AppData\\Local\\Python\\pythoncore-3.12-64\\Lib',
+ 'C:\\Users\\crist\\AppData\\Local\\Python\\pythoncore-3.12-64',
+ 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv',
+ 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages',
+ 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer']
+3584 INFO: Appending 'datas' from .spec
+3598 INFO: checking Analysis
+3598 INFO: Building Analysis because Analysis-00.toc is non existent
+3598 INFO: Looking for Python shared library...
+3600 INFO: Using Python shared library: C:\Users\crist\AppData\Local\Python\pythoncore-3.12-64\python312.dll
+3600 INFO: Running Analysis Analysis-00.toc
+3600 INFO: Target bytecode optimization level: 0
+3600 INFO: Initializing module dependency graph...
+3602 INFO: Initializing module graph hook caches...
+3602 INFO: Analyzing modules for base_library.zip ...
+4975 INFO: Processing standard module hook 'hook-encodings.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+5457 INFO: Processing standard module hook 'hook-math.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+6491 INFO: Processing standard module hook 'hook-pickle.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+7480 INFO: Processing standard module hook 'hook-heapq.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+7877 INFO: Caching module dependency graph...
+7913 INFO: Analyzing D:\Arquivos\desktop\Projetos\Synaptomancer\main.py
+7913 INFO: Processing standard module hook 'hook-PyQt6.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+8486 INFO: Processing standard module hook 'hook-PyQt6.QtWidgets.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+11645 INFO: Processing standard module hook 'hook-PyQt6.QtCore.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+16055 INFO: Processing standard module hook 'hook-PyQt6.QtGui.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+35071 INFO: Processing standard module hook 'hook-_ctypes.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+35197 INFO: Processing standard module hook 'hook-platform.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+35211 INFO: Processing standard module hook 'hook-numpy.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+35551 INFO: Processing standard module hook 'hook-difflib.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+35711 INFO: Processing standard module hook 'hook-multiprocessing.util.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+35837 INFO: Processing standard module hook 'hook-xml.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+36603 INFO: Processing standard module hook 'hook-sysconfig.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+36965 INFO: Processing standard module hook 'hook-webbrowser.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+37571 INFO: Processing pre-safe-import-module hook 'hook-typing_extensions.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+37571 INFO: SetuptoolsInfo: initializing cached setuptools info...
+38535 INFO: Processing standard module hook 'hook-charset_normalizer.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+38825 INFO: Processing standard module hook 'hook-pkg_resources.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+39197 INFO: Processing pre-safe-import-module hook 'hook-packaging.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+39273 INFO: Processing pre-safe-import-module hook 'hook-jaraco.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+39273 INFO: Setuptools: 'jaraco' appears to be a full setuptools-vendored copy - creating alias to 'setuptools._vendor.jaraco'!
+39289 INFO: Processing standard module hook 'hook-setuptools.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+39299 INFO: Processing pre-safe-import-module hook 'hook-distutils.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+39320 INFO: Processing pre-safe-import-module hook 'hook-jaraco.functools.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+39320 INFO: Setuptools: 'jaraco.functools' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.jaraco.functools'!
+39332 INFO: Processing pre-safe-import-module hook 'hook-more_itertools.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+39332 INFO: Setuptools: 'more_itertools' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.more_itertools'!
+39566 INFO: Processing pre-safe-import-module hook 'hook-jaraco.text.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+39566 INFO: Setuptools: 'jaraco.text' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.jaraco.text'!
+39577 INFO: Processing standard module hook 'hook-setuptools._vendor.jaraco.text.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+39577 INFO: Processing pre-safe-import-module hook 'hook-importlib_resources.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+39577 INFO: Processing pre-safe-import-module hook 'hook-jaraco.context.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+39577 INFO: Setuptools: 'jaraco.context' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.jaraco.context'!
+39586 INFO: Processing pre-safe-import-module hook 'hook-backports.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+39587 INFO: Setuptools: 'backports' appears to be a full setuptools-vendored copy - creating alias to 'setuptools._vendor.backports'!
+39711 INFO: Processing pre-safe-import-module hook 'hook-importlib_metadata.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+39711 INFO: Setuptools: 'importlib_metadata' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.importlib_metadata'!
+39742 INFO: Processing standard module hook 'hook-setuptools._vendor.importlib_metadata.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+39758 INFO: Processing pre-safe-import-module hook 'hook-zipp.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+39760 INFO: Setuptools: 'zipp' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.zipp'!
+39940 INFO: Processing pre-safe-import-module hook 'hook-tomli.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+39940 INFO: Setuptools: 'tomli' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.tomli'!
+40298 INFO: Processing pre-safe-import-module hook 'hook-wheel.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+40298 INFO: Setuptools: 'wheel' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.wheel'!
+40413 INFO: Processing pre-safe-import-module hook 'hook-platformdirs.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+40425 INFO: Processing standard module hook 'hook-platformdirs.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+40502 INFO: Processing standard module hook 'hook-pyqtgraph.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+348 WARNING: Failed to collect submodules for 'pyqtgraph.opengl' because importing 'pyqtgraph.opengl' raised: ModuleNotFoundError: No module named 'OpenGL'
+41326 INFO: hook-pyqtgraph: selected 'PyQt6' as Qt bindings because hook for 'PyQt6' has been run before.
+41399 INFO: Processing standard module hook 'hook-xml.etree.cElementTree.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+41404 INFO: Processing standard module hook 'hook-PyQt6.uic.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+41687 INFO: Processing standard module hook 'hook-PyQt6.QtSvg.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+42159 INFO: Processing standard module hook 'hook-PyQt6.QtOpenGLWidgets.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+42843 INFO: Processing standard module hook 'hook-PyQt6.QtOpenGL.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+43821 INFO: Processing standard module hook 'hook-PyQt6.QtTest.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+44634 INFO: Processing standard module hook 'hook-scipy.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+45647 INFO: Processing standard module hook 'hook-scipy.special._ufuncs.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+45769 INFO: Processing standard module hook 'hook-scipy.linalg.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+47508 INFO: Processing standard module hook 'hook-scipy.spatial._ckdtree.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+47571 INFO: Processing standard module hook 'hook-matplotlib.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+48000 INFO: Processing pre-safe-import-module hook 'hook-gi.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+48168 INFO: Processing standard module hook 'hook-matplotlib.backend_bases.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+48270 INFO: Processing standard module hook 'hook-PIL.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+48334 INFO: Processing standard module hook 'hook-PIL.Image.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+48852 INFO: Processing standard module hook 'hook-PIL.ImageFilter.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+49374 INFO: Processing standard module hook 'hook-jinja2.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+49852 INFO: Processing standard module hook 'hook-matplotlib.backends.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+49934 INFO: Processing standard module hook 'hook-matplotlib.pyplot.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+50162 INFO: Processing standard module hook 'hook-matplotlib.figure.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+50653 INFO: Processing standard module hook 'hook-dateutil.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+50712 INFO: Processing pre-safe-import-module hook 'hook-six.moves.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+51771 INFO: Processing standard module hook 'hook-certifi.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+52242 INFO: Processing standard module hook 'hook-scipy.spatial.transform.rotation.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+53114 INFO: Processing standard module hook 'hook-scipy.stats._stats.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+53648 INFO: Processing standard module hook 'hook-scipy.sparse.csgraph.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+54296 INFO: Processing standard module hook 'hook-scipy.special._ellip_harm_2.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+54695 INFO: Processing standard module hook 'hook-matplotlib.backends.backend_qtagg.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+54699 INFO: Processing standard module hook 'hook-matplotlib.backends.qt_compat.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+54699 INFO: hook-matplotlib.backends.qt_compat: selected 'PyQt6' as Qt bindings because hook for 'PyQt6' has been run before.
+54771 INFO: Processing standard module hook 'hook-xml.dom.domreg.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+56029 INFO: Processing standard module hook 'hook-sklearn.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+56541 INFO: Processing standard module hook 'hook-sklearn.utils.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+56933 INFO: Processing standard module hook 'hook-sklearn.externals.array_api_compat.numpy.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+56974 INFO: Processing standard module hook 'hook-sklearn.externals.array_api_compat.cupy.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+56987 INFO: Processing standard module hook 'hook-sklearn.externals.array_api_compat.torch.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+57016 INFO: Processing standard module hook 'hook-sklearn.externals.array_api_compat.dask.array.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+57085 INFO: Processing standard module hook 'hook-pandas.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+58628 INFO: Processing standard module hook 'hook-zoneinfo.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+59820 INFO: Processing standard module hook 'hook-pandas.io.formats.style.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+61967 INFO: Processing standard module hook 'hook-pandas.plotting.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+63299 INFO: Processing standard module hook 'hook-sqlite3.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+63677 INFO: Processing standard module hook 'hook-pandas.io.clipboard.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+64077 INFO: Processing standard module hook 'hook-sklearn.metrics.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+67589 INFO: Processing standard module hook 'hook-sklearn.metrics.cluster.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+67642 INFO: Processing standard module hook 'hook-sklearn.metrics.pairwise.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+67774 INFO: Processing standard module hook 'hook-sklearn.cluster.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+67905 INFO: Processing standard module hook 'hook-sklearn.neighbors.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+67992 INFO: Processing standard module hook 'hook-sklearn.linear_model.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+69125 INFO: Analyzing hidden import 'mne.__main__'
+69128 INFO: Analyzing hidden import 'mne._fiff'
+69129 INFO: Analyzing hidden import 'mne._fiff._digitization'
+69930 INFO: Processing standard module hook 'hook-scipy.io.matlab.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+72693 INFO: Analyzing hidden import 'mne._fiff.what'
+72695 INFO: Analyzing hidden import 'mne.beamformer'
+72697 INFO: Analyzing hidden import 'mne.beamformer._compute_beamformer'
+72707 INFO: Analyzing hidden import 'mne.beamformer._dics'
+72716 INFO: Analyzing hidden import 'mne.beamformer._lcmv'
+72721 INFO: Analyzing hidden import 'mne.beamformer._rap_music'
+72793 INFO: Analyzing hidden import 'mne.beamformer.resolution_matrix'
+72795 INFO: Analyzing hidden import 'mne.commands.mne_anonymize'
+72797 INFO: Analyzing hidden import 'mne.commands.mne_browse_raw'
+72799 INFO: Analyzing hidden import 'mne.commands.mne_bti2fiff'
+72801 INFO: Analyzing hidden import 'mne.commands.mne_clean_eog_ecg'
+72803 INFO: Analyzing hidden import 'mne.commands.mne_compare_fiff'
+72805 INFO: Analyzing hidden import 'mne.commands.mne_compute_proj_ecg'
+72806 INFO: Analyzing hidden import 'mne.commands.mne_compute_proj_eog'
+72806 INFO: Analyzing hidden import 'mne.commands.mne_coreg'
+72806 INFO: Analyzing hidden import 'mne.commands.mne_flash_bem'
+72806 INFO: Analyzing hidden import 'mne.commands.mne_freeview_bem_surfaces'
+72806 INFO: Analyzing hidden import 'mne.commands.mne_kit2fiff'
+72823 INFO: Analyzing hidden import 'mne.commands.mne_make_scalp_surfaces'
+72825 INFO: Analyzing hidden import 'mne.commands.mne_prepare_bem_model'
+72826 INFO: Analyzing hidden import 'mne.commands.mne_report'
+72829 INFO: Analyzing hidden import 'mne.commands.mne_setup_forward_model'
+72831 INFO: Analyzing hidden import 'mne.commands.mne_setup_source_space'
+72834 INFO: Analyzing hidden import 'mne.commands.mne_show_fiff'
+72835 INFO: Analyzing hidden import 'mne.commands.mne_show_info'
+72836 INFO: Analyzing hidden import 'mne.commands.mne_surf2bem'
+72836 INFO: Analyzing hidden import 'mne.commands.mne_sys_info'
+72836 INFO: Analyzing hidden import 'mne.commands.mne_watershed_bem'
+72836 INFO: Analyzing hidden import 'mne.commands.mne_what'
+72836 INFO: Analyzing hidden import 'mne.conftest'
+73128 INFO: Processing standard module hook 'hook-urllib3.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+73760 INFO: Analyzing hidden import 'mne.data'
+73762 INFO: Analyzing hidden import 'mne.datasets._fake'
+73762 INFO: Analyzing hidden import 'mne.datasets._fsaverage'
+73764 INFO: Analyzing hidden import 'mne.datasets._fsaverage.base'
+73764 INFO: Analyzing hidden import 'mne.datasets._infant'
+73766 INFO: Analyzing hidden import 'mne.datasets._phantom'
+73766 INFO: Analyzing hidden import 'mne.datasets._phantom.base'
+73768 INFO: Analyzing hidden import 'mne.datasets.brainstorm'
+73774 INFO: Analyzing hidden import 'mne.datasets.epilepsy_ecog'
+73774 INFO: Analyzing hidden import 'mne.datasets.erp_core'
+73775 INFO: Analyzing hidden import 'mne.datasets.eyelink'
+73777 INFO: Analyzing hidden import 'mne.datasets.fieldtrip_cmc'
+73779 INFO: Analyzing hidden import 'mne.datasets.fnirs_motor'
+73780 INFO: Analyzing hidden import 'mne.datasets.hf_sef'
+73781 INFO: Analyzing hidden import 'mne.datasets.kiloword'
+73784 INFO: Analyzing hidden import 'mne.datasets.misc'
+73785 INFO: Analyzing hidden import 'mne.datasets.mtrf'
+73785 INFO: Analyzing hidden import 'mne.datasets.multimodal'
+73788 INFO: Analyzing hidden import 'mne.datasets.opm'
+73788 INFO: Analyzing hidden import 'mne.datasets.phantom_4dbti'
+73790 INFO: Analyzing hidden import 'mne.datasets.phantom_kernel'
+73792 INFO: Analyzing hidden import 'mne.datasets.phantom_kit'
+73792 INFO: Analyzing hidden import 'mne.datasets.refmeg_noise'
+73794 INFO: Analyzing hidden import 'mne.datasets.sample'
+73794 INFO: Analyzing hidden import 'mne.datasets.somato'
+73796 INFO: Analyzing hidden import 'mne.datasets.spm_face'
+73798 INFO: Analyzing hidden import 'mne.datasets.ssvep'
+73798 INFO: Analyzing hidden import 'mne.datasets.ucl_opm_auditory'
+73801 INFO: Analyzing hidden import 'mne.datasets.visual_92_categories'
+73802 INFO: Analyzing hidden import 'mne.decoding'
+73803 INFO: Analyzing hidden import 'mne.decoding._covs_ged'
+73809 INFO: Analyzing hidden import 'mne.decoding._fixes'
+73811 INFO: Analyzing hidden import 'mne.decoding._ged'
+73852 INFO: Analyzing hidden import 'mne.decoding.ems'
+73868 INFO: Analyzing hidden import 'mne.decoding.receptive_field'
+73890 INFO: Analyzing hidden import 'mne.decoding.search_light'
+73904 INFO: Analyzing hidden import 'mne.decoding.ssd'
+73907 INFO: Analyzing hidden import 'mne.decoding.time_frequency'
+73912 INFO: Analyzing hidden import 'mne.decoding.xdawn'
+73914 INFO: Analyzing hidden import 'mne.export._brainvision'
+73918 INFO: Analyzing hidden import 'mne.export._edf_bdf'
+73924 INFO: Analyzing hidden import 'mne.export._eeglab'
+73928 INFO: Analyzing hidden import 'mne.export._egimff'
+73975 INFO: Analyzing hidden import 'mne.export._export'
+73979 INFO: Analyzing hidden import 'mne.gui'
+73981 INFO: Analyzing hidden import 'mne.gui._coreg'
+74039 INFO: Analyzing hidden import 'mne.gui._gui'
+74043 INFO: Analyzing hidden import 'mne.html_templates._templates'
+74048 INFO: Analyzing hidden import 'mne.inverse_sparse._gamma_map'
+74053 INFO: Analyzing hidden import 'mne.io._fiff_wrap'
+74054 INFO: Analyzing hidden import 'mne.io.ant'
+74055 INFO: Analyzing hidden import 'mne.io.array'
+74055 INFO: Analyzing hidden import 'mne.io.artemis123'
+74071 INFO: Analyzing hidden import 'mne.io.besa'
+74087 INFO: Analyzing hidden import 'mne.io.boxy'
+74087 INFO: Analyzing hidden import 'mne.io.bti'
+74133 INFO: Analyzing hidden import 'mne.io.eximia'
+74133 INFO: Analyzing hidden import 'mne.io.eyelink'
+74165 INFO: Analyzing hidden import 'mne.io.fieldtrip'
+74181 INFO: Analyzing hidden import 'mne.io.fiff'
+74196 INFO: Analyzing hidden import 'mne.io.fil'
+74196 INFO: Analyzing hidden import 'mne.io.hitachi'
+74235 INFO: Analyzing hidden import 'mne.io.nedf'
+74241 INFO: Analyzing hidden import 'mne.io.neuralynx'
+74243 INFO: Analyzing hidden import 'mne.io.nicolet'
+74243 INFO: Analyzing hidden import 'mne.io.nihon'
+74271 INFO: Analyzing hidden import 'mne.io.nsx'
+74281 INFO: Analyzing hidden import 'mne.io.persyst'
+74290 INFO: Analyzing hidden import 'mne.io.pick'
+74290 INFO: Analyzing hidden import 'mne.io.snirf'
+74304 INFO: Analyzing hidden import 'mne.minimum_norm.resolution_matrix'
+74312 INFO: Analyzing hidden import 'mne.minimum_norm.spatial_resolution'
+74318 INFO: Analyzing hidden import 'mne.minimum_norm.time_frequency'
+74336 INFO: Analyzing hidden import 'mne.misc'
+74339 INFO: Analyzing hidden import 'mne.preprocessing._annotate_amplitude'
+74344 INFO: Analyzing hidden import 'mne.preprocessing._annotate_nan'
+74352 INFO: Analyzing hidden import 'mne.preprocessing._csd'
+74352 INFO: Analyzing hidden import 'mne.preprocessing._css'
+74352 INFO: Analyzing hidden import 'mne.preprocessing._lof'
+74368 INFO: Analyzing hidden import 'mne.preprocessing._pca_obs'
+74374 INFO: Analyzing hidden import 'mne.preprocessing._regress'
+74380 INFO: Analyzing hidden import 'mne.preprocessing.hfc'
+74382 INFO: Analyzing hidden import 'mne.preprocessing.interpolate'
+74388 INFO: Analyzing hidden import 'mne.preprocessing.otp'
+74391 INFO: Analyzing hidden import 'mne.preprocessing.realign'
+74396 INFO: Analyzing hidden import 'mne.preprocessing.ssp'
+74400 INFO: Analyzing hidden import 'mne.preprocessing.stim'
+74404 INFO: Analyzing hidden import 'mne.preprocessing.xdawn'
+74414 INFO: Analyzing hidden import 'mne.report.report'
+74506 INFO: Analyzing hidden import 'mne.simulation'
+74506 INFO: Analyzing hidden import 'mne.simulation._metrics'
+74506 INFO: Analyzing hidden import 'mne.simulation.evoked'
+74506 INFO: Analyzing hidden import 'mne.simulation.metrics'
+74522 INFO: Analyzing hidden import 'mne.simulation.raw'
+74602 INFO: Analyzing hidden import 'mne.stats._adjacency'
+74602 INFO: Analyzing hidden import 'mne.stats.erp'
+74602 INFO: Analyzing hidden import 'mne.stats.multi_comp'
+74618 INFO: Analyzing hidden import 'mne.stats.permutations'
+74618 INFO: Analyzing hidden import 'mne.stats.regression'
+74629 INFO: Analyzing hidden import 'mne.time_frequency.ar'
+74629 INFO: Analyzing hidden import 'mne.utils._testing'
+74634 INFO: Analyzing hidden import 'mne.utils._typing'
+74634 INFO: Analyzing hidden import 'mne.utils.dataframe'
+74650 INFO: Analyzing hidden import 'mne.utils.fetching'
+74651 INFO: Analyzing hidden import 'mne.utils.linalg'
+74655 INFO: Analyzing hidden import 'mne.utils.mixin'
+74669 INFO: Analyzing hidden import 'mne.utils.progressbar'
+74674 INFO: Analyzing hidden import 'mne.viz._proj'
+74679 INFO: Analyzing hidden import 'mne.viz.backends._notebook'
+74729 INFO: Analyzing hidden import 'mne.viz.circle'
+74743 INFO: Analyzing hidden import 'mne.viz.conftest'
+74743 INFO: Analyzing hidden import 'mne.viz.eyetracking'
+74743 INFO: Analyzing hidden import 'mne.viz.montage'
+74753 INFO: Processing module hooks (post-graph stage)...
+74931 INFO: Processing standard module hook 'hook-sklearn.tree.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+75001 INFO: Processing standard module hook 'hook-matplotlib.backends.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+75002 INFO: Matplotlib backend selection method: automatic discovery of used backends
+75458 INFO: Trying determine the default backend as first importable candidate from the list: ['QtAgg', 'Qt5Agg', 'Gtk4Agg', 'Gtk3Agg', 'TkAgg', 'WxAgg']
+76452 INFO: Selected matplotlib backends: ['QtAgg']
+76452 INFO: Extra dists for selected matplotlib backends: []
+76821 INFO: Processing standard module hook 'hook-PIL.SpiderImagePlugin.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+76899 WARNING: Hidden import "scipy.special._cdflib" not found!
+76986 INFO: Processing standard module hook 'hook-tzdata.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+77552 INFO: Performing binary vs. data reclassification (2013 entries)
+77706 INFO: Looking for ctypes DLLs
+77722 WARNING: Ignoring /System/Library/Frameworks/IOKit.framework/IOKit imported from D:\Arquivos\desktop\Projetos\Synaptomancer\.venv\Lib\site-packages\serial\tools\list_ports_osx.py - only basenames are supported with ctypes imports!
+77722 WARNING: Ignoring /System/Library/Frameworks/CoreFoundation.framework/CoreFoundation imported from D:\Arquivos\desktop\Projetos\Synaptomancer\.venv\Lib\site-packages\serial\tools\list_ports_osx.py - only basenames are supported with ctypes imports!
+77873 INFO: Analyzing run-time hooks ...
+77873 INFO: Including custom run-time hook 'D:/Arquivos/desktop/Projetos/Synaptomancer/build_hooks/qt_dll_path.py'
+77889 INFO: Including run-time hook 'pyi_rth_pkgutil.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+77889 INFO: Including run-time hook 'pyi_rth_multiprocessing.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+77889 INFO: Including run-time hook 'pyi_rth_pyqt6.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+77889 INFO: Processing pre-find-module-path hook 'hook-_pyi_rth_utils.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_find_module_path'
+77905 INFO: Processing standard module hook 'hook-_pyi_rth_utils.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+77908 INFO: Including run-time hook 'pyi_rth_inspect.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+77910 INFO: Including run-time hook 'pyi_rth_mplconfig.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+77916 INFO: Including run-time hook 'pyi_rth_pyqtgraph_multiprocess.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\rthooks'
+77918 INFO: Including run-time hook 'pyi_rth_setuptools.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+77918 INFO: Including run-time hook 'pyi_rth_pkgres.py' from 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+78058 INFO: Creating base_library.zip...
+78079 INFO: Looking for dynamic libraries
+D:\Arquivos\desktop\Projetos\Synaptomancer\.venv\Lib\site-packages\PyInstaller\building\build_main.py:227: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  __import__(package)
+81264 INFO: Extra DLL search directories (AddDllDirectory): ['D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyQt6\\Qt6\\bin', 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\numpy.libs', 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\scipy.libs', 'D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\pandas.libs']
+81264 INFO: Extra DLL search directories (PATH): ['D:\\Arquivos\\desktop\\Projetos\\Synaptomancer\\.venv\\Lib\\site-packages\\PyQt6\\Qt6\\bin']
+84600 INFO: Warnings written to D:\Arquivos\desktop\Projetos\Synaptomancer\build\pyinstaller\Synaptomancer\warn-Synaptomancer.txt
+84854 INFO: Graph cross-reference written to D:\Arquivos\desktop\Projetos\Synaptomancer\build\pyinstaller\Synaptomancer\xref-Synaptomancer.html
+84968 INFO: checking PYZ
+84968 INFO: Building PYZ because PYZ-00.toc is non existent
+84968 INFO: Building PYZ (ZlibArchive) D:\Arquivos\desktop\Projetos\Synaptomancer\build\pyinstaller\Synaptomancer\PYZ-00.pyz
+87230 INFO: Building PYZ (ZlibArchive) D:\Arquivos\desktop\Projetos\Synaptomancer\build\pyinstaller\Synaptomancer\PYZ-00.pyz completed successfully.
+87276 INFO: checking PKG
+87276 INFO: Building PKG because PKG-00.toc is non existent
+87276 INFO: Building PKG (CArchive) Synaptomancer.pkg
+87311 INFO: Building PKG (CArchive) Synaptomancer.pkg completed successfully.
+87313 INFO: Bootloader D:\Arquivos\desktop\Projetos\Synaptomancer\.venv\Lib\site-packages\PyInstaller\bootloader\Windows-64bit-intel\runw.exe
+87313 INFO: checking EXE
+87313 INFO: Building EXE because EXE-00.toc is non existent
+87313 INFO: Building EXE from EXE-00.toc
+87313 INFO: Copying bootloader EXE to D:\Arquivos\desktop\Projetos\Synaptomancer\build\pyinstaller\Synaptomancer\Synaptomancer.exe
+87356 INFO: Copying icon to EXE
+87396 INFO: Copying 0 resources to EXE
+87396 INFO: Embedding manifest in EXE
+87429 INFO: Appending PKG archive to EXE
+87521 INFO: Fixing EXE headers
+87976 INFO: Building EXE from EXE-00.toc completed successfully.
+88003 INFO: checking COLLECT
+88003 INFO: Building COLLECT because COLLECT-00.toc is non existent
+88003 INFO: Removing dir D:\Arquivos\desktop\Projetos\Synaptomancer\release\Synaptomancer
+88231 INFO: Building COLLECT COLLECT-00.toc
+90722 INFO: Building COLLECT COLLECT-00.toc completed successfully.
+90766 INFO: Build complete! The results are available in: D:\Arquivos\desktop\Projetos\Synaptomancer\release
+
+Pacote criado em: D:\Arquivos\desktop\Projetos\Synaptomancer\release\Synaptomancer
+Distribua a pasta Synaptomancer inteira; nao mova somente o .exe.

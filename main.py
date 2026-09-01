@@ -4,6 +4,7 @@ from PyQt6.QtCore import QTranslator, QLocale, QSettings
 import sys
 
 from functions.utils.mkdatadir import mkdatadir
+from functions.utils.paths import TRANSLATIONS_DIR
 from interface.window_main import MainWindow
 
 if __name__ == "__main__":
@@ -18,7 +19,7 @@ if __name__ == "__main__":
     mkdatadir()
     app = QApplication(sys.argv)
 
-    if translator.load(f"synapto_{language}", "translations/"):
+    if translator.load(f"synapto_{language}", TRANSLATIONS_DIR):
         app.installTranslator(translator)
 
     main_window = MainWindow()

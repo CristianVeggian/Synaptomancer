@@ -1,6 +1,12 @@
 import os
+import sys
 
-ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+# In the portable PyInstaller build, keep mutable data and plugins next to the
+# executable. In development, keep the current project-root behavior.
+if getattr(sys, "frozen", False):
+    ROOT_DIR = os.path.dirname(sys.executable)
+else:
+    ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 
 LOGS_DIR = os.path.join(ROOT_DIR, "_logs")
 
